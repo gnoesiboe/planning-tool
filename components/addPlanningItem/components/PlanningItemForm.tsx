@@ -51,6 +51,7 @@ const PlanningItemForm: React.FC<Props> = ({
                         handleFieldChange('teamId', event.target.value)
                     }
                     required
+                    disabled={true}
                 >
                     <option value="" key="none">
                         -- Team --
