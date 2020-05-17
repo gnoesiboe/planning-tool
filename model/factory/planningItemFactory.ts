@@ -1,5 +1,5 @@
+import { RequestBody } from './../../pages/api/planning-item';
 import { Result } from './../../repository/database/planningItemRepository';
-import { PostRequestInput } from '../../pages/api/planning';
 import { PlanningItem } from '../planning';
 import { createUuid } from '../../utility/idGenerator';
 import { FormValues } from '../../components/addPlanningItem/hooks/useHandleFormState';
@@ -11,7 +11,7 @@ export function createPlanningItemFromRequestInput({
     week,
     year,
     notes,
-}: PostRequestInput): PlanningItem {
+}: RequestBody): PlanningItem {
     return {
         id,
         week,
