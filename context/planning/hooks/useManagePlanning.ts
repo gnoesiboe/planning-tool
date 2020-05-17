@@ -58,6 +58,14 @@ export default function useManagePlanning() {
                 );
             }
 
+            setPlanning((currentPlanning) => {
+                if (!currentPlanning) {
+                    throw new Error('Planning should already exist');
+                }
+
+                return removeItemFromPlanning(currentPlanning, item);
+            });
+
             removeItemFromPlanning(planning, item);
 
             notifyError('Something went wrong persisting the planning item.');

@@ -32,7 +32,7 @@ export async function executeQueryWithCatchAndRetry<R = any>(
 
         return result as R;
     } catch (error) {
-        connection.reset();
+        connection.destroy();
 
         if (retries >= maxRetries) {
             throw error;

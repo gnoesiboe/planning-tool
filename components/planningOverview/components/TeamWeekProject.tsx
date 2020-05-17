@@ -13,7 +13,11 @@ const TeamWeekProject: React.FC<Props> = ({ project, notes, children }) => {
     };
 
     return (
-        <div style={style} className="planning-overview__team-week-project">
+        <div
+            style={style}
+            className="planning-overview__team-week-project"
+            title={notes || ''}
+        >
             {children}
             <h3 className="planning-overview__team-week-project__title">
                 {project.name}

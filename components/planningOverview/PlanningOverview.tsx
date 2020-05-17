@@ -8,6 +8,8 @@ import { getRangeOfWeeksWithYearsFromCurrent } from '../../utility/dateTimeUtili
 import { selectItemsForTeamForWeek } from './utility/planningItemSelector';
 import { resolveProjectOrThrow } from './utility/projectResolver';
 import TeamWeekNotesOverview from '../teamWeekNotesOverview/TeamWeekNotesOverview';
+import AddTeamWeekNote from '../addTeamWeekNote/AddTeamWeekNote';
+import WeekActions from './components/WeekActions';
 
 const PlanningOverview: React.FC = () => {
     const { planning, projects, teams } = usePlanningContext();
@@ -53,12 +55,19 @@ const PlanningOverview: React.FC = () => {
                                     week={week}
                                     team={team}
                                 />
-                                <AddPlanningItem
-                                    week={week}
-                                    year={year}
-                                    team={team}
-                                    currentPlanningItems={itemsForWeek}
-                                />
+                                <WeekActions>
+                                    <AddPlanningItem
+                                        week={week}
+                                        year={year}
+                                        team={team}
+                                        currentPlanningItems={itemsForWeek}
+                                    />
+                                    <AddTeamWeekNote
+                                        team={team}
+                                        week={week}
+                                        year={year}
+                                    />
+                                </WeekActions>
                             </Week>
                         );
                     })}

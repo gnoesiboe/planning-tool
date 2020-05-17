@@ -1,5 +1,6 @@
 import { usePlanningContext } from '../../context/planning/PlanningContext';
 import { Team } from '../../model/planning';
+import RemoveTeamWeekNote from '../removeTeamWeekNote/RemoveTeamWeekNote';
 
 type Props = {
     week: number;
@@ -19,13 +20,14 @@ const TeamWeekNotesOverview: React.FC<Props> = ({ team, week }) => {
     );
 
     return (
-        <div className="team-week-notes-overview">
-            <ul className="list-inline">
-                {notes.map((note) => (
-                    <li>{note.note}</li>
-                ))}
-            </ul>
-        </div>
+        <ul className="team-week-notes-overview">
+            {notes.map((note) => (
+                <li key={note.id} className="team-week-notes-overview--item">
+                    <RemoveTeamWeekNote note={note} />
+                    {note.note}
+                </li>
+            ))}
+        </ul>
     );
 };
 

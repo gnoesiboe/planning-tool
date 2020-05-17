@@ -1,0 +1,9 @@
+.week-actions {
+    margin-top: 10px;
+    text-align: right;
+    visibility: hidden;
+
+    .planning-overview__week:hover & {
+        visibility: visible;
+    }
+}

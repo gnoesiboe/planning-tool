@@ -6,7 +6,7 @@ type Props = React.DetailedHTMLProps<
 >;
 
 const LinkButton: React.FC<Props> = ({ className, ...otherProps }) => (
-    <Button {...otherProps} className="btn-link" />
+    <Button {...otherProps} className={`btn-link ${className || ''}`} />
 );
 
 export default LinkButton;

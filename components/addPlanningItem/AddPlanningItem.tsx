@@ -1,8 +1,8 @@
-import Octicon, { Plus } from '@primer/octicons-react';
 import useShowHideModal from '../../hooks/useShowHideModal';
 import PlanningItemForm from './components/PlanningItemForm';
 import { Team, PlanningItem } from '../../model/planning';
 import Modal from '../primities/modal/Modal';
+import { Dropdown } from 'react-bootstrap';
 
 type Props = {
     week: number;
@@ -23,28 +23,25 @@ const AddPlanningItem: React.FC<Props> = ({
         (item) => item.projectId
     );
 
+    if (visible) {
+        return (
+            <Modal onRequestClose={() => hide()}>
+                <h1>{`Planning item toevoegen - Week ${week}`}</h1>
+                <PlanningItemForm
+                    week={week}
+                    year={year}
+                    onDone={() => hide()}
+                    team={team}
+                    disabledProjectIds={disabledProjectIds}
+                />
+            </Modal>
+        );
+    }
+
     return (
-        <span className="add-planning-item">
-            {visible ? (
-                <Modal onRequestClose={() => hide()}>
-                    <h1>{`Planning item toevoegen - Week ${week}`}</h1>
-                    <PlanningItemForm
-                        week={week}
-                        year={year}
-                        onDone={() => hide()}
-                        team={team}
-                        disabledProjectIds={disabledProjectIds}
-                    />
-                </Modal>
-            ) : (
-                <button
-                    className="btn add-planning-item__button"
-                    onClick={() => show()}
-                >
-                    <Octicon icon={Plus} />
-                </button>
-            )}
-        </span>
+        <Dropdown.Item href="#" onClick={() => show()}>
+            Planning item
+        </Dropdown.Item>
     );
 };
 
