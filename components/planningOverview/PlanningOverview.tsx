@@ -34,6 +34,19 @@ const PlanningOverview: React.FC = () => {
 
                         return (
                             <Week key={week} name={week}>
+                                <WeekActions>
+                                    <AddPlanningItem
+                                        week={week}
+                                        year={year}
+                                        team={team}
+                                        currentPlanningItems={itemsForWeek}
+                                    />
+                                    <AddTeamWeekNote
+                                        team={team}
+                                        week={week}
+                                        year={year}
+                                    />
+                                </WeekActions>
                                 {itemsForWeek.map((item) => {
                                     const key = `${week}_${item.teamId}_${item.projectId}}`;
                                     const project = resolveProjectOrThrow(
@@ -55,19 +68,6 @@ const PlanningOverview: React.FC = () => {
                                     week={week}
                                     team={team}
                                 />
-                                <WeekActions>
-                                    <AddPlanningItem
-                                        week={week}
-                                        year={year}
-                                        team={team}
-                                        currentPlanningItems={itemsForWeek}
-                                    />
-                                    <AddTeamWeekNote
-                                        team={team}
-                                        week={week}
-                                        year={year}
-                                    />
-                                </WeekActions>
                             </Week>
                         );
                     })}
