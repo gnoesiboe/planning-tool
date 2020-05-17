@@ -1,0 +1,70 @@
+.planning-overview {
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+    padding-top: 50px;
+}
+
+.planning-overview__title {
+    position: fixed;
+    top: 20px;
+}
+
+.planning-overview__team-row {
+    margin: 0;
+    padding: 20px 10px 20px 0;
+    width: 100%;
+    white-space: nowrap;
+    position: relative;
+}
+
+.planning-overview__team-row__title {
+    margin: 40px 0 0 0;
+    display: inline-block;
+    width: 250px;
+    white-space: normal;
+    position: sticky;
+    top: 0;
+    left: 0;
+
+    h2 {
+        display: inline;
+        padding: 0 20px 10px 0;
+        background: #fff;
+        border-radius: 5px;
+    }
+}
+
+.planning-overview__week {
+    display: inline-block;
+    padding: 0 0 10px;
+    margin-left: 10px;
+    width: 150px;
+    vertical-align: top;
+}
+
+.planning-overview__week__title {
+    height: 40px;
+    padding: 0;
+    margin: 0 0 10px;
+}
+
+.planning-overview__team-week-project {
+    padding: 10px;
+    border-radius: 3px;
+    height: 100px;
+    margin: 0 0 5px;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.planning-overview__team-week-project__title {
+    font-size: 1rem;
+    margin: 0;
+    white-space: normal;
+}
+
+.planning-overview__team-week-project__notes {
+    font-size: 0.8rem;
+}

@@ -1,0 +1,10 @@
+// Modules
+@import './modules/planningOverview';
+@import './modules/removeTeamWeekProject';
+@import './modules/addPlanningItem';
+@import './modules/teamWeekNotesOverview';
+
+body {
+    padding: 10px;
+    margin: 0;
+}

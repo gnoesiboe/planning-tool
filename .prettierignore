@@ -1,0 +1,8 @@
+/node_modules
+/vendor
+/_next
+/.next
+/.vscode
+/.git
+/out
+/build
