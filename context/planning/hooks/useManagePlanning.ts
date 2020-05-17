@@ -92,6 +92,8 @@ export default function useManagePlanning() {
             );
 
             console.error(error);
+        } finally {
+            () => fetchPlanning();
         }
     };
 
