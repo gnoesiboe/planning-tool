@@ -1,7 +1,11 @@
+import {
+    createPostPlanningItemUrl,
+    createDeletePlanningItemUrl,
+} from './../../server/routing/urlGenerator';
 import { PlanningItem } from './../../model/planning';
 
 export async function persist(planningItem: PlanningItem): Promise<void> {
-    await fetch('http://localhost:3000/api/planning-item', {
+    await fetch(createPostPlanningItemUrl(), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -11,7 +15,7 @@ export async function persist(planningItem: PlanningItem): Promise<void> {
 }
 
 export async function remove(planningItem: PlanningItem): Promise<void> {
-    await fetch(`http://localhost:3000/api/planning-item/${planningItem.id}`, {
+    await fetch(createDeletePlanningItemUrl(planningItem.id), {
         method: 'DELETE',
     });
 }
