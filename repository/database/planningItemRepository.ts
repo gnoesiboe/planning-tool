@@ -24,7 +24,6 @@ export async function findAll(): Promise<PlanningItem[]> {
             p.name ASC
     `);
 
-    // @todo move to factory
     return results.map((result) =>
         createPlanningItemFromDatabaseResult(result)
     );
