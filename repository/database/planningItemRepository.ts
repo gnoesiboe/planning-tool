@@ -67,6 +67,15 @@ export async function persist({
     `);
 }
 
+export async function update({ id, notes }: PlanningItem): Promise<void> {
+    await executeQuery(`
+        UPDATE planning_item
+        SET notes = '${notes}'
+        WHERE id = '${id}'
+        LIMIT 1
+    `);
+}
+
 export async function remove(item: PlanningItem): Promise<void> {
     await executeQuery(`
         DELETE FROM planning_item
