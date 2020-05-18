@@ -47,24 +47,33 @@ const PlanningOverview: React.FC = () => {
                                         year={year}
                                     />
                                 </WeekActions>
-                                {itemsForWeek.map((item) => {
-                                    const key = `${week}_${item.teamId}_${item.projectId}}`;
-                                    const project = resolveProjectOrThrow(
-                                        projects,
-                                        item.projectId
-                                    );
+                                {itemsForWeek.length > 0 && (
+                                    <div className="planning-overview__team-week-projects">
+                                        {itemsForWeek.map((item) => {
+                                            const key = `${week}_${item.teamId}_${item.projectId}}`;
+                                            const project = resolveProjectOrThrow(
+                                                projects,
+                                                item.projectId
+                                            );
 
-                                    return (
-                                        <TeamWeekProject
-                                            key={key}
-                                            project={project}
-                                            notes={item.notes}
-                                        >
-                                            <RemovePlanningItem item={item} />
-                                            <EditPlanningItem item={item} />
-                                        </TeamWeekProject>
-                                    );
-                                })}
+                                            return (
+                                                <TeamWeekProject
+                                                    key={key}
+                                                    project={project}
+                                                    notes={item.notes}
+                                                >
+                                                    <RemovePlanningItem
+                                                        item={item}
+                                                    />
+                                                    <EditPlanningItem
+                                                        item={item}
+                                                        team={team}
+                                                    />
+                                                </TeamWeekProject>
+                                            );
+                                        })}
+                                    </div>
+                                )}
                                 <TeamWeekNotesOverview
                                     week={week}
                                     team={team}

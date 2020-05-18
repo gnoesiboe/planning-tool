@@ -52,6 +52,10 @@
     margin: 0 0 10px;
 }
 
+.planning-overview__team-week-projects {
+    margin-bottom: 20px;
+}
+
 .planning-overview__team-week-project {
     padding: 10px;
     border-radius: 3px;
@@ -70,5 +74,8 @@
 }
 
 .planning-overview__team-week-project__notes {
-    font-size: 0.8rem;
+    * {
+        font-size: 0.8rem;
+        color: #444;
+    }
 }

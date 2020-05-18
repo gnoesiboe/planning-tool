@@ -1,5 +1,6 @@
 import { Project } from '../../../model/planning';
 import { CSSProperties, ReactNode } from 'react';
+import MarkdownContent from '../../primities/MarkdownContent';
 
 type Props = {
     project: Project;
@@ -23,9 +24,9 @@ const TeamWeekProject: React.FC<Props> = ({ project, notes, children }) => {
                 {project.name}
             </h3>
             {notes && (
-                <p className="planning-overview__team-week-project__notes">
+                <MarkdownContent className="planning-overview__team-week-project__notes">
                     {notes}
-                </p>
+                </MarkdownContent>
             )}
         </div>
     );
