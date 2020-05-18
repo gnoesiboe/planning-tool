@@ -1,0 +1,11 @@
+.edit-planning-item {
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+    padding: 0 !important;
+    visibility: hidden;
+
+    .planning-overview__team-week-project:hover & {
+        visibility: visible;
+    }
+}

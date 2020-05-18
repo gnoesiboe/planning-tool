@@ -1,7 +1,14 @@
 .remove-team-week-project {
     button {
-        float: right;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
         padding: 0;
-        margin: -5px 0 10px 10px;
+        margin: -5px 0 0 3px;
+        visibility: hidden;
+
+        .planning-overview__team-week-project:hover & {
+            visibility: visible;
+        }
     }
 }

@@ -10,6 +10,7 @@ import { resolveProjectOrThrow } from './utility/projectResolver';
 import TeamWeekNotesOverview from '../teamWeekNotesOverview/TeamWeekNotesOverview';
 import AddTeamWeekNote from '../addTeamWeekNote/AddTeamWeekNote';
 import WeekActions from './components/WeekActions';
+import EditPlanningItem from '../editPlanningItem/EditPlanningItem';
 
 const PlanningOverview: React.FC = () => {
     const { planning, projects, teams } = usePlanningContext();
@@ -60,6 +61,7 @@ const PlanningOverview: React.FC = () => {
                                             notes={item.notes}
                                         >
                                             <RemovePlanningItem item={item} />
+                                            <EditPlanningItem item={item} />
                                         </TeamWeekProject>
                                     );
                                 })}
