@@ -1,6 +1,10 @@
 import { PlanningItem } from '../../model/planning';
 import { executeSelect, executeQuery } from '../../storage/database';
 import { createPlanningItemFromDatabaseResult } from '../../model/factory/planningItemFactory';
+import {
+    getCurrentYear,
+    getCurrentWeek,
+} from '../../utility/dateTimeUtilities';
 
 export type Result = {
     id: string;
@@ -11,7 +15,10 @@ export type Result = {
     notes: string | null;
 };
 
-export async function findAll(): Promise<PlanningItem[]> {
+export async function findAllUpcoming(): Promise<PlanningItem[]> {
+    const currentYear = getCurrentYear();
+    const currentWeek = getCurrentWeek();
+
     const results = await executeSelect<Result>(`
         SELECT
             pi.*
@@ -19,6 +26,8 @@ export async function findAll(): Promise<PlanningItem[]> {
             planning_item pi
         INNER JOIN
             project p ON p.id = pi.project_id
+        WHERE
+            (pi.year > ${currentYear} OR (pi.year = ${currentYear} AND pi.week >= ${currentWeek}))
         ORDER BY
             pi.week ASC,
             p.name ASC

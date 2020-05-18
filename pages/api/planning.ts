@@ -1,6 +1,6 @@
 import { Planning } from './../../model/planning';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { findAll } from '../../repository/database/planningItemRepository';
+import { findAllUpcoming } from '../../repository/database/planningItemRepository';
 import { sendMethodNotAllowedResponse } from '../../server/response/handler/errorResponseHandler';
 import { sendPlanningListResponse } from '../../server/response/handler/planningResponseHandler';
 import { strict as assert } from 'assert';
@@ -19,7 +19,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
         return;
     }
 
-    const planningItems = await findAll();
+    const planningItems = await findAllUpcoming();
 
     const planning: Planning = {};
 

@@ -4,15 +4,9 @@ import { nl } from 'date-fns/locale';
 export function getRangeOfWeeksWithYearsFromCurrent(
     add: number
 ): Array<[number, number]> {
-    const now = new Date();
-    const currentWeek = getWeek(now, {
-        locale: nl,
-    });
-    const currentYear = getYear(now);
+    const out: Array<[number, number]> = [[getCurrentWeek(), getCurrentYear()]];
 
-    const out: Array<[number, number]> = [[currentWeek, currentYear]];
-
-    let cursorDate = now;
+    let cursorDate = new Date();
     let counter = 1;
 
     while (counter < add) {
@@ -34,4 +28,10 @@ export function getRangeOfWeeksWithYearsFromCurrent(
 
 export function getCurrentYear(): number {
     return getYear(new Date());
+}
+
+export function getCurrentWeek(): number {
+    return getWeek(new Date(), {
+        locale: nl,
+    });
 }
