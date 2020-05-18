@@ -1,5 +1,13 @@
+import Head from 'next/head';
+
 const Projects = () => {
-    return <h1>@todo implement</h1>;
+    return (
+        <>
+            <Head>
+                <title>Projects | Freshheads</title>
+            </Head>
+        </>
+    );
 };
 
 export default Projects;

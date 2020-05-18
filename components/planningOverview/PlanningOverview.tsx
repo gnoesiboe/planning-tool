@@ -25,7 +25,7 @@ const PlanningOverview: React.FC = () => {
     return (
         <div className="planning-overview">
             <Head>
-                <title>Planning overview</title>
+                <title>Planning overview | Freshheads</title>
             </Head>
             {teams.map((team) => (
                 <Team team={team} key={team.id}>
