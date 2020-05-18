@@ -11,6 +11,7 @@ import TeamWeekNotesOverview from '../teamWeekNotesOverview/TeamWeekNotesOvervie
 import AddTeamWeekNote from '../addTeamWeekNote/AddTeamWeekNote';
 import WeekActions from './components/WeekActions';
 import EditPlanningItem from '../editPlanningItem/EditPlanningItem';
+import Head from 'next/head';
 
 const PlanningOverview: React.FC = () => {
     const { planning, projects, teams } = usePlanningContext();
@@ -23,6 +24,9 @@ const PlanningOverview: React.FC = () => {
 
     return (
         <div className="planning-overview">
+            <Head>
+                <title>Planning overview</title>
+            </Head>
             {teams.map((team) => (
                 <Team team={team} key={team.id}>
                     {weeksWithYears.map(([week, year]) => {
