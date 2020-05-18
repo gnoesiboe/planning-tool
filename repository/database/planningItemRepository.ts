@@ -51,15 +51,17 @@ export async function findOneWithId(id: string): Promise<PlanningItem | null> {
 export async function persist({
     id,
     week,
+    year,
     teamId,
     projectId,
     notes,
 }: PlanningItem): Promise<void> {
     await executeQuery(`
-        INSERT INTO planning_item (id, week, team_id, project_id, notes)
+        INSERT INTO planning_item (id, week, year, team_id, project_id, notes)
         VALUES (
             '${id}',
             ${week},
+            ${year},
             '${teamId}',
             '${projectId}',
             ${notes ? `'${notes}'` : 'NULL'}
