@@ -1,5 +1,5 @@
 import useShowHideModal from '../../hooks/useShowHideModal';
-import PlanningItemForm from './components/PlanningItemForm';
+import AddPlanningItemForm from './components/AddPlanningItemForm';
 import { Team, PlanningItem } from '../../model/planning';
 import Modal from '../primities/modal/Modal';
 import { Dropdown } from 'react-bootstrap';
@@ -27,7 +27,7 @@ const AddPlanningItem: React.FC<Props> = ({
         return (
             <Modal onRequestClose={() => hide()}>
                 <h1>{`Planning item toevoegen - Week ${week}`}</h1>
-                <PlanningItemForm
+                <AddPlanningItemForm
                     week={week}
                     year={year}
                     onDone={() => hide()}

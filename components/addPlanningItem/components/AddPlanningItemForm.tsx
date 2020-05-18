@@ -14,7 +14,7 @@ type Props = {
     disabledProjectIds: string[];
 };
 
-const PlanningItemForm: React.FC<Props> = ({
+const AddPlanningItemForm: React.FC<Props> = ({
     week,
     year,
     team,
@@ -113,4 +113,4 @@ const PlanningItemForm: React.FC<Props> = ({
     );
 };
 
-export default PlanningItemForm;
+export default AddPlanningItemForm;

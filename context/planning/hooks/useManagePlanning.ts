@@ -1,4 +1,7 @@
-import { RemovePlanningItemHandler } from './../PlanningContext';
+import {
+    RemovePlanningItemHandler,
+    EditPlanningItemHandler,
+} from './../PlanningContext';
 import { Planning } from './../../../model/planning';
 import { fetchOne as fetchPlanning } from '../../../repository/api/planningRepository';
 import { useState, useEffect } from 'react';
@@ -6,11 +9,13 @@ import { AddPlanningItemHandler } from '../PlanningContext';
 import {
     persist,
     remove,
+    update,
 } from '../../../repository/api/planningItemRepository';
 import { notifySuccess, notifyError } from '../../../utility/notifier';
 import {
     addItemToPlanning,
     removeItemFromPlanning,
+    updateItemInPlanning,
 } from '../handler/planningStateMutationHandler';
 
 export default function useManagePlanning() {
@@ -74,7 +79,32 @@ export default function useManagePlanning() {
         }
     };
 
+    const editPlanningItem: EditPlanningItemHandler = async (item) => {
+        // update local state
+        setPlanning((currentPlanning) => {
+            if (!currentPlanning) {
+                throw new Error('Planning should already exist');
+            }
+
+            return updateItemInPlanning(currentPlanning, item);
+        });
+
+        // update on server
+        try {
+            await update(item);
+        } catch (error) {
+            notifyError(
+                'Something went wrong updating the planning item on the server. Refresh the page to continue!'
+            );
+
+            console.error(error);
+        } finally {
+            () => fetchPlanning();
+        }
+    };
+
     const removePlanningItem: RemovePlanningItemHandler = async (item) => {
+        // update local state
         setPlanning((currentPlanning) => {
             if (!currentPlanning) {
                 throw new Error('Planning should already exist');
@@ -97,5 +127,5 @@ export default function useManagePlanning() {
         }
     };
 
-    return { planning, addPlanningItem, removePlanningItem };
+    return { planning, addPlanningItem, editPlanningItem, removePlanningItem };
 }

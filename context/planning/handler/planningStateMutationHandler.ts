@@ -14,6 +14,25 @@ export function addItemToPlanning(
     });
 }
 
+export function updateItemInPlanning(
+    planning: Planning,
+    updatedItem: PlanningItem
+): Planning {
+    return produce<Planning>(planning, (nextPlanning) => {
+        Object.keys(planning).map((week) => {
+            const items = nextPlanning[week];
+
+            const itemIndex = items.findIndex(
+                (item) => item.id === updatedItem.id
+            );
+
+            if (itemIndex !== -1) {
+                items[itemIndex] = updatedItem;
+            }
+        });
+    });
+}
+
 export function removeItemFromPlanning(
     planning: Planning,
     itemToRemove: PlanningItem

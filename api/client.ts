@@ -17,6 +17,19 @@ export async function executePostRequest(
     });
 }
 
+export async function executePutRequest(
+    url: string,
+    body: Object
+): Promise<void> {
+    await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+}
+
 export async function executeDeleteRequest(url: string): Promise<void> {
     await fetch(url, {
         method: 'DELETE',

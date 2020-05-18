@@ -4,6 +4,8 @@ const baseUrl = `${process.env.NEXT_PUBLIC_API_SCHEME}://${process.env.NEXT_PUBL
 export const createPostPlanningItemUrl = () => `${baseUrl}/planning-item`;
 export const createDeletePlanningItemUrl = (id: string) =>
     `${baseUrl}/planning-item/${id}`;
+export const createPutPlanningItemUrl = (id: string) =>
+    `${baseUrl}/planning-item/${id}`;
 
 // planning
 export const createGetPlanningUrl = () => `${baseUrl}/planning`;
