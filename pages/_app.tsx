@@ -14,7 +14,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Navbar.Brand>Freshheads</Navbar.Brand>
                 <Nav className="mr-auto">
                     <Link href="/">
-                        <Nav.Link>Planning</Nav.Link>
+                        <Nav.Link href="/">Planning</Nav.Link>
+                    </Link>
+                    <Link href="/projects">
+                        <Nav.Link href="/projects">Projects</Nav.Link>
                     </Link>
                 </Nav>
             </Navbar>
