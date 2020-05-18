@@ -1,13 +1,5 @@
-import Head from 'next/head';
+import ProjectOverview from '../components/projectOverview/ProjectOverview';
 
-const Projects = () => {
-    return (
-        <>
-            <Head>
-                <title>Projects | Freshheads</title>
-            </Head>
-        </>
-    );
-};
+const Projects = () => <ProjectOverview />;
 
 export default Projects;
