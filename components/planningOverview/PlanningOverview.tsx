@@ -10,7 +10,6 @@ import { resolveProjectOrThrow } from './utility/projectResolver';
 import TeamWeekNotesOverview from '../teamWeekNotesOverview/TeamWeekNotesOverview';
 import AddTeamWeekNote from '../addTeamWeekNote/AddTeamWeekNote';
 import WeekActions from './components/WeekActions';
-import PlanningOverviewTitle from './components/PlanningOverviewTitle';
 
 const PlanningOverview: React.FC = () => {
     const { planning, projects, teams } = usePlanningContext();
@@ -23,7 +22,6 @@ const PlanningOverview: React.FC = () => {
 
     return (
         <div className="planning-overview">
-            <PlanningOverviewTitle />
             {teams.map((team) => (
                 <Team team={team} key={team.id}>
                     {weeksWithYears.map(([week, year]) => {
