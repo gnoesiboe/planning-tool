@@ -5,29 +5,24 @@ import {
 } from './../../server/routing/urlGenerator';
 import { TeamWeekNotesResponseBody } from './../../server/response/types.d';
 import { TeamWeekNote } from '../../model/planning';
+import {
+    executeGetRequest,
+    executeDeleteRequest,
+    executePostRequest,
+} from '../../api/client';
 
 export async function fetchAll(): Promise<TeamWeekNote[]> {
-    const response = await fetch(createGetTeamWeekNoteListUrl());
-
-    const {
-        teamWeekNotes,
-    } = (await response.json()) as TeamWeekNotesResponseBody;
+    const { teamWeekNotes } = await executeGetRequest<
+        TeamWeekNotesResponseBody
+    >(createGetTeamWeekNoteListUrl());
 
     return teamWeekNotes;
 }
 
 export async function remove(note: TeamWeekNote): Promise<void> {
-    await fetch(createDeleteTeamWeekNoteUrl(note.id), {
-        method: 'DELETE',
-    });
+    await executeDeleteRequest(createDeleteTeamWeekNoteUrl(note.id));
 }
 
 export async function persist(note: TeamWeekNote): Promise<void> {
-    await fetch(createPostTeamWeekNoteUrl(), {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(note),
-    });
+    await executePostRequest(createPostTeamWeekNoteUrl(), note);
 }

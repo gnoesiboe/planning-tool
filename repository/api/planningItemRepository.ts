@@ -3,19 +3,12 @@ import {
     createDeletePlanningItemUrl,
 } from './../../server/routing/urlGenerator';
 import { PlanningItem } from './../../model/planning';
+import { executePostRequest, executeDeleteRequest } from '../../api/client';
 
 export async function persist(planningItem: PlanningItem): Promise<void> {
-    await fetch(createPostPlanningItemUrl(), {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(planningItem),
-    });
+    await executePostRequest(createPostPlanningItemUrl(), planningItem);
 }
 
 export async function remove(planningItem: PlanningItem): Promise<void> {
-    await fetch(createDeletePlanningItemUrl(planningItem.id), {
-        method: 'DELETE',
-    });
+    await executeDeleteRequest(createDeletePlanningItemUrl(planningItem.id));
 }
