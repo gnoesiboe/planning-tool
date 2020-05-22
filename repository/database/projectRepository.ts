@@ -1,29 +1,53 @@
 import { Project } from '../../model/planning';
 import { executeSelect, executeQuery } from '../../storage/database';
+import { createProjectFromDatabaseResult } from '../../model/factory/projectFactory';
+
+export type Result = {
+    id: string;
+    name: string;
+    color: string;
+    active: 1 | 0;
+};
 
 export async function findAllOrderedByName(): Promise<Project[]> {
-    return await executeSelect<Project>('SELECT * FROM project');
+    const results = await executeSelect<Result>(
+        'SELECT * FROM project ORDER BY name ASC'
+    );
+
+    return results.map((result) => createProjectFromDatabaseResult(result));
 }
 
 export async function findOneWithId(id: string): Promise<Project | null> {
-    const results = await executeSelect<Project>(
-        'SELECT * FROM project WHERE id = ?',
+    const results = await executeSelect<Result>(
+        'SELECT * FROM project WHERE id = ? ORDER BY',
         [id]
     );
 
-    return results.pop() || null;
+    const firstResult = results.pop();
+
+    return firstResult ? createProjectFromDatabaseResult(firstResult) : null;
 }
 
-export async function persist({ id, name, color }: Project): Promise<void> {
+export async function persist({
+    id,
+    name,
+    color,
+    active,
+}: Project): Promise<void> {
     await executeQuery(
         'INSERT INTO project (id, name, color) VALUES (?, ?, ?)',
-        [id, name, color]
+        [id, name, color, active ? 1 : 0]
     );
 }
 
-export async function update({ id, name, color }: Project): Promise<void> {
+export async function update({
+    id,
+    name,
+    color,
+    active,
+}: Project): Promise<void> {
     await executeQuery(
-        'UPDATE project SET name = ?, color = ? WHERE id = ? LIMIT 1',
-        [name, color, id]
+        'UPDATE project SET name = ?, color = ?, active = ? WHERE id = ? LIMIT 1',
+        [name, color, id, active ? 1 : 0]
     );
 }

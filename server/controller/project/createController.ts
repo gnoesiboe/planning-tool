@@ -9,12 +9,14 @@ const inputSchema = Joi.object({
     id: Joi.string().required(),
     name: Joi.string().required(),
     color: Joi.string().required(),
+    active: Joi.boolean().required(),
 }).required();
 
 export type RequestBody = {
     id: string;
     name: string;
     color: string;
+    active: boolean;
 };
 
 const createController: Controller = async (request, response) => {

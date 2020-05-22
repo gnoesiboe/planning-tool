@@ -15,6 +15,7 @@ export type Project = {
     id: string;
     name: string;
     color: string;
+    active: boolean;
 };
 
 export type PlanningItem = {

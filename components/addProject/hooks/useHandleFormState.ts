@@ -5,20 +5,27 @@ import { createProjectFromFormInput } from '../../../model/factory/projectFactor
 export type FormValues = {
     name: string;
     color: string;
+    active: boolean;
 };
 
 type FormErrors = {
     name: string | null;
     color: string | null;
+    active: string | null;
 };
 
 const emptyErrors: FormErrors = {
     name: null,
     color: null,
+    active: null,
 };
 
 export default function useHandleFormState(onDone: () => void) {
-    const [values, setValues] = useState<FormValues>({ name: '', color: '' });
+    const [values, setValues] = useState<FormValues>({
+        name: '',
+        color: '',
+        active: true,
+    });
 
     const [errors, setErrors] = useState<FormErrors>({ ...emptyErrors });
 

@@ -49,6 +49,28 @@ const ProjectForm: React.FC<Props> = ({ onDone }) => {
                     <FormFieldError>{errors.color}</FormFieldError>
                 )}
             </FormGroup>
+            <FormGroup>
+                <div className="form-check">
+                    <input
+                        type="checkbox"
+                        id="active"
+                        checked={!!values.active}
+                        className={`form-check-input ${
+                            errors.color ? 'is-invalid' : ''
+                        }`}
+                        onChange={(event) =>
+                            handleFieldChange('active', event.target.value)
+                        }
+                    />
+                    <label htmlFor="active" className="form-check-label">
+                        Active
+                    </label>
+                </div>
+
+                {errors.active && (
+                    <FormFieldError>{errors.active}</FormFieldError>
+                )}
+            </FormGroup>
             <PrimaryButton type="submit">Add project</PrimaryButton>
             <LinkButton onClick={() => onDone()}>Cancel</LinkButton>
         </form>

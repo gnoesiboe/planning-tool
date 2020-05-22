@@ -15,11 +15,13 @@ import { sendUpdateSuccessResponse } from '../../response/handler/successRespons
 const inputSchema = Joi.object({
     name: Joi.string().required(),
     color: Joi.string().required(),
+    active: Joi.boolean().required(),
 }).required();
 
 type RequestBody = {
     name: string;
     color: string;
+    active: boolean;
 };
 
 const updateController: Controller = async (request, response) => {
