@@ -16,8 +16,10 @@ const ProjectOverview: React.FC = () => {
             {projects && (
                 <Table striped bordered hover>
                     <thead>
-                        <th>Name</th>
-                        <th>Color</th>
+                        <tr>
+                            <th>Name</th>
+                            <th>Color</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {projects.map((project) => (
