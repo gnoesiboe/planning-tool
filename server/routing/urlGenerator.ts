@@ -1,11 +1,11 @@
 const baseUrl = `${process.env.NEXT_PUBLIC_API_SCHEME}://${process.env.NEXT_PUBLIC_API_HOST}:${process.env.NEXT_PUBLIC_API_PORT}/api`;
 
 // planning item
-export const createPostPlanningItemUrl = () => `${baseUrl}/planning-item`;
+export const createPostPlanningItemUrl = () => `${baseUrl}/planning-items`;
 export const createDeletePlanningItemUrl = (id: string) =>
-    `${baseUrl}/planning-item/${id}`;
+    `${baseUrl}/planning-items/${id}`;
 export const createPutPlanningItemUrl = (id: string) =>
-    `${baseUrl}/planning-item/${id}`;
+    `${baseUrl}/planning-items/${id}`;
 
 // planning
 export const createGetPlanningUrl = () => `${baseUrl}/planning`;
