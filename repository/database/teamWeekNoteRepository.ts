@@ -11,14 +11,9 @@ export type Result = {
 };
 
 export async function findAll(): Promise<TeamWeekNote[]> {
-    const results = await executeSelect<Result>(`
-        SELECT
-            *
-        FROM
-            team_week_note
-        ORDER BY
-            created_at ASC
-    `);
+    const results = await executeSelect<Result>(
+        'SELECT * FROM team_week_note ORDER BY created_at ASC'
+    );
 
     return results.map((result) =>
         createTeamWeekNoteFromDatabaseResult(result)
@@ -26,14 +21,10 @@ export async function findAll(): Promise<TeamWeekNote[]> {
 }
 
 export async function findOneWithId(id: string): Promise<TeamWeekNote | null> {
-    const results = await executeSelect<Result>(`
-        SELECT
-            *
-        FROM
-            team_week_note
-        WHERE
-            id = '${id}'
-    `);
+    const results = await executeSelect<Result>(
+        'SELECT * FROM team_week_note WHERE id = ?',
+        [id]
+    );
 
     const firstResult = results.pop() || null;
 
@@ -43,10 +34,7 @@ export async function findOneWithId(id: string): Promise<TeamWeekNote | null> {
 }
 
 export async function remove(note: TeamWeekNote): Promise<void> {
-    await executeQuery(`
-        DELETE FROM team_week_note
-        WHERE id = '${note.id}'
-    `);
+    await executeQuery('DELETE FROM team_week_note WHERE id = ?', [note.id]);
 }
 
 export async function persist({
@@ -56,15 +44,8 @@ export async function persist({
     year,
     note,
 }: TeamWeekNote): Promise<void> {
-    await executeQuery(`
-        INSERT INTO team_week_note (id, team_id, week, year, note, created_at)
-        VALUES (
-            '${id}',
-            '${teamId}',
-            ${week},
-            ${year},
-            '${note}',
-            NOW()
-        )
-    `);
+    await executeQuery(
+        'INSERT INTO team_week_note (id, team_id, week, year, note, created_at) VALUES (?, ?, ?, ?, ?, NOW())',
+        [id, teamId, week, year, note]
+    );
 }

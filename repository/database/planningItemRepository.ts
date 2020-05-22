@@ -19,19 +19,22 @@ export async function findAllUpcoming(): Promise<PlanningItem[]> {
     const currentYear = getCurrentYear();
     const currentWeek = getCurrentWeek();
 
-    const results = await executeSelect<Result>(`
-        SELECT
-            pi.*
-        FROM
-            planning_item pi
-        INNER JOIN
-            project p ON p.id = pi.project_id
-        WHERE
-            (pi.year > ${currentYear} OR (pi.year = ${currentYear} AND pi.week >= ${currentWeek}))
-        ORDER BY
-            pi.week ASC,
-            p.name ASC
-    `);
+    const results = await executeSelect<Result>(
+        `
+            SELECT
+                pi.*
+            FROM
+                planning_item pi
+            INNER JOIN
+                project p ON p.id = pi.project_id
+            WHERE
+                (pi.year > ? OR (pi.year = ? AND pi.week >= ?))
+            ORDER BY
+                pi.week ASC,
+                p.name ASC
+        `,
+        [currentYear, currentYear, currentWeek]
+    );
 
     return results.map((result) =>
         createPlanningItemFromDatabaseResult(result)
@@ -39,14 +42,10 @@ export async function findAllUpcoming(): Promise<PlanningItem[]> {
 }
 
 export async function findOneWithId(id: string): Promise<PlanningItem | null> {
-    const results = await executeSelect<Result>(`
-        SELECT
-            *
-        FROM
-            planning_item
-        WHERE
-            id = '${id}'
-    `);
+    const results = await executeSelect<Result>(
+        'SELECT * FROM planning_item WHERE id = ?',
+        [id]
+    );
 
     const firstResult = results.pop();
 
@@ -65,32 +64,21 @@ export async function persist({
     projectId,
     notes,
 }: PlanningItem): Promise<void> {
-    await executeQuery(`
-        INSERT INTO planning_item (id, week, year, team_id, project_id, notes)
-        VALUES (
-            '${id}',
-            ${week},
-            ${year},
-            '${teamId}',
-            '${projectId}',
-            ${notes ? `'${notes}'` : 'NULL'}
-        )
-    `);
+    await executeQuery(
+        'INSERT INTO planning_item (id, week, year, team_id, project_id, notes) VALUES (?, ?, ?, ?, ?, ?)',
+        [id, week, year, teamId, projectId, notes]
+    );
 }
 
 export async function update({ id, notes }: PlanningItem): Promise<void> {
-    await executeQuery(`
-        UPDATE planning_item
-        SET notes = '${notes}'
-        WHERE id = '${id}'
-        LIMIT 1
-    `);
+    await executeQuery(
+        'UPDATE planning_item SET notes = ? WHERE id = ? LIMIT 1',
+        [notes, id]
+    );
 }
 
 export async function remove(item: PlanningItem): Promise<void> {
-    await executeQuery(`
-        DELETE FROM planning_item
-        WHERE id = '${item.id}'
-        LIMIT 1
-    `);
+    await executeQuery(`DELETE FROM planning_item WHERE id = ? LIMIT 1`, [
+        item.id,
+    ]);
 }

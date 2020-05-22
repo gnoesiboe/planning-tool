@@ -7,7 +7,8 @@ export async function findAllOrderedByName(): Promise<Team[]> {
 
 export async function findOneWithId(id: string): Promise<Team | null> {
     const results = await executeSelect<Team>(
-        `SELECT * FROM team WHERE id = '${id}'`
+        'SELECT * FROM team WHERE id = ?',
+        [id]
     );
 
     return results.pop() || null;

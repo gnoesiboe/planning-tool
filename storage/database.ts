@@ -1,5 +1,7 @@
 import mariadb, { Connection } from 'mariadb';
 
+type DynamicValues = Array<string | number | null>;
+
 let connection: Connection;
 
 let retries: number = 0;
@@ -21,12 +23,13 @@ async function getConnection(): Promise<Connection> {
 }
 
 export async function executeQueryWithCatchAndRetry<R = any>(
-    query: string
+    query: string,
+    dynamicValues: DynamicValues
 ): Promise<R> {
     const connection = await getConnection();
 
     try {
-        const result = await connection.query(query);
+        const result = await connection.query(query, dynamicValues);
 
         retries = 0;
 
@@ -40,14 +43,20 @@ export async function executeQueryWithCatchAndRetry<R = any>(
 
         retries++;
 
-        return executeQueryWithCatchAndRetry<R>(query);
+        return executeQueryWithCatchAndRetry<R>(query, dynamicValues);
     }
 }
 
-export async function executeSelect<T>(query: string): Promise<T[]> {
-    return await executeQueryWithCatchAndRetry<T[]>(query);
+export async function executeSelect<T>(
+    query: string,
+    dynamicValues: DynamicValues = []
+): Promise<T[]> {
+    return await executeQueryWithCatchAndRetry<T[]>(query, dynamicValues);
 }
 
-export async function executeQuery(query: string): Promise<void> {
-    await executeQueryWithCatchAndRetry(query);
+export async function executeQuery(
+    query: string,
+    dynamicValues: DynamicValues = []
+): Promise<void> {
+    await executeQueryWithCatchAndRetry(query, dynamicValues);
 }

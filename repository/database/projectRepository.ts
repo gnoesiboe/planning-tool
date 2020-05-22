@@ -7,30 +7,23 @@ export async function findAllOrderedByName(): Promise<Project[]> {
 
 export async function findOneWithId(id: string): Promise<Project | null> {
     const results = await executeSelect<Project>(
-        `SELECT * FROM project WHERE id = '${id}'`
+        'SELECT * FROM project WHERE id = ?',
+        [id]
     );
 
     return results.pop() || null;
 }
 
 export async function persist({ id, name, color }: Project): Promise<void> {
-    await executeQuery(`
-        INSERT INTO project (id, name, color)
-        VALUES
-            '${id}',
-            '${name},
-            '${color}
-    `);
+    await executeQuery(
+        'INSERT INTO project (id, name, color) VALUES (?, ?, ?)',
+        [id, name, color]
+    );
 }
 
 export async function update({ id, name, color }: Project): Promise<void> {
-    await executeQuery(`
-        UPDATE project
-        SET
-            name = '${name}',
-            color = '${color}'
-        WHERE
-            id = '${id}'
-        LIMIT 1
-    `);
+    await executeQuery(
+        'UPDATE project SET name = ?, color = ? WHERE id = ? LIMIT 1',
+        [name, color, id]
+    );
 }
