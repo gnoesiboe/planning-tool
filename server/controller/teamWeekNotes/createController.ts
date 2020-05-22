@@ -5,10 +5,10 @@ import {
 } from '../../response/handler/errorResponseHandler';
 import { findOneWithId as findTeamWithId } from '../../../repository/database/teamRepository';
 import { createTeamWeekNoteFromRequestInput } from '../../../model/factory/teamWeekNoteFactory';
-import { persist } from '../../../repository/api/teamWeekNoteRepository';
 import { sendCreationSuccessfulResponse } from '../../response/handler/successResponseHandler';
 import Joi from '@hapi/joi';
 import { getCurrentYear } from '../../../utility/dateTimeUtilities';
+import { persist } from '../../../repository/database/teamWeekNoteRepository';
 
 const inputSchema = Joi.object({
     id: Joi.string().required(),
