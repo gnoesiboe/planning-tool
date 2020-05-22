@@ -6,7 +6,7 @@ type Props = React.DetailedHTMLProps<
 >;
 
 const PrimaryButton: React.FC<Props> = ({ className, ...otherProps }) => (
-    <Button {...otherProps} className="btn-primary" />
+    <Button {...otherProps} className={`btn-primary ${className}`} />
 );
 
 export default PrimaryButton;

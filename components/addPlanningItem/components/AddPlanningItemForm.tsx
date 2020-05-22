@@ -5,6 +5,7 @@ import FormGroup from '../../primities/form/FormGroup';
 import PrimaryButton from '../../primities/button/PrimaryButton';
 import LinkButton from '../../primities/button/LinkButton';
 import useSubmitFormWithKeyboardShortcut from '../../../hooks/useSubmitFormWithKeyboardShortcut';
+import FormFieldError from '../../primities/form/FormFieldError';
 
 type Props = {
     week: number;
@@ -63,7 +64,7 @@ const AddPlanningItemForm: React.FC<Props> = ({
                     ))}
                 </select>
                 {errors.teamId && (
-                    <div className="invalid-feedback">{errors.teamId}</div>
+                    <FormFieldError>{errors.teamId}</FormFieldError>
                 )}
             </FormGroup>
             <FormGroup>
@@ -94,7 +95,7 @@ const AddPlanningItemForm: React.FC<Props> = ({
                     ))}
                 </select>
                 {errors.projectId && (
-                    <div className="invalid-feedback">{errors.projectId}</div>
+                    <FormFieldError>{errors.projectId}</FormFieldError>
                 )}
             </FormGroup>
             <FormGroup>

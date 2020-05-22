@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     </Link>
                 </Nav>
             </Navbar>
-            <div className="container-fluid">
+            <div className="container-fluid page-content">
                 <PlanningContextProvider>
                     <Component {...pageProps} />
                 </PlanningContextProvider>

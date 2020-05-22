@@ -36,7 +36,7 @@ const TeamWeekNoteForm: React.FC<Props> = ({ team, week, year, onDone }) => {
                     required
                 />
             </FormGroup>
-            <PrimaryButton type="submit">Opslaan</PrimaryButton>
+            <PrimaryButton type="submit">Add note</PrimaryButton>
             <LinkButton onClick={() => onDone()}>Cancel</LinkButton>
         </form>
     );

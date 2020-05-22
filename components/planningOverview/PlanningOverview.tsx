@@ -27,6 +27,7 @@ const PlanningOverview: React.FC = () => {
             <Head>
                 <title>Planning overview | Freshheads</title>
             </Head>
+            <h1>Planning</h1>
             {teams.map((team) => (
                 <Team team={team} key={team.id}>
                     {weeksWithYears.map(([week, year]) => {
