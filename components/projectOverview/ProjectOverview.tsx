@@ -18,14 +18,16 @@ const ProjectOverview: React.FC = () => {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Color</th>
+                            <th style={{ width: '120px' }}>Color</th>
                         </tr>
                     </thead>
                     <tbody>
                         {projects.map((project) => (
                             <tr key={project.id}>
                                 <td>{project.name}</td>
-                                <td>{project.color}</td>
+                                <td style={{ backgroundColor: project.color }}>
+                                    {project.color}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
