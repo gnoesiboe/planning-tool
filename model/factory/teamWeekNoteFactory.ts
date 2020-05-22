@@ -31,18 +31,8 @@ export function createTeamWEekNoteFromFormValues(
     };
 }
 
-export function createTeamWeekNoteFromRequestInput({
-    id,
-    teamId,
-    week,
-    year,
-    note,
-}: RequestInput): TeamWeekNote {
-    return {
-        id,
-        teamId,
-        week,
-        year,
-        note,
-    };
+export function createTeamWeekNoteFromRequestInput(
+    input: RequestInput
+): TeamWeekNote {
+    return { ...input };
 }
