@@ -8,9 +8,18 @@ export function addProjectToProjects(
     return produce<Project[]>(currentProjects, (updatedProjects) => {
         updatedProjects.push(project);
 
-        updatedProjects.sort((first, second) =>
-            first.name.localeCompare(second.name)
-        );
+        // make sure that inactive projects go last and otherwise are sorted by name
+        updatedProjects.sort((first, second) => {
+            if (first.active === false) {
+                return -1;
+            }
+
+            if (second.active === false) {
+                return 1;
+            }
+
+            return first.name.localeCompare(second.name);
+        });
     });
 }
 

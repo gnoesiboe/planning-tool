@@ -9,9 +9,11 @@ export type Result = {
     active: 1 | 0;
 };
 
-export async function findAllOrderedByName(): Promise<Project[]> {
+export async function findAllOrderedByNameAndActiveStatus(): Promise<
+    Project[]
+> {
     const results = await executeSelect<Result>(
-        'SELECT * FROM project ORDER BY name ASC'
+        'SELECT * FROM project ORDER BY active DESC, name ASC'
     );
 
     return results.map((result) => createProjectFromDatabaseResult(result));
