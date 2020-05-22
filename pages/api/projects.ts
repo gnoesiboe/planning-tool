@@ -1,15 +1,9 @@
-import { ProjectsResponseBody } from '../../server/response/types';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { findAllOrderedByName as findAllProjects } from '../../repository/database/projectRepository';
+import { RequestMethod } from './../../server/routing/methodSwitch';
+import { createMultiMethodController } from '../../server/routing/methodSwitch';
+import indexController from '../../server/controller/project/indexController';
 
-export default async (_request: NextApiRequest, response: NextApiResponse) => {
-    const projects = await findAllProjects();
+const controller = createMultiMethodController({
+    [RequestMethod.GET]: indexController,
+});
 
-    const body: ProjectsResponseBody = {
-        projects,
-    };
-
-    response.statusCode = 200;
-    response.setHeader('Content-Type', 'application/json');
-    response.end(JSON.stringify(body));
-};
+export default controller;

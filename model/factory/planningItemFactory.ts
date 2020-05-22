@@ -1,4 +1,4 @@
-import { RequestBody } from './../../pages/api/planning-item';
+import { RequestBody } from './../../server/controller/planningItem/createController';
 import { Result } from './../../repository/database/planningItemRepository';
 import { PlanningItem } from '../planning';
 import { createUuid } from '../../utility/idGenerator';

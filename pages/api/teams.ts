@@ -1,13 +1,9 @@
-import { TeamsResponseBody } from '../../server/response/types';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { findAllOrderedByName as findAllTeams } from '../../repository/database/teamRepository';
+import { RequestMethod } from './../../server/routing/methodSwitch';
+import { createMultiMethodController } from '../../server/routing/methodSwitch';
+import indexController from '../../server/controller/team/indexController';
 
-export default async (_request: NextApiRequest, response: NextApiResponse) => {
-    const teams = await findAllTeams();
+const controller = createMultiMethodController({
+    [RequestMethod.GET]: indexController,
+});
 
-    const body: TeamsResponseBody = { teams };
-
-    response.statusCode = 200;
-    response.setHeader('Content-Type', 'application/json');
-    response.end(JSON.stringify(body));
-};
+export default controller;

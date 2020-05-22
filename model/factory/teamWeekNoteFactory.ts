@@ -1,8 +1,8 @@
+import { RequestInput } from './../../server/controller/teamWeekNotes/createController';
 import { TeamWeekNote, Team } from './../planning';
 import { Result } from './../../repository/database/teamWeekNoteRepository';
 import { FormValues } from '../../components/addTeamWeekNote/hooks/useHandleFormState';
 import { createUuid } from '../../utility/idGenerator';
-import { PostRequestInput } from '../../pages/api/team-week-notes';
 
 export function createTeamWeekNoteFromDatabaseResult(
     result: Result
@@ -37,7 +37,7 @@ export function createTeamWeekNoteFromRequestInput({
     week,
     year,
     note,
-}: PostRequestInput): TeamWeekNote {
+}: RequestInput): TeamWeekNote {
     return {
         id,
         teamId,
