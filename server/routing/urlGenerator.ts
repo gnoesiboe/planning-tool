@@ -12,6 +12,7 @@ export const createGetPlanningUrl = () => `${baseUrl}/planning`;
 
 // project
 export const createGetProjectListUrl = () => `${baseUrl}/projects`;
+export const createPostProjectUrl = () => `${baseUrl}/projects`;
 
 // team
 export const createGetTeamListUrl = () => `${baseUrl}/teams`;

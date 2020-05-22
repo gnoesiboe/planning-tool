@@ -1,6 +1,8 @@
+import { usePlanningContext } from './../../../context/planning/PlanningContext';
 import { useState, FormEventHandler } from 'react';
+import { createProjectFromFormInput } from '../../../model/factory/projectFactory';
 
-type FormValues = {
+export type FormValues = {
     name: string;
     color: string;
 };
@@ -19,6 +21,8 @@ export default function useHandleFormState(onDone: () => void) {
     const [values, setValues] = useState<FormValues>({ name: '', color: '' });
 
     const [errors, setErrors] = useState<FormErrors>({ ...emptyErrors });
+
+    const { addProject } = usePlanningContext();
 
     const handleFieldChange = (key: keyof FormValues, value: string) => {
         setValues((currentValues) => ({
@@ -54,8 +58,11 @@ export default function useHandleFormState(onDone: () => void) {
             return;
         }
 
-        // @todo persist
-        console.log('@todo persist', values);
+        const project = createProjectFromFormInput(values);
+
+        addProject(project);
+
+        onDone();
     };
 
     return { values, errors, handleFieldChange, onSubmit };
