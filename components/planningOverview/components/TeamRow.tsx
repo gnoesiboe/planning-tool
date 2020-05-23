@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Team } from '../../../model/planning';
+import HeightEqualizer from 'react-equalizer';
 
 type Props = {
     team: Team;
@@ -12,7 +13,9 @@ const TeamRow: React.FC<Props> = ({ children, team }) => {
             <div className="planning-overview__team-row__title">
                 <h2>{team.name}</h2>
             </div>
-            {children}
+            <HeightEqualizer className="planning-overview__team-row__equalizer">
+                {children}
+            </HeightEqualizer>
         </div>
     );
 };

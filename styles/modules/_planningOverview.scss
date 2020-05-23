@@ -18,6 +18,10 @@
     border-bottom: 1px solid #ddd;
 }
 
+.planning-overview__team-row__equalizer {
+    display: inline; // react-equalizer uses a div element, which is by default a block element
+}
+
 .planning-overview__team-row__title {
     margin: 40px 0 0 0;
     display: inline-block;
@@ -39,12 +43,17 @@
 .planning-overview__week {
     display: inline-block;
     border-radius: 3px;
-    padding: 10px 5px 0;
+    padding: 10px 10px 0;
+    margin-bottom: 10px;
     width: 150px;
     height: 100%;
     vertical-align: top;
     position: relative;
     overflow: hidden;
+}
+
+.planning-overview__week:first-child {
+    padding-left: 0;
 }
 
 .planning-overview__week__title {
