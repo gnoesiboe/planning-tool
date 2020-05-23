@@ -35,21 +35,21 @@ export function updateItemInPlanning(
 
 export function moveItemToOtherWeekInPlanning(
     itemToMove: PlanningItem,
-    newWeek: number,
+    previousWeek: number,
     planning: Planning
 ): Planning {
     return produce<Planning>(planning, (nextPlanning) => {
         // remove from current week
-        nextPlanning[itemToMove.week] = nextPlanning[itemToMove.week].filter(
+        nextPlanning[previousWeek] = nextPlanning[previousWeek].filter(
             (cursorItem) => cursorItem.id !== itemToMove.id
         );
 
         // add to next week
-        if (typeof nextPlanning[newWeek] === 'undefined') {
-            nextPlanning[newWeek] = [];
+        if (typeof nextPlanning[itemToMove.week] === 'undefined') {
+            nextPlanning[itemToMove.week] = [];
         }
 
-        nextPlanning[newWeek].push(itemToMove);
+        nextPlanning[itemToMove.week].push(itemToMove);
     });
 }
 

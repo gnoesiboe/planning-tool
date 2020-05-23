@@ -15,8 +15,9 @@ export type AddPlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type EditPlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type MovePlanningItemHandler = (
     id: string,
-    moveToWeek: number,
-    moveToYear: number
+    newWeek: number,
+    newYear: number,
+    newTeamId: string
 ) => Promise<void>;
 export type RemovePlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type AddTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;

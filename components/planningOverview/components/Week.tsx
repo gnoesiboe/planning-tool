@@ -1,16 +1,19 @@
 import { ReactNode } from 'react';
 import useAcceptPlanningItemDrops from '../hooks/useAcceptPlanningItemDrops';
+import { Team } from '../../../model/planning';
 
 export type OnItemDroppedHandler = (
     id: string,
-    moveToWeek: number,
-    moveToYear: number
+    newWeek: number,
+    newYear: number,
+    newTeamId: string
 ) => void;
 
 type Props = {
     children: ReactNode;
     week: number;
     year: number;
+    team: Team;
     acceptDropOfProjectIds: string[];
     onItemDropped: OnItemDroppedHandler;
 };
@@ -19,6 +22,7 @@ const Week: React.FC<Props> = ({
     children,
     week,
     year,
+    team,
     acceptDropOfProjectIds,
     onItemDropped,
 }) => {
@@ -26,6 +30,7 @@ const Week: React.FC<Props> = ({
         acceptDropOfProjectIds,
         week,
         year,
+        team,
         onItemDropped
     );
 

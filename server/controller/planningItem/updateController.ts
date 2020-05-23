@@ -2,27 +2,31 @@ import { PlanningItem } from './../../../model/planning';
 import { Controller } from './../../routing/methodSwitch';
 import { strict as assert } from 'assert';
 import {
-    findOneWithId,
+    findOneWithId as findPlanningItemWithId,
     update,
 } from '../../../repository/database/planningItemRepository';
 import {
     sendNotFoundResponse,
     sendValidationErrorResponse,
+    sendBadRequestResponse,
 } from '../../response/handler/errorResponseHandler';
 import Joi from '@hapi/joi';
 import { sendUpdateSuccessResponse } from '../../response/handler/successResponseHandler';
 import { getCurrentYear } from '../../../utility/dateTimeUtilities';
+import { findOneWithId as findTeamWithId } from '../../../repository/database/teamRepository';
 
 const inputSchema = Joi.object({
     notes: Joi.string().allow(null),
     week: Joi.number().required(),
     year: Joi.number().required().min(getCurrentYear()),
+    teamId: Joi.string().required(),
 }).required();
 
 export type RequestBody = {
     notes: string;
     week: number;
     year: number;
+    teamId: string;
 };
 
 const updateController: Controller = async (request, response) => {
@@ -32,7 +36,7 @@ const updateController: Controller = async (request, response) => {
 
     assert.ok(typeof id === 'string');
 
-    const item = await findOneWithId(id);
+    const item = await findPlanningItemWithId(id);
 
     if (!item) {
         sendNotFoundResponse(
@@ -52,6 +56,17 @@ const updateController: Controller = async (request, response) => {
     }
 
     const input: RequestBody = value;
+
+    const team = await findTeamWithId(input.teamId);
+
+    if (!team) {
+        sendBadRequestResponse(
+            response,
+            `No team found with id '${input.teamId}'`
+        );
+
+        return;
+    }
 
     const newItem: PlanningItem = { ...item, ...input };
 

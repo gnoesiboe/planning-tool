@@ -58,6 +58,7 @@ const PlanningOverview: React.FC = () => {
                                     key={week}
                                     week={week}
                                     year={year}
+                                    team={team}
                                     acceptDropOfProjectIds={projectNotYetInWeek}
                                     onItemDropped={onItemDropped}
                                 >

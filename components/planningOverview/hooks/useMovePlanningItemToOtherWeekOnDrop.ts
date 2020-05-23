@@ -4,8 +4,12 @@ import { OnItemDroppedHandler } from './../components/Week';
 export default function useMovePlanningItemToOtherWeekOnDrop() {
     const { movePlanningItem } = usePlanningContext();
 
-    const onItemDropped: OnItemDroppedHandler = (id, moveToWeek, moveToYear) =>
-        movePlanningItem(id, moveToWeek, moveToYear);
+    const onItemDropped: OnItemDroppedHandler = (
+        id,
+        newWeek,
+        newYear,
+        newTeamId
+    ) => movePlanningItem(id, newWeek, newYear, newTeamId);
 
     return { onItemDropped };
 }

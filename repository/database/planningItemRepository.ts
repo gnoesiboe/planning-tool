@@ -75,10 +75,11 @@ export async function update({
     notes,
     week,
     year,
+    teamId,
 }: PlanningItem): Promise<void> {
     await executeQuery(
-        'UPDATE planning_item SET notes = ?, week = ?, year = ? WHERE id = ? LIMIT 1',
-        [notes, week, year, id]
+        'UPDATE planning_item SET notes = ?, week = ?, year = ?, team_id = ? WHERE id = ? LIMIT 1',
+        [notes, week, year, teamId, id]
     );
 }
 

@@ -1,3 +1,4 @@
+import { Team } from './../../../model/planning';
 import { OnItemDroppedHandler } from './../components/Week';
 import { useDrop } from 'react-dnd';
 import { DropObject } from './useMakeDraggable';
@@ -12,6 +13,7 @@ export default function useAcceptPlanningItemDrops(
     acceptDropOfProjectIds: string[],
     week: number,
     year: number,
+    team: Team,
     onItemDropped: OnItemDroppedHandler
 ) {
     const [{ isOver, canDrop }, droppableRef] = useDrop<
@@ -21,7 +23,7 @@ export default function useAcceptPlanningItemDrops(
     >({
         accept: acceptDropOfProjectIds,
         drop: ({ id }) => {
-            onItemDropped(id, week, year);
+            onItemDropped(id, week, year, team.id);
 
             return undefined;
         },

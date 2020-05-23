@@ -87,7 +87,8 @@ export default function useManagePlanning() {
     const movePlanningItem: MovePlanningItemHandler = async (
         id,
         newWeek,
-        newYear
+        newYear,
+        newTeamId
     ) => {
         if (!planning) {
             return;
@@ -99,6 +100,13 @@ export default function useManagePlanning() {
             return;
         }
 
+        let newItem = {
+            ...item,
+            year: newYear,
+            week: newWeek,
+            teamId: newTeamId,
+        };
+
         // update local state
         setPlanning((currentPlanning) => {
             if (!currentPlanning) {
@@ -106,19 +114,13 @@ export default function useManagePlanning() {
             }
 
             return moveItemToOtherWeekInPlanning(
-                item,
-                newWeek,
+                newItem,
+                item.week,
                 currentPlanning
             );
         });
 
         // update on server
-        let newItem = {
-            ...item,
-            year: newYear,
-            week: newWeek,
-        };
-
         try {
             await update(newItem);
         } catch (error) {

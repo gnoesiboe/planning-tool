@@ -23,5 +23,6 @@ export async function update(item: PlanningItem): Promise<void> {
         notes: item.notes,
         week: item.week,
         year: item.year,
+        teamId: item.teamId,
     });
 }
