@@ -34,8 +34,7 @@ export default function useAcceptPlanningItemDrops(
     const hoverStyle: CSSProperties =
         isOver && canDrop
             ? {
-                  background: 'darkgreen',
-                  padding: '10px 10px 0',
+                  background: 'rgba(0, 100, 0, 0.2)',
               }
             : {};
 
