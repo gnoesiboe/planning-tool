@@ -36,12 +36,14 @@ export default function useManagePlanning() {
             });
     };
 
+    // refetch planning on window focus
     useEffect(() => {
         window.addEventListener('focus', doFetchPlanning);
 
         return () => window.removeEventListener('focus', doFetchPlanning);
     }, [fetchPlanning]);
 
+    // fetch planning on initial mount
     useEffect(() => doFetchPlanning(), []);
 
     const addPlanningItem: AddPlanningItemHandler = async (item) => {
@@ -125,8 +127,6 @@ export default function useManagePlanning() {
             );
 
             console.error(error);
-        } finally {
-            () => fetchPlanning();
         }
     };
 
@@ -149,8 +149,6 @@ export default function useManagePlanning() {
             );
 
             console.error(error);
-        } finally {
-            () => fetchPlanning();
         }
     };
 
@@ -173,8 +171,6 @@ export default function useManagePlanning() {
             );
 
             console.error(error);
-        } finally {
-            () => fetchPlanning();
         }
     };
 
