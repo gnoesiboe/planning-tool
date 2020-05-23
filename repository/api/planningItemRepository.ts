@@ -21,5 +21,7 @@ export async function remove(planningItem: PlanningItem): Promise<void> {
 export async function update(item: PlanningItem): Promise<void> {
     await executePutRequest(createPutPlanningItemUrl(item.id), {
         notes: item.notes,
+        week: item.week,
+        year: item.year,
     });
 }

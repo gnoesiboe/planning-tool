@@ -1,3 +1,4 @@
+import { PlanningItem } from './../../../model/planning';
 import { Controller } from './../../routing/methodSwitch';
 import { strict as assert } from 'assert';
 import {
@@ -10,13 +11,18 @@ import {
 } from '../../response/handler/errorResponseHandler';
 import Joi from '@hapi/joi';
 import { sendUpdateSuccessResponse } from '../../response/handler/successResponseHandler';
+import { getCurrentYear } from '../../../utility/dateTimeUtilities';
 
 const inputSchema = Joi.object({
     notes: Joi.string().allow(null),
+    week: Joi.number().required(),
+    year: Joi.number().required().min(getCurrentYear()),
 }).required();
 
 export type RequestBody = {
     notes: string;
+    week: number;
+    year: number;
 };
 
 const updateController: Controller = async (request, response) => {
@@ -47,10 +53,7 @@ const updateController: Controller = async (request, response) => {
 
     const input: RequestBody = value;
 
-    const newItem = {
-        ...item,
-        notes: input.notes,
-    };
+    const newItem: PlanningItem = { ...item, ...input };
 
     await update(newItem);
 

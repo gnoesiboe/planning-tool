@@ -1,6 +1,7 @@
 import {
     RemovePlanningItemHandler,
     EditPlanningItemHandler,
+    MovePlanningItemHandler,
 } from './../PlanningContext';
 import { Planning } from './../../../model/planning';
 import { fetchOne as fetchPlanning } from '../../../repository/api/planningRepository';
@@ -16,7 +17,9 @@ import {
     addItemToPlanning,
     removeItemFromPlanning,
     updateItemInPlanning,
+    moveItemToOtherWeekInPlanning,
 } from '../handler/planningStateMutationHandler';
+import { resolveItemInPlanning } from '../utility/planningItemResolver';
 
 export default function useManagePlanning() {
     const [planning, setPlanning] = useState<Planning | null>(null);
@@ -79,6 +82,54 @@ export default function useManagePlanning() {
         }
     };
 
+    const movePlanningItem: MovePlanningItemHandler = async (
+        id,
+        newWeek,
+        newYear
+    ) => {
+        if (!planning) {
+            return;
+        }
+
+        const item = resolveItemInPlanning(id, planning);
+
+        if (!item) {
+            return;
+        }
+
+        // update local state
+        setPlanning((currentPlanning) => {
+            if (!currentPlanning) {
+                throw new Error('Planning should already exist');
+            }
+
+            return moveItemToOtherWeekInPlanning(
+                item,
+                newWeek,
+                currentPlanning
+            );
+        });
+
+        // update on server
+        let newItem = {
+            ...item,
+            year: newYear,
+            week: newWeek,
+        };
+
+        try {
+            await update(newItem);
+        } catch (error) {
+            notifyError(
+                'Something went wrong updating the planning item on the server. Refresh the page to continue!'
+            );
+
+            console.error(error);
+        } finally {
+            () => fetchPlanning();
+        }
+    };
+
     const editPlanningItem: EditPlanningItemHandler = async (item) => {
         // update local state
         setPlanning((currentPlanning) => {
@@ -127,5 +178,11 @@ export default function useManagePlanning() {
         }
     };
 
-    return { planning, addPlanningItem, editPlanningItem, removePlanningItem };
+    return {
+        planning,
+        addPlanningItem,
+        movePlanningItem,
+        editPlanningItem,
+        removePlanningItem,
+    };
 }

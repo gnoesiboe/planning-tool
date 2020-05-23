@@ -13,6 +13,11 @@ import useManageProjects from './hooks/useManageProjects';
 
 export type AddPlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type EditPlanningItemHandler = (item: PlanningItem) => Promise<void>;
+export type MovePlanningItemHandler = (
+    id: string,
+    moveToWeek: number,
+    moveToYear: number
+) => Promise<void>;
 export type RemovePlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type AddTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;
 export type RemoveTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;
@@ -24,6 +29,7 @@ type ContextValue = {
     projects: Project[] | null;
     teamWeekNotes: TeamWeekNote[] | null;
     addPlanningItem: AddPlanningItemHandler;
+    movePlanningItem: MovePlanningItemHandler;
     editPlanningItem: EditPlanningItemHandler;
     removePlanningItem: RemovePlanningItemHandler;
     addTeamWeekNote: AddTeamWeekNoteHandler;
@@ -37,6 +43,7 @@ const initialValue: ContextValue = {
     projects: null,
     teamWeekNotes: null,
     addPlanningItem: async () => {},
+    movePlanningItem: async () => {},
     editPlanningItem: async () => {},
     removePlanningItem: async () => {},
     addTeamWeekNote: async () => {},
@@ -54,6 +61,7 @@ export const PlanningContextProvider: React.FC<{
     const {
         planning,
         addPlanningItem,
+        movePlanningItem,
         editPlanningItem,
         removePlanningItem,
     } = useManagePlanning();
@@ -72,6 +80,7 @@ export const PlanningContextProvider: React.FC<{
         projects,
         teamWeekNotes,
         addPlanningItem,
+        movePlanningItem,
         editPlanningItem,
         removePlanningItem,
         addTeamWeekNote,

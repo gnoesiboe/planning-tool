@@ -70,10 +70,15 @@ export async function persist({
     );
 }
 
-export async function update({ id, notes }: PlanningItem): Promise<void> {
+export async function update({
+    id,
+    notes,
+    week,
+    year,
+}: PlanningItem): Promise<void> {
     await executeQuery(
-        'UPDATE planning_item SET notes = ? WHERE id = ? LIMIT 1',
-        [notes, id]
+        'UPDATE planning_item SET notes = ?, week = ?, year = ? WHERE id = ? LIMIT 1',
+        [notes, week, year, id]
     );
 }
 

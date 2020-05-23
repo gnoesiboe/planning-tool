@@ -33,6 +33,26 @@ export function updateItemInPlanning(
     });
 }
 
+export function moveItemToOtherWeekInPlanning(
+    itemToMove: PlanningItem,
+    newWeek: number,
+    planning: Planning
+): Planning {
+    return produce<Planning>(planning, (nextPlanning) => {
+        // remove from current week
+        nextPlanning[itemToMove.week] = nextPlanning[itemToMove.week].filter(
+            (cursorItem) => cursorItem.id !== itemToMove.id
+        );
+
+        // add to next week
+        if (typeof nextPlanning[newWeek] === 'undefined') {
+            nextPlanning[newWeek] = [];
+        }
+
+        nextPlanning[newWeek].push(itemToMove);
+    });
+}
+
 export function removeItemFromPlanning(
     planning: Planning,
     itemToRemove: PlanningItem
