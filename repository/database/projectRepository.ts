@@ -21,7 +21,7 @@ export async function findAllOrderedByNameAndActiveStatus(): Promise<
 
 export async function findOneWithId(id: string): Promise<Project | null> {
     const results = await executeSelect<Result>(
-        'SELECT * FROM project WHERE id = ? ORDER BY',
+        'SELECT * FROM project WHERE id = ?',
         [id]
     );
 
