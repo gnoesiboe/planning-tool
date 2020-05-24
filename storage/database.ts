@@ -1,62 +1,41 @@
-import mariadb, { Connection } from 'mariadb';
+import mariadb, { Pool, PoolConnection } from 'mariadb';
 
 type DynamicValues = Array<string | number | null>;
 
-let connection: Connection;
-
-let retries: number = 0;
-const maxRetries = 3;
-
-async function getConnection(): Promise<Connection> {
-    if (connection && connection.isValid()) {
-        return connection;
-    }
-
-    connection = await mariadb.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-    });
-
-    return connection;
-}
-
-export async function executeQueryWithCatchAndRetry<R = any>(
-    query: string,
-    dynamicValues: DynamicValues
-): Promise<R> {
-    const connection = await getConnection();
-
-    try {
-        const result = await connection.query(query, dynamicValues);
-
-        retries = 0;
-
-        return result as R;
-    } catch (error) {
-        connection.destroy();
-
-        if (retries >= maxRetries) {
-            throw error;
-        }
-
-        retries++;
-
-        return executeQueryWithCatchAndRetry<R>(query, dynamicValues);
-    }
-}
+const pool: Pool = mariadb.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    connectionLimit: 10,
+});
 
 export async function executeSelect<T>(
     query: string,
     dynamicValues: DynamicValues = []
 ): Promise<T[]> {
-    return await executeQueryWithCatchAndRetry<T[]>(query, dynamicValues);
+    let connection: PoolConnection | null = null;
+
+    try {
+        connection = await pool.getConnection();
+
+        return await connection.query(query, dynamicValues);
+    } catch (error) {
+        // @todo better error handling
+
+        console.error(error);
+
+        return [];
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
 }
 
 export async function executeQuery(
     query: string,
     dynamicValues: DynamicValues = []
 ): Promise<void> {
-    await executeQueryWithCatchAndRetry(query, dynamicValues);
+    await executeSelect(query, dynamicValues);
 }
