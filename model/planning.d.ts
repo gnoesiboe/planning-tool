@@ -18,15 +18,29 @@ export type Project = {
     active: boolean;
 };
 
-export type PlanningItem = {
+export interface PlanningItem {
     id: string;
     week: number;
     year: number;
     teamId: string;
     projectId: string;
     notes: string | null;
+}
+
+export interface ExstendedPlanningItem extends PlanningItem {
+    project: Project;
+}
+
+export type WeekPlanningItems = Array<{
+    week: number;
+    year: number;
+    notSetProjectIds: string[];
+    items: ExstendedPlanningItem[];
+}>;
+
+export type TeamPlanning = {
+    team: Team;
+    weeks: WeekPlanningItems;
 };
 
-export type Planning = {
-    [week: string]: PlanningItem[];
-};
+export type Planning = TeamPlanning[];

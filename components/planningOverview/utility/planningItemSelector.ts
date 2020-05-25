@@ -1,40 +1,59 @@
-import { Planning, PlanningItem, Team } from './../../../model/planning';
+import {
+    Planning,
+    PlanningItem,
+    Team,
+    WeekPlanningItems,
+    Project,
+    ExstendedPlanningItem,
+} from './../../../model/planning';
+import { getRangeOfWeeksWithYearsFromCurrent } from '../../../utility/dateTimeUtilities';
+import { resolveProjectOrThrow } from './projectResolver';
+import { sortBy } from 'lodash';
 
-export function selectItemsForTeamForWeek(
-    planning: Planning,
-    week: number,
-    team: Team
-): PlanningItem[] {
-    const itemsForWeek = planning[week] || [];
-
-    return itemsForWeek
-        .filter((item) => item.teamId === team.id)
-        .sort((first, second) => {
-            if (first.projectId > second.projectId) {
-                return 1;
-            }
-
-            if (first.projectId < second.projectId) {
-                return -1;
-            }
-
-            return 0;
-        });
-}
-
-export function selectItemsGrouppedByWeek(
+export function selectItemsGrouppedByWeekAndTeam(
+    teams: Team[],
+    projects: Project[],
     planningItems: PlanningItem[]
 ): Planning {
-    const planning: Planning = {};
+    const allProjectIds = projects.map(({ id }) => id);
+    const weeksWithYears = getRangeOfWeeksWithYearsFromCurrent(10);
 
-    planningItems.forEach((planningItem) => {
-        const week = planningItem.week;
+    const planning: Planning = [];
 
-        if (typeof planning[week] === 'undefined') {
-            planning[week] = [];
-        }
+    // add rows for all teams and weeks
+    teams.forEach((team) => {
+        const weeks: WeekPlanningItems = [];
 
-        planning[week].push(planningItem);
+        weeksWithYears.forEach(([week, year]) => {
+            const items: ExstendedPlanningItem[] = [];
+            const projectIdsInWeek: string[] = [];
+
+            planningItems.forEach((item) => {
+                if (
+                    item.week !== week ||
+                    item.teamId !== team.id ||
+                    item.year !== year
+                ) {
+                    return;
+                }
+
+                projectIdsInWeek.push(item.projectId);
+
+                const project = resolveProjectOrThrow(projects, item.projectId);
+
+                items.push({ ...item, project });
+            });
+
+            const sortedItems = sortBy(items, (item) => item.project.name);
+
+            const notSetProjectIds = allProjectIds.filter(
+                (projectId) => !projectIdsInWeek.includes(projectId)
+            );
+
+            weeks.push({ week, year, items: sortedItems, notSetProjectIds });
+        });
+
+        planning.push({ team, weeks });
     });
 
     return planning;

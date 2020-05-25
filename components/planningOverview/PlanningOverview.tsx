@@ -3,13 +3,6 @@ import Week from './components/Week';
 import TeamWeekProject from './components/TeamWeekProject';
 import RemovePlanningItem from '../removePlanningItem/RemovePlanningItem';
 import AddPlanningItem from '../addPlanningItem/AddPlanningItem';
-import { usePlanningContext } from '../../context/planning/PlanningContext';
-import { getRangeOfWeeksWithYearsFromCurrent } from '../../utility/dateTimeUtilities';
-import {
-    selectItemsForTeamForWeek,
-    selectItemsGrouppedByWeek,
-} from './utility/planningItemSelector';
-import { resolveProjectOrThrow } from './utility/projectResolver';
 import TeamWeekNotesOverview from '../teamWeekNotesOverview/TeamWeekNotesOverview';
 import AddTeamWeekNote from '../addTeamWeekNote/AddTeamWeekNote';
 import WeekActions from './components/WeekActions';
@@ -17,18 +10,16 @@ import EditPlanningItem from '../editPlanningItem/EditPlanningItem';
 import Head from 'next/head';
 import DragAndDropProvider from './components/DragAndDropProvider';
 import useMovePlanningItemToOtherWeekOnDrop from './hooks/useMovePlanningItemToOtherWeekOnDrop';
+import usePlanning from './hooks/usePlanning';
 
 const PlanningOverview: React.FC = () => {
-    const { planningItems, projects, teams } = usePlanningContext();
+    const { planning } = usePlanning();
 
     const { onItemDropped } = useMovePlanningItemToOtherWeekOnDrop();
 
-    if (!planningItems || !projects || !teams) {
+    if (!planning) {
         return null;
     }
-
-    const weeksWithYears = getRangeOfWeeksWithYearsFromCurrent(10);
-    const planning = selectItemsGrouppedByWeek(planningItems);
 
     return (
         <div className="planning-overview">
@@ -37,33 +28,16 @@ const PlanningOverview: React.FC = () => {
             </Head>
             <h1>Planning</h1>
             <DragAndDropProvider>
-                {teams.map((team) => (
+                {planning.map(({ team, weeks }) => (
                     <Team team={team} key={team.id}>
-                        {weeksWithYears.map(([week, year]) => {
-                            const itemsForWeek = selectItemsForTeamForWeek(
-                                planning,
-                                week,
-                                team
-                            );
-
-                            const allProjectIds = projects.map(({ id }) => id);
-
-                            const projectIdsAlreadyInWeek = itemsForWeek.map(
-                                (item) => item.projectId
-                            );
-
-                            const projectNotYetInWeek = allProjectIds.filter(
-                                (projectId) =>
-                                    !projectIdsAlreadyInWeek.includes(projectId)
-                            );
-
-                            return (
+                        {weeks.map(
+                            ({ week, year, items, notSetProjectIds }) => (
                                 <Week
                                     key={week}
                                     week={week}
                                     year={year}
                                     team={team}
-                                    acceptDropOfProjectIds={projectNotYetInWeek}
+                                    acceptDropOfProjectIds={notSetProjectIds}
                                     onItemDropped={onItemDropped}
                                 >
                                     <WeekActions>
@@ -71,7 +45,7 @@ const PlanningOverview: React.FC = () => {
                                             week={week}
                                             year={year}
                                             team={team}
-                                            currentPlanningItems={itemsForWeek}
+                                            currentPlanningItems={items}
                                         />
                                         <AddTeamWeekNote
                                             team={team}
@@ -79,31 +53,23 @@ const PlanningOverview: React.FC = () => {
                                             year={year}
                                         />
                                     </WeekActions>
-                                    {itemsForWeek.length > 0 && (
+                                    {items.length > 0 && (
                                         <div className="planning-overview__team-week-projects">
-                                            {itemsForWeek.map((item) => {
-                                                const key = `${week}_${item.teamId}_${item.projectId}}`;
-                                                const project = resolveProjectOrThrow(
-                                                    projects,
-                                                    item.projectId
-                                                );
-
-                                                return (
-                                                    <TeamWeekProject
-                                                        key={key}
-                                                        project={project}
+                                            {items.map((item) => (
+                                                <TeamWeekProject
+                                                    key={item.id}
+                                                    project={item.project}
+                                                    item={item}
+                                                >
+                                                    <RemovePlanningItem
                                                         item={item}
-                                                    >
-                                                        <RemovePlanningItem
-                                                            item={item}
-                                                        />
-                                                        <EditPlanningItem
-                                                            item={item}
-                                                            team={team}
-                                                        />
-                                                    </TeamWeekProject>
-                                                );
-                                            })}
+                                                    />
+                                                    <EditPlanningItem
+                                                        item={item}
+                                                        team={team}
+                                                    />
+                                                </TeamWeekProject>
+                                            ))}
                                         </div>
                                     )}
                                     <TeamWeekNotesOverview
@@ -111,8 +77,8 @@ const PlanningOverview: React.FC = () => {
                                         team={team}
                                     />
                                 </Week>
-                            );
-                        })}
+                            )
+                        )}
                     </Team>
                 ))}
             </DragAndDropProvider>
