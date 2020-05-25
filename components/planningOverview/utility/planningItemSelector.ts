@@ -21,3 +21,21 @@ export function selectItemsForTeamForWeek(
             return 0;
         });
 }
+
+export function selectItemsGrouppedByWeek(
+    planningItems: PlanningItem[]
+): Planning {
+    const planning: Planning = {};
+
+    planningItems.forEach((planningItem) => {
+        const week = planningItem.week;
+
+        if (typeof planning[week] === 'undefined') {
+            planning[week] = [];
+        }
+
+        planning[week].push(planningItem);
+    });
+
+    return planning;
+}

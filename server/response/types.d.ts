@@ -1,10 +1,6 @@
-import { TeamWeekNote } from './../../model/planning';
+import { TeamWeekNote, PlanningItem } from './../../model/planning';
 import { Planning, Project, Team } from '../../model/planning';
 import { ValidationError, ValidationErrorItem } from '@hapi/joi';
-
-export type PlanningResponseBody = {
-    planning: Planning;
-};
 
 export type ProjectsResponseBody = {
     projects: Project[];
@@ -12,6 +8,10 @@ export type ProjectsResponseBody = {
 
 export type TeamsResponseBody = {
     teams: Team[];
+};
+
+export type PlanningItemsResponseBody = {
+    planningItems: PlanningItem[];
 };
 
 export type TeamWeekNotesResponseBody = {

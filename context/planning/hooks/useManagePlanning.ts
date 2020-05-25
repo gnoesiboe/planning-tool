@@ -3,33 +3,33 @@ import {
     EditPlanningItemHandler,
     MovePlanningItemHandler,
 } from './../PlanningContext';
-import { Planning } from './../../../model/planning';
-import { fetchOne as fetchPlanning } from '../../../repository/api/planningRepository';
+import { PlanningItem } from './../../../model/planning';
 import { useState, useEffect } from 'react';
 import { AddPlanningItemHandler } from '../PlanningContext';
 import {
     persist,
     remove,
     update,
+    fetchAllUpcoming,
 } from '../../../repository/api/planningItemRepository';
 import { notifySuccess, notifyError } from '../../../utility/notifier';
 import {
     addItemToPlanning,
     removeItemFromPlanning,
-    updateItemInPlanning,
-    moveItemToOtherWeekInPlanning,
+    updateItemInPlanningItemsCollection,
 } from '../handler/planningStateMutationHandler';
-import { resolveItemInPlanning } from '../utility/planningItemResolver';
 import useExecuteOnInterval from '../../../hooks/useExecuteOnInterval';
 
 const refetchTimeout = 1000 * 60 * 10; // 10 minutes;
 
 export default function useManagePlanning() {
-    const [planning, setPlanning] = useState<Planning | null>(null);
+    const [planningItems, setPlanningItems] = useState<PlanningItem[] | null>(
+        null
+    );
 
     const doFetchPlanning = () => {
-        fetchPlanning()
-            .then((planning) => setPlanning(planning))
+        fetchAllUpcoming()
+            .then((planningItems) => setPlanningItems(planningItems))
             .catch((error) => {
                 notifyError(
                     'Something went wrong while fetching the planning. Please refresh the page to continue!'
@@ -47,9 +47,11 @@ export default function useManagePlanning() {
 
     const addPlanningItem: AddPlanningItemHandler = async (item) => {
         // update local state to be able to continue right away
-        setPlanning((currentPlanning) => {
-            if (!currentPlanning) {
-                throw new Error('Planning should already exist');
+        setPlanningItems((currentPlanning) => {
+            if (!Array.isArray(currentPlanning)) {
+                throw new Error(
+                    'Expecting planning items to be available at this point'
+                );
             }
 
             return addItemToPlanning(currentPlanning, item);
@@ -61,13 +63,13 @@ export default function useManagePlanning() {
 
             notifySuccess('Planning item added');
         } catch (error) {
-            if (!planning) {
+            if (!planningItems) {
                 throw new Error(
                     'Expecting planning to be available at this point'
                 );
             }
 
-            setPlanning((currentPlanning) => {
+            setPlanningItems((currentPlanning) => {
                 if (!currentPlanning) {
                     throw new Error('Planning should already exist');
                 }
@@ -75,7 +77,7 @@ export default function useManagePlanning() {
                 return removeItemFromPlanning(currentPlanning, item);
             });
 
-            removeItemFromPlanning(planning, item);
+            removeItemFromPlanning(planningItems, item);
 
             notifyError('Something went wrong persisting the planning item.');
 
@@ -89,17 +91,17 @@ export default function useManagePlanning() {
         newYear,
         newTeamId
     ) => {
-        if (!planning) {
+        if (!Array.isArray(planningItems)) {
             return;
         }
 
-        const item = resolveItemInPlanning(id, planning);
+        const item = planningItems.find((cursorItem) => cursorItem.id === id);
 
         if (!item) {
             return;
         }
 
-        let newItem = {
+        let updatedItem = {
             ...item,
             year: newYear,
             week: newWeek,
@@ -107,21 +109,20 @@ export default function useManagePlanning() {
         };
 
         // update local state
-        setPlanning((currentPlanning) => {
+        setPlanningItems((currentPlanning) => {
             if (!currentPlanning) {
                 throw new Error('Planning should already exist');
             }
 
-            return moveItemToOtherWeekInPlanning(
-                newItem,
-                item.week,
-                currentPlanning
+            return updateItemInPlanningItemsCollection(
+                planningItems,
+                updatedItem
             );
         });
 
         // update on server
         try {
-            await update(newItem);
+            await update(updatedItem);
         } catch (error) {
             notifyError(
                 'Something went wrong updating the planning item on the server. Refresh the page to continue!'
@@ -133,12 +134,12 @@ export default function useManagePlanning() {
 
     const editPlanningItem: EditPlanningItemHandler = async (item) => {
         // update local state
-        setPlanning((currentPlanning) => {
+        setPlanningItems((currentPlanning) => {
             if (!currentPlanning) {
                 throw new Error('Planning should already exist');
             }
 
-            return updateItemInPlanning(currentPlanning, item);
+            return updateItemInPlanningItemsCollection(currentPlanning, item);
         });
 
         // update on server
@@ -155,7 +156,7 @@ export default function useManagePlanning() {
 
     const removePlanningItem: RemovePlanningItemHandler = async (item) => {
         // update local state
-        setPlanning((currentPlanning) => {
+        setPlanningItems((currentPlanning) => {
             if (!currentPlanning) {
                 throw new Error('Planning should already exist');
             }
@@ -176,7 +177,7 @@ export default function useManagePlanning() {
     };
 
     return {
-        planning,
+        planningItems,
         addPlanningItem,
         movePlanningItem,
         editPlanningItem,

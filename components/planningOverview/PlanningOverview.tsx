@@ -5,7 +5,10 @@ import RemovePlanningItem from '../removePlanningItem/RemovePlanningItem';
 import AddPlanningItem from '../addPlanningItem/AddPlanningItem';
 import { usePlanningContext } from '../../context/planning/PlanningContext';
 import { getRangeOfWeeksWithYearsFromCurrent } from '../../utility/dateTimeUtilities';
-import { selectItemsForTeamForWeek } from './utility/planningItemSelector';
+import {
+    selectItemsForTeamForWeek,
+    selectItemsGrouppedByWeek,
+} from './utility/planningItemSelector';
 import { resolveProjectOrThrow } from './utility/projectResolver';
 import TeamWeekNotesOverview from '../teamWeekNotesOverview/TeamWeekNotesOverview';
 import AddTeamWeekNote from '../addTeamWeekNote/AddTeamWeekNote';
@@ -16,15 +19,16 @@ import DragAndDropProvider from './components/DragAndDropProvider';
 import useMovePlanningItemToOtherWeekOnDrop from './hooks/useMovePlanningItemToOtherWeekOnDrop';
 
 const PlanningOverview: React.FC = () => {
-    const { planning, projects, teams } = usePlanningContext();
+    const { planningItems, projects, teams } = usePlanningContext();
 
     const { onItemDropped } = useMovePlanningItemToOtherWeekOnDrop();
 
-    if (!planning || !projects || !teams) {
+    if (!planningItems || !projects || !teams) {
         return null;
     }
 
     const weeksWithYears = getRangeOfWeeksWithYearsFromCurrent(10);
+    const planning = selectItemsGrouppedByWeek(planningItems);
 
     return (
         <div className="planning-overview">

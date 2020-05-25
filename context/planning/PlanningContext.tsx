@@ -1,7 +1,6 @@
 import { ReactNode, createContext, useContext } from 'react';
 import {
     Team,
-    Planning,
     Project,
     PlanningItem,
     TeamWeekNote,
@@ -26,7 +25,7 @@ export type AddProjectHandler = (project: Project) => Promise<void>;
 
 type ContextValue = {
     teams: Team[] | null;
-    planning: Planning | null;
+    planningItems: PlanningItem[] | null;
     projects: Project[] | null;
     teamWeekNotes: TeamWeekNote[] | null;
     addPlanningItem: AddPlanningItemHandler;
@@ -40,7 +39,7 @@ type ContextValue = {
 
 const initialValue: ContextValue = {
     teams: null,
-    planning: null,
+    planningItems: null,
     projects: null,
     teamWeekNotes: null,
     addPlanningItem: async () => {},
@@ -60,7 +59,7 @@ export const PlanningContextProvider: React.FC<{
     const { teams } = useFetchPlanningRequirements();
 
     const {
-        planning,
+        planningItems,
         addPlanningItem,
         movePlanningItem,
         editPlanningItem,
@@ -76,7 +75,7 @@ export const PlanningContextProvider: React.FC<{
     const { projects, addProject } = useManageProjects();
 
     const value: ContextValue = {
-        planning,
+        planningItems,
         teams,
         projects,
         teamWeekNotes,

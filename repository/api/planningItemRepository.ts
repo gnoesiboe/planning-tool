@@ -1,14 +1,25 @@
+import { PlanningItemsResponseBody } from './../../server/response/types.d';
 import {
     createPostPlanningItemUrl,
     createDeletePlanningItemUrl,
     createPutPlanningItemUrl,
+    createGetPlanningItemListUrl,
 } from './../../server/routing/urlGenerator';
 import { PlanningItem } from './../../model/planning';
 import {
     executePostRequest,
     executeDeleteRequest,
     executePutRequest,
+    executeGetRequest,
 } from '../../api/client';
+
+export async function fetchAllUpcoming(): Promise<PlanningItem[]> {
+    const { planningItems } = await executeGetRequest<
+        PlanningItemsResponseBody
+    >(createGetPlanningItemListUrl());
+
+    return planningItems;
+}
 
 export async function persist(planningItem: PlanningItem): Promise<void> {
     await executePostRequest(createPostPlanningItemUrl(), planningItem);

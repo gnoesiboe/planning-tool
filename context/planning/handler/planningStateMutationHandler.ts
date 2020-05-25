@@ -1,65 +1,39 @@
-import { PlanningItem, Planning } from '../../../model/planning';
+import { PlanningItem } from '../../../model/planning';
 import produce from 'immer';
 
 export function addItemToPlanning(
-    planning: Planning,
+    planningItems: PlanningItem[],
     newItem: PlanningItem
-): Planning {
-    return produce<Planning>(planning, (nextPlanning) => {
-        if (typeof nextPlanning[newItem.week] === 'undefined') {
-            nextPlanning[newItem.week] = [];
-        }
-
-        nextPlanning[newItem.week].push(newItem);
+): PlanningItem[] {
+    return produce<PlanningItem[]>(planningItems, (nextPlanningItems) => {
+        nextPlanningItems.push(newItem);
     });
 }
 
-export function updateItemInPlanning(
-    planning: Planning,
+export function updateItemInPlanningItemsCollection(
+    planningItems: PlanningItem[],
     updatedItem: PlanningItem
-): Planning {
-    return produce<Planning>(planning, (nextPlanning) => {
-        Object.keys(planning).map((week) => {
-            const items = nextPlanning[week];
-
-            const itemIndex = items.findIndex(
-                (item) => item.id === updatedItem.id
-            );
-
-            if (itemIndex !== -1) {
-                items[itemIndex] = updatedItem;
-            }
-        });
-    });
-}
-
-export function moveItemToOtherWeekInPlanning(
-    itemToMove: PlanningItem,
-    previousWeek: number,
-    planning: Planning
-): Planning {
-    return produce<Planning>(planning, (nextPlanning) => {
-        // remove from current week
-        nextPlanning[previousWeek] = nextPlanning[previousWeek].filter(
-            (cursorItem) => cursorItem.id !== itemToMove.id
+): PlanningItem[] {
+    return produce<PlanningItem[]>(planningItems, (nextPlanningItems) => {
+        const itemIndex = nextPlanningItems.findIndex(
+            (cursorItem) => updatedItem.id === cursorItem.id
         );
 
-        // add to next week
-        if (typeof nextPlanning[itemToMove.week] === 'undefined') {
-            nextPlanning[itemToMove.week] = [];
+        if (itemIndex === -1) {
+            return;
         }
 
-        nextPlanning[itemToMove.week].push(itemToMove);
+        nextPlanningItems[itemIndex] = updatedItem;
     });
 }
 
 export function removeItemFromPlanning(
-    planning: Planning,
+    planningItems: PlanningItem[],
     itemToRemove: PlanningItem
-): Planning {
-    return produce<Planning>(planning, (nextPlanning) => {
-        nextPlanning[itemToRemove.week] = nextPlanning[
-            itemToRemove.week
-        ].filter((cursorItem) => cursorItem.id !== itemToRemove.id);
+): PlanningItem[] {
+    return produce<PlanningItem[]>(planningItems, (nextPlanningItems) => {
+        return nextPlanningItems.filter(
+            (cursorItem) => cursorItem.id !== itemToRemove.id
+        );
     });
 }
