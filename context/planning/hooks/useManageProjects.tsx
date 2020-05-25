@@ -7,6 +7,9 @@ import {
     addProjectToProjects,
     removeProjectFromProjects,
 } from '../handler/projectStateMutationHandler';
+import useExecuteOnInterval from '../../../hooks/useExecuteOnInterval';
+
+const refetchInterval = 1000 * 60 * 15; // 15 minutes
 
 export default function useManageProjects() {
     const [projects, setProjects] = useState<Project[] | null>(null);
@@ -23,12 +26,10 @@ export default function useManageProjects() {
             });
     };
 
-    useEffect(() => {
-        window.addEventListener('focus', doFetchProjects);
+    // fetch periodically to retrieve updates from the backend
+    useExecuteOnInterval(() => doFetchProjects(), refetchInterval);
 
-        return () => window.removeEventListener('focus', doFetchProjects);
-    }, [doFetchProjects]);
-
+    // fetch on mount
     useEffect(() => doFetchProjects(), []);
 
     const addProject: AddProjectHandler = async (project) => {

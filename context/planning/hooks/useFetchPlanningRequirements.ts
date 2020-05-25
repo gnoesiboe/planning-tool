@@ -4,15 +4,18 @@ import { useQuery } from 'react-query';
 import { notifyError } from '../../../utility/notifier';
 
 export default function useFetchPlanningRequirements() {
-    const { data: teams, error: teamsFetchError } = useQuery<
-        Team[] | null,
-        string
-    >('teams', fetchAllTeams, {
-        refetchOnMount: true,
-    });
+    const { data: teams, error: error } = useQuery<Team[] | null, string>(
+        'teams',
+        fetchAllTeams,
+        {
+            refetchOnMount: false,
+        }
+    );
 
-    if (teamsFetchError) {
+    if (error) {
         notifyError('Something went wrong while fetching teams');
+
+        console.error(error);
     }
 
     return {

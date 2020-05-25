@@ -14,6 +14,9 @@ import {
     removeNoteFromTeamWeekNotes,
     addNoteToTeamWeekNotes,
 } from '../handler/teamWeekNoteStatesMutationHandler';
+import useExecuteOnInterval from '../../../hooks/useExecuteOnInterval';
+
+const refetchInterval = 1000 * 60 * 15; // 15 minutes
 
 export default function useManageTeamWeekNotes() {
     const [teamWeekNotes, setTeamWeekNotes] = useState<TeamWeekNote[] | null>(
@@ -32,12 +35,10 @@ export default function useManageTeamWeekNotes() {
             });
     };
 
-    useEffect(() => {
-        window.addEventListener('focus', doFetchTeamWeekNotes);
+    // fetch periodically to fetch updates from the backend
+    useExecuteOnInterval(() => doFetchTeamWeekNotes(), refetchInterval);
 
-        return () => window.removeEventListener('focus', doFetchTeamWeekNotes);
-    }, [doFetchTeamWeekNotes]);
-
+    // fetch on mount
     useEffect(() => doFetchTeamWeekNotes(), []);
 
     const removeTeamWeekNote: RemoveTeamWeekNoteHandler = async (

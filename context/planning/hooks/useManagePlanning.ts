@@ -20,6 +20,9 @@ import {
     moveItemToOtherWeekInPlanning,
 } from '../handler/planningStateMutationHandler';
 import { resolveItemInPlanning } from '../utility/planningItemResolver';
+import useExecuteOnInterval from '../../../hooks/useExecuteOnInterval';
+
+const refetchTimeout = 1000 * 60 * 10; // 10 minutes;
 
 export default function useManagePlanning() {
     const [planning, setPlanning] = useState<Planning | null>(null);
@@ -36,12 +39,8 @@ export default function useManagePlanning() {
             });
     };
 
-    // refetch planning on window focus
-    useEffect(() => {
-        window.addEventListener('focus', doFetchPlanning);
-
-        return () => window.removeEventListener('focus', doFetchPlanning);
-    }, [fetchPlanning]);
+    // refetch planning from the backend every 10 minutes
+    useExecuteOnInterval(() => doFetchPlanning(), refetchTimeout);
 
     // fetch planning on initial mount
     useEffect(() => doFetchPlanning(), []);
