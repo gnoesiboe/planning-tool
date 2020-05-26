@@ -1,6 +1,6 @@
 import mariadb, { Pool, PoolConnection } from 'mariadb';
 
-type DynamicValues = Array<string | number | null>;
+export type QueryParams = Array<string | number | null>;
 
 const pool: Pool = mariadb.createPool({
     host: process.env.DB_HOST,
@@ -12,14 +12,14 @@ const pool: Pool = mariadb.createPool({
 
 export async function executeSelect<T>(
     query: string,
-    dynamicValues: DynamicValues = []
+    params: QueryParams = []
 ): Promise<T[]> {
     let connection: PoolConnection | null = null;
 
     try {
         connection = await pool.getConnection();
 
-        return await connection.query(query, dynamicValues);
+        return await connection.query(query, params);
     } catch (error) {
         // @todo better error handling
 
@@ -35,7 +35,7 @@ export async function executeSelect<T>(
 
 export async function executeQuery(
     query: string,
-    dynamicValues: DynamicValues = []
+    params: QueryParams = []
 ): Promise<void> {
-    await executeSelect(query, dynamicValues);
+    await executeSelect(query, params);
 }

@@ -1,3 +1,4 @@
+import { QueryParams } from './../../storage/database';
 import { PlanningItem } from '../../model/planning';
 import { executeSelect, executeQuery } from '../../storage/database';
 import { createPlanningItemFromDatabaseResult } from '../../model/factory/planningItemFactory';
@@ -5,6 +6,7 @@ import {
     getCurrentYear,
     getCurrentWeek,
 } from '../../utility/dateTimeUtilities';
+import { createArrayContainingValue } from '../../utility/arrayUtilities';
 
 export type Result = {
     id: string;
@@ -15,26 +17,44 @@ export type Result = {
     notes: string | null;
 };
 
-export async function findAllUpcoming(): Promise<PlanningItem[]> {
+export async function findAllUpcoming(
+    teamIds: string[] = []
+): Promise<PlanningItem[]> {
     const currentYear = getCurrentYear();
     const currentWeek = getCurrentWeek();
 
-    const results = await executeSelect<Result>(
-        `
-            SELECT
-                pi.*
-            FROM
-                planning_item pi
-            INNER JOIN
-                project p ON p.id = pi.project_id
-            WHERE
-                (pi.year > ? OR (pi.year = ? AND pi.week >= ?))
-            ORDER BY
-                pi.week ASC,
-                p.name ASC
-        `,
-        [currentYear, currentYear, currentWeek]
-    );
+    const baseQuery = `
+        SELECT
+            pi.*
+        FROM
+            planning_item pi
+        INNER JOIN
+            project p ON p.id = pi.project_id
+        INNER JOIN
+            team t ON t.id = pi.team_id
+        `;
+
+    const wheres = ['(pi.year > ? OR (pi.year = ? AND pi.week >= ?))'];
+    const params: QueryParams = [currentYear, currentYear, currentWeek];
+
+    if (teamIds.length > 0) {
+        const placeholders = createArrayContainingValue(
+            '?',
+            teamIds.length
+        ).join(', ');
+        wheres.push(`t.id IN (${placeholders})`);
+        params.push(...teamIds);
+    }
+
+    const query = `
+        ${baseQuery}
+        WHERE ${wheres.join(' AND ')}
+        ORDER BY
+            pi.week ASC,
+            p.name ASC
+    `;
+
+    const results = await executeSelect<Result>(query, params);
 
     return results.map((result) =>
         createPlanningItemFromDatabaseResult(result)
