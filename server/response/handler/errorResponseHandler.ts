@@ -48,3 +48,13 @@ export function sendNotFoundResponse(
     response.status(404);
     response.json(body);
 }
+
+export function sendInternalServerErrorResponse(
+    response: NextApiResponse,
+    message: string
+) {
+    const body: ErrorResponseBody = { message };
+
+    response.status(500);
+    response.json(body);
+}
