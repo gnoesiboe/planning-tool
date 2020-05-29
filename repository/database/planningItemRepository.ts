@@ -1,3 +1,4 @@
+import { WeekYearPair } from './../../utility/types.d';
 import { QueryParams } from './../../storage/database';
 import { PlanningItem } from '../../model/planning';
 import { executeSelect, executeQuery } from '../../storage/database';
@@ -11,11 +12,6 @@ export type Result = {
     project_id: string;
     team_id: string;
     notes: string | null;
-};
-
-export type WeekYearPair = {
-    week: number;
-    year: number;
 };
 
 export async function findAllUpcoming(

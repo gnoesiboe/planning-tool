@@ -1,4 +1,3 @@
-import { WeekYearPair } from './../../../repository/database/planningItemRepository';
 import { NextApiRequest } from 'next';
 import { PlanningItemsResponseBody } from './../../response/types.d';
 import { Controller } from './../../routing/methodSwitch';
@@ -13,6 +12,7 @@ import {
     getCurrentYear,
     getNoOfWeeksInYear,
 } from '../../../utility/dateTimeUtilities';
+import { WeekYearPair } from '../../../utility/types';
 
 const defaultNoOfWeeksToShow = 10;
 
@@ -55,7 +55,7 @@ const createInputSchema = () => {
                 const fromYear = year_from || getCurrentYear();
                 const untilWeek = week_until || getCurrentWeek();
 
-                if (untilWeek < fromWeek) {
+                if (untilWeek <= fromWeek) {
                     return fromYear + 1;
                 }
 

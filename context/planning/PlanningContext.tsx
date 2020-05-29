@@ -9,6 +9,7 @@ import useFetchPlanningRequirements from './hooks/useFetchPlanningRequirements';
 import useManagePlanning from './hooks/useManagePlanning';
 import useManageTeamWeekNotes from './hooks/useManageTeamWeekNotes';
 import useManageProjects from './hooks/useManageProjects';
+import { Filters, resolveInitialFilterValues } from './resolver/filterResolver';
 
 export type AddPlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type EditPlanningItemHandler = (item: PlanningItem) => Promise<void>;
@@ -24,6 +25,7 @@ export type RemoveTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;
 export type AddProjectHandler = (project: Project) => Promise<void>;
 
 type ContextValue = {
+    filters: Filters;
     teams: Team[] | null;
     planningItems: PlanningItem[] | null;
     projects: Project[] | null;
@@ -37,7 +39,10 @@ type ContextValue = {
     addProject: AddProjectHandler;
 };
 
+const initialFilterValues = resolveInitialFilterValues();
+
 const initialValue: ContextValue = {
+    filters: initialFilterValues,
     teams: null,
     planningItems: null,
     projects: null,
@@ -75,6 +80,7 @@ export const PlanningContextProvider: React.FC<{
     const { projects, addProject } = useManageProjects();
 
     const value: ContextValue = {
+        filters: initialFilterValues,
         planningItems,
         teams,
         projects,
