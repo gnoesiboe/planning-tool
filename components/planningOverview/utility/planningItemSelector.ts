@@ -1,3 +1,4 @@
+import { PlanningFilters } from './../../../context/planning/hooks/useManagePlanning';
 import {
     Planning,
     PlanningItem,
@@ -6,17 +7,21 @@ import {
     Project,
     ExstendedPlanningItem,
 } from './../../../model/planning';
-import { getRangeOfWeeksWithYearsFromCurrent } from '../../../utility/dateTimeUtilities';
+import { createRangeOfWeekYearPairs } from '../../../utility/dateTimeUtilities';
 import { resolveProjectOrThrow } from './projectResolver';
 import { sortBy } from 'lodash';
 
 export function selectItemsGrouppedByWeekAndTeam(
     teams: Team[],
     projects: Project[],
-    planningItems: PlanningItem[]
+    planningItems: PlanningItem[],
+    filters: PlanningFilters
 ): Planning {
     const allProjectIds = projects.map(({ id }) => id);
-    const weeksWithYears = getRangeOfWeeksWithYearsFromCurrent(10);
+    const weeksWithYears = createRangeOfWeekYearPairs(
+        filters.from,
+        filters.until
+    );
 
     const planning: Planning = [];
 
@@ -24,7 +29,7 @@ export function selectItemsGrouppedByWeekAndTeam(
     teams.forEach((team) => {
         const weeks: WeekPlanningItems = [];
 
-        weeksWithYears.forEach(([week, year]) => {
+        weeksWithYears.forEach(({ week, year }) => {
             const items: ExstendedPlanningItem[] = [];
             const projectIdsInWeek: string[] = [];
 

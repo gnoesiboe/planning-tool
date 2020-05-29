@@ -1,18 +1,13 @@
-import { WeekYearPair } from '../../../utility/types';
 import {
     getCurrentWeek,
     getCurrentYear,
     getNoOfWeeksInYear,
 } from '../../../utility/dateTimeUtilities';
-
-export type Filters = {
-    from: WeekYearPair;
-    until: WeekYearPair;
-};
+import { PlanningFilters } from '../hooks/useManagePlanning';
 
 const defaultNoOfWeeksToShow = 10;
 
-export function resolveInitialFilterValues(): Filters {
+export function resolveInitialFilters(): PlanningFilters {
     const fromWeek = getCurrentWeek();
     const fromYear = getCurrentYear();
 

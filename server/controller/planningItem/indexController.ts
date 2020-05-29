@@ -61,7 +61,8 @@ const createInputSchema = () => {
 
                 return fromYear;
             })
-            .min(getCurrentYear() + 2),
+            .min(getCurrentYear() - 1)
+            .max(getCurrentYear() + 2),
     }).required();
 };
 

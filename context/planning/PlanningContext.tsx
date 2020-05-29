@@ -6,10 +6,11 @@ import {
     TeamWeekNote,
 } from '../../model/planning';
 import useFetchPlanningRequirements from './hooks/useFetchPlanningRequirements';
-import useManagePlanning from './hooks/useManagePlanning';
+import useManagePlanning, { PlanningFilters } from './hooks/useManagePlanning';
 import useManageTeamWeekNotes from './hooks/useManageTeamWeekNotes';
 import useManageProjects from './hooks/useManageProjects';
-import { Filters, resolveInitialFilterValues } from './resolver/filterResolver';
+import { resolveInitialFilters } from './resolver/filterResolver';
+import { FiltersValues } from '../../server/controller/planningItem/indexController';
 
 export type AddPlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type EditPlanningItemHandler = (item: PlanningItem) => Promise<void>;
@@ -23,9 +24,13 @@ export type RemovePlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type AddTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;
 export type RemoveTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;
 export type AddProjectHandler = (project: Project) => Promise<void>;
+export type OnFilterChangeHandler = (
+    newFilterValues: Partial<FiltersValues>
+) => void;
 
 type ContextValue = {
-    filters: Filters;
+    filters: PlanningFilters;
+    onFilterChange: OnFilterChangeHandler;
     teams: Team[] | null;
     planningItems: PlanningItem[] | null;
     projects: Project[] | null;
@@ -39,10 +44,9 @@ type ContextValue = {
     addProject: AddProjectHandler;
 };
 
-const initialFilterValues = resolveInitialFilterValues();
-
 const initialValue: ContextValue = {
-    filters: initialFilterValues,
+    filters: resolveInitialFilters(),
+    onFilterChange: () => {},
     teams: null,
     planningItems: null,
     projects: null,
@@ -64,6 +68,8 @@ export const PlanningContextProvider: React.FC<{
     const { teams } = useFetchPlanningRequirements();
 
     const {
+        filters,
+        onFilterChange,
         planningItems,
         addPlanningItem,
         movePlanningItem,
@@ -80,7 +86,8 @@ export const PlanningContextProvider: React.FC<{
     const { projects, addProject } = useManageProjects();
 
     const value: ContextValue = {
-        filters: initialFilterValues,
+        filters,
+        onFilterChange,
         planningItems,
         teams,
         projects,

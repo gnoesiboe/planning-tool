@@ -12,11 +12,26 @@ import {
     executePutRequest,
     executeGetRequest,
 } from '../../api/client';
+import { WeekYearPair } from '../../utility/types';
+import { createQueryString } from '../../utility/queryStringUtilities';
 
-export async function fetchAllUpcoming(): Promise<PlanningItem[]> {
+export async function fetchAllInTimespan(
+    from: WeekYearPair,
+    until: WeekYearPair
+): Promise<PlanningItem[]> {
+    const url =
+        createGetPlanningItemListUrl() +
+        '?' +
+        createQueryString({
+            week_from: from.week,
+            year_from: from.year,
+            week_until: until.week,
+            year_until: until.year,
+        });
+
     const { planningItems } = await executeGetRequest<
         PlanningItemsResponseBody
-    >(createGetPlanningItemListUrl());
+    >(url);
 
     return planningItems;
 }

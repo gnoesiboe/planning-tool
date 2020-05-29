@@ -2,6 +2,7 @@ import {
     RemovePlanningItemHandler,
     EditPlanningItemHandler,
     MovePlanningItemHandler,
+    OnFilterChangeHandler,
 } from './../PlanningContext';
 import { PlanningItem } from './../../../model/planning';
 import { useState, useEffect } from 'react';
@@ -10,7 +11,7 @@ import {
     persist,
     remove,
     update,
-    fetchAllUpcoming,
+    fetchAllInTimespan,
 } from '../../../repository/api/planningItemRepository';
 import { notifySuccess, notifyError } from '../../../utility/notifier';
 import {
@@ -19,16 +20,36 @@ import {
     updateItemInPlanningItemsCollection,
 } from '../handler/planningStateMutationHandler';
 import useExecuteOnInterval from '../../../hooks/useExecuteOnInterval';
+import { WeekYearPair } from '../../../utility/types';
+import { resolveInitialFilters } from '../resolver/filterResolver';
 
 const refetchTimeout = 1000 * 60 * 10; // 10 minutes;
 
+export type PlanningFilters = {
+    from: WeekYearPair;
+    until: WeekYearPair;
+};
+
 export default function useManagePlanning() {
+    const [filters, setFilters] = useState<PlanningFilters>(
+        resolveInitialFilters()
+    );
+
     const [planningItems, setPlanningItems] = useState<PlanningItem[] | null>(
         null
     );
 
+    const onFilterChange: OnFilterChangeHandler = (newFilterValues) => {
+        setFilters((currentFilters) => ({
+            ...currentFilters,
+            ...newFilterValues,
+        }));
+
+        doFetchPlanning();
+    };
+
     const doFetchPlanning = () => {
-        fetchAllUpcoming()
+        fetchAllInTimespan(filters.from, filters.until)
             .then((planningItems) => setPlanningItems(planningItems))
             .catch((error) => {
                 notifyError(
@@ -177,6 +198,8 @@ export default function useManagePlanning() {
     };
 
     return {
+        filters,
+        onFilterChange,
         planningItems,
         addPlanningItem,
         movePlanningItem,

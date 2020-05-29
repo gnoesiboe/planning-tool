@@ -11,6 +11,7 @@ import Head from 'next/head';
 import DragAndDropProvider from './components/DragAndDropProvider';
 import useMovePlanningItemToOtherWeekOnDrop from './hooks/useMovePlanningItemToOtherWeekOnDrop';
 import usePlanning from './hooks/usePlanning';
+import PlanningOverviewFiltering from '../PlanningOverviewFiltering/PlanningOverviewFiltering';
 
 const PlanningOverview: React.FC = () => {
     const { planning } = usePlanning();
@@ -27,6 +28,7 @@ const PlanningOverview: React.FC = () => {
                 <title>Planning overview | Freshheads</title>
             </Head>
             <h1>Planning</h1>
+            <PlanningOverviewFiltering />
             <DragAndDropProvider>
                 {planning.map(({ team, weeks }) => (
                     <Team team={team} key={team.id}>

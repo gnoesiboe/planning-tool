@@ -1,12 +1,25 @@
-import { getWeek, addWeeks, getYear, getISOWeeksInYear } from 'date-fns';
+import { WeekYearPair } from './types.d';
+import {
+    getWeek,
+    addWeeks,
+    getYear,
+    getISOWeeksInYear,
+    getISOWeek,
+    subMonths,
+    setYear,
+    setISOWeek,
+    startOfWeek,
+    endOfWeek,
+    eachWeekOfInterval,
+} from 'date-fns';
 import { nl } from 'date-fns/locale';
 
-export function getRangeOfWeeksWithYearsFromCurrent(
-    add: number
-): Array<[number, number]> {
-    const out: Array<[number, number]> = [[getCurrentWeek(), getCurrentYear()]];
+export function getRangeOfWeekYearPairsFromDate(from: Date, add: number) {
+    const out: Array<WeekYearPair> = [
+        { week: getISOWeek(from), year: getYear(from) },
+    ];
 
-    let cursorDate = new Date();
+    let cursorDate = from;
     let counter = 1;
 
     while (counter < add) {
@@ -18,12 +31,48 @@ export function getRangeOfWeeksWithYearsFromCurrent(
 
         const nextYear = getYear(cursorDate);
 
-        out.push([nextWeek, nextYear]);
+        out.push({ week: nextWeek, year: nextYear });
 
         counter++;
     }
 
     return out;
+}
+
+export function subtractMonths(date: Date, amount: number): Date {
+    return subMonths(date, amount);
+}
+
+export function createRangeOfWeekYearPairs(
+    from: WeekYearPair,
+    until: WeekYearPair
+): Array<WeekYearPair> {
+    const startDate = createDateFromWeekYearPair(from, 'start');
+    const endDate = createDateFromWeekYearPair(until, 'start');
+
+    const weeksInBetween = eachWeekOfInterval(
+        { start: startDate, end: endDate },
+        { locale: nl }
+    );
+
+    return weeksInBetween.map((date) => ({
+        week: getISOWeek(date),
+        year: getYear(date),
+    }));
+}
+
+export function createDateFromWeekYearPair(
+    pair: WeekYearPair,
+    cursorInWeek: 'end' | 'start'
+): Date {
+    let date = new Date();
+
+    date = setISOWeek(date, pair.week);
+    date = setYear(date, pair.year);
+
+    return cursorInWeek === 'end'
+        ? endOfWeek(date, { locale: nl })
+        : startOfWeek(date, { locale: nl });
 }
 
 export function getNoOfWeeksInYear(year: number) {
