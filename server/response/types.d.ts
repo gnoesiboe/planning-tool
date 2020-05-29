@@ -1,3 +1,4 @@
+import { FiltersValues } from './../controller/planningItem/indexController';
 import { TeamWeekNote, PlanningItem } from './../../model/planning';
 import { Planning, Project, Team } from '../../model/planning';
 import { ValidationError, ValidationErrorItem } from '@hapi/joi';
@@ -11,6 +12,7 @@ export type TeamsResponseBody = {
 };
 
 export type PlanningItemsResponseBody = {
+    filters: FiltersValues;
     planningItems: PlanningItem[];
 };
 

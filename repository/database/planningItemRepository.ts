@@ -2,10 +2,6 @@ import { QueryParams } from './../../storage/database';
 import { PlanningItem } from '../../model/planning';
 import { executeSelect, executeQuery } from '../../storage/database';
 import { createPlanningItemFromDatabaseResult } from '../../model/factory/planningItemFactory';
-import {
-    getCurrentYear,
-    getCurrentWeek,
-} from '../../utility/dateTimeUtilities';
 import { createArrayContainingValue } from '../../utility/arrayUtilities';
 
 export type Result = {
@@ -17,12 +13,16 @@ export type Result = {
     notes: string | null;
 };
 
-export async function findAllUpcoming(
-    teamIds: string[] = []
-): Promise<PlanningItem[]> {
-    const currentYear = getCurrentYear();
-    const currentWeek = getCurrentWeek();
+export type WeekYearPair = {
+    week: number;
+    year: number;
+};
 
+export async function findAllUpcoming(
+    teamIds: string[] = [],
+    from: WeekYearPair,
+    until: WeekYearPair
+): Promise<PlanningItem[]> {
     const baseQuery = `
         SELECT
             pi.*
@@ -33,10 +33,17 @@ export async function findAllUpcoming(
         INNER JOIN
             team t ON t.id = pi.team_id
         `;
+    const params: QueryParams = [];
+    const wheres: string[] = [];
 
-    const wheres = ['(pi.year > ? OR (pi.year = ? AND pi.week >= ?))'];
-    const params: QueryParams = [currentYear, currentYear, currentWeek];
+    // add timespan filters
+    wheres.push(
+        'CONCAT(pi.year, pi.week) >= ?',
+        'CONCAT(pi.year, pi.week) <= ?'
+    );
+    params.push(`${from.year}${from.week}`, `${until.year}${until.week}`);
 
+    // add team filters
     if (teamIds.length > 0) {
         const placeholders = createArrayContainingValue(
             '?',

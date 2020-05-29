@@ -1,4 +1,4 @@
-import { getWeek, addWeeks, getYear } from 'date-fns';
+import { getWeek, addWeeks, getYear, getISOWeeksInYear } from 'date-fns';
 import { nl } from 'date-fns/locale';
 
 export function getRangeOfWeeksWithYearsFromCurrent(
@@ -24,6 +24,13 @@ export function getRangeOfWeeksWithYearsFromCurrent(
     }
 
     return out;
+}
+
+export function getNoOfWeeksInYear(year: number) {
+    let middleOfYear = new Date();
+    middleOfYear.setFullYear(year);
+
+    return getISOWeeksInYear(middleOfYear);
 }
 
 export function getCurrentYear(): number {
