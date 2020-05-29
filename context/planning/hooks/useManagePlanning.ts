@@ -28,6 +28,7 @@ const refetchTimeout = 1000 * 60 * 10; // 10 minutes;
 export type PlanningFilters = {
     from: WeekYearPair;
     until: WeekYearPair;
+    teamIds: string[];
 };
 
 export default function useManagePlanning() {
@@ -52,7 +53,7 @@ export default function useManagePlanning() {
     }, [filters]);
 
     const doFetchPlanning = () => {
-        fetchAllInTimespan(filters.from, filters.until)
+        fetchAllInTimespan(filters)
             .then((planningItems) => setPlanningItems(planningItems))
             .catch((error) => {
                 notifyError(

@@ -1,6 +1,7 @@
 import FormGroup from '../primities/form/FormGroup';
 import { transform as transformToValue } from './utility/weekyearToFormChoiceValueTransformer';
-import useHandleFormState from './utility/useHandleFormState';
+import useHandleFormState, { SelectOption } from './utility/useHandleFormState';
+import ReactSelect from 'react-select';
 
 const PlanningOverviewFiltering: React.FC = () => {
     const {
@@ -9,7 +10,10 @@ const PlanningOverviewFiltering: React.FC = () => {
         fromValue,
         until,
         untilValue,
-        onFieldChange,
+        onPeriodFieldChange,
+        teamOptions,
+        teamsValue,
+        onTeamFieldChange,
     } = useHandleFormState();
 
     return (
@@ -22,7 +26,7 @@ const PlanningOverviewFiltering: React.FC = () => {
                     className="form-control"
                     value={fromValue}
                     onChange={(event) =>
-                        onFieldChange('from', event.target.value)
+                        onPeriodFieldChange('from', event.target.value)
                     }
                 >
                     {choiceRange.map((pair) => {
@@ -53,7 +57,7 @@ const PlanningOverviewFiltering: React.FC = () => {
                     className="form-control"
                     value={untilValue}
                     onChange={(event) =>
-                        onFieldChange('until', event.target.value)
+                        onPeriodFieldChange('until', event.target.value)
                     }
                 >
                     {choiceRange.map((pair) => {
@@ -73,6 +77,21 @@ const PlanningOverviewFiltering: React.FC = () => {
                         );
                     })}
                 </select>
+            </FormGroup>
+            &nbsp;
+            <FormGroup>
+                <label htmlFor="teams">Teams: </label>
+                &nbsp;
+                <ReactSelect<SelectOption>
+                    id="teams"
+                    options={teamOptions}
+                    isMulti
+                    value={teamsValue}
+                    onChange={(newItems) => {
+                        // @ts-ignore can't get items to match requested
+                        onTeamFieldChange(newItems || []);
+                    }}
+                />
             </FormGroup>
         </form>
     );

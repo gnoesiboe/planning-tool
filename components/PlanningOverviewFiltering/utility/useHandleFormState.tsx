@@ -8,11 +8,18 @@ import {
     subtractMonths,
 } from '../../../utility/dateTimeUtilities';
 import { FiltersValues } from '../../../server/controller/planningItem/indexController';
+import { OptionsType } from 'react-select';
+
+export type SelectOption = {
+    value: string;
+    label: string;
+};
 
 export default function useHandleFormState() {
     const {
-        filters: { from, until },
+        filters: { from, until, teamIds },
         onFilterChange,
+        teams,
     } = usePlanningContext();
 
     const choiceRange = getRangeOfWeekYearPairsFromDate(
@@ -23,11 +30,41 @@ export default function useHandleFormState() {
     const fromValue = transformToValue(from);
     const untilValue = transformToValue(until);
 
-    const onFieldChange = (field: keyof FiltersValues, newValue: string) => {
+    const onPeriodFieldChange = (
+        field: keyof FiltersValues,
+        newValue: string
+    ) => {
         onFilterChange({
             [field]: reverseTransform(newValue),
         });
     };
 
-    return { from, fromValue, until, untilValue, choiceRange, onFieldChange };
+    const teamOptions: OptionsType<SelectOption> = teams
+        ? teams.map((team) => ({
+              value: team.id,
+              label: team.name,
+          }))
+        : [];
+
+    const teamsValue: SelectOption[] = teamOptions.filter((option) =>
+        teamIds.includes(option.value)
+    );
+
+    const onTeamFieldChange = (newItems: SelectOption[]) => {
+        onFilterChange({
+            teamIds: newItems.map((item) => item.value),
+        });
+    };
+
+    return {
+        from,
+        fromValue,
+        until,
+        untilValue,
+        choiceRange,
+        onPeriodFieldChange,
+        teamOptions,
+        teamsValue,
+        onTeamFieldChange,
+    };
 }

@@ -1,3 +1,4 @@
+import { PlanningFilters } from './../../context/planning/hooks/useManagePlanning';
 import { PlanningItemsResponseBody } from './../../server/response/types.d';
 import {
     createPostPlanningItemUrl,
@@ -12,22 +13,26 @@ import {
     executePutRequest,
     executeGetRequest,
 } from '../../api/client';
-import { WeekYearPair } from '../../utility/types';
 import { createQueryString } from '../../utility/queryStringUtilities';
 
-export async function fetchAllInTimespan(
-    from: WeekYearPair,
-    until: WeekYearPair
-): Promise<PlanningItem[]> {
+export async function fetchAllInTimespan({
+    from,
+    until,
+    teamIds,
+}: PlanningFilters): Promise<PlanningItem[]> {
+    const queryParams: { [key: string]: number | string[] } = {
+        week_from: from.week,
+        year_from: from.year,
+        week_until: until.week,
+        year_until: until.year,
+    };
+
+    if (teamIds.length > 0) {
+        queryParams['team_id'] = teamIds;
+    }
+
     const url =
-        createGetPlanningItemListUrl() +
-        '?' +
-        createQueryString({
-            week_from: from.week,
-            year_from: from.year,
-            week_until: until.week,
-            year_until: until.year,
-        });
+        createGetPlanningItemListUrl() + '?' + createQueryString(queryParams);
 
     const { planningItems } = await executeGetRequest<
         PlanningItemsResponseBody

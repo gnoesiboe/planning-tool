@@ -25,5 +25,6 @@ export function resolveInitialFilters(): PlanningFilters {
             week: untilWeek,
             year: untilYear,
         },
+        teamIds: [],
     };
 }

@@ -26,6 +26,10 @@ export function selectItemsGrouppedByWeekAndTeam(
 
     // add rows for all teams and weeks
     teams.forEach((team) => {
+        if (filters.teamIds.length > 0 && !filters.teamIds.includes(team.id)) {
+            return;
+        }
+
         const weeks: WeekPlanningItems = [];
 
         weeksWithYears.forEach(({ week, year }) => {
