@@ -44,9 +44,12 @@ export default function useManagePlanning() {
             ...currentFilters,
             ...newFilterValues,
         }));
-
-        doFetchPlanning();
     };
+
+    // when filters change, refetch planning items
+    useEffect(() => {
+        doFetchPlanning();
+    }, [filters]);
 
     const doFetchPlanning = () => {
         fetchAllInTimespan(filters.from, filters.until)
