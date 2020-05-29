@@ -75,6 +75,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     position: relative;
+    animation: fadein 0.5s;
 }
 
 .planning-overview__team-week-project__title {
@@ -87,5 +88,14 @@
     * {
         font-size: 0.8rem;
         color: #444;
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
