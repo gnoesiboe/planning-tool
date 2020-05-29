@@ -14,7 +14,6 @@ type Props = {
     week: number;
     year: number;
     team: Team;
-    acceptDropOfProjectIds: string[];
     onItemDropped: OnItemDroppedHandler;
 };
 
@@ -23,11 +22,9 @@ const Week: React.FC<Props> = ({
     week,
     year,
     team,
-    acceptDropOfProjectIds,
     onItemDropped,
 }) => {
     const { droppableRef, hoverStyle } = useAcceptPlanningItemDrops(
-        acceptDropOfProjectIds,
         week,
         year,
         team,

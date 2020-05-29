@@ -34,7 +34,6 @@ export interface ExstendedPlanningItem extends PlanningItem {
 export type WeekPlanningItems = Array<{
     week: number;
     year: number;
-    notSetProjectIds: string[];
     items: ExstendedPlanningItem[];
 }>;
 

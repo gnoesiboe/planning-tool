@@ -17,7 +17,6 @@ export function selectItemsGrouppedByWeekAndTeam(
     planningItems: PlanningItem[],
     filters: PlanningFilters
 ): Planning {
-    const allProjectIds = projects.map(({ id }) => id);
     const weeksWithYears = createRangeOfWeekYearPairs(
         filters.from,
         filters.until
@@ -51,11 +50,7 @@ export function selectItemsGrouppedByWeekAndTeam(
 
             const sortedItems = sortBy(items, (item) => item.project.name);
 
-            const notSetProjectIds = allProjectIds.filter(
-                (projectId) => !projectIdsInWeek.includes(projectId)
-            );
-
-            weeks.push({ week, year, items: sortedItems, notSetProjectIds });
+            weeks.push({ week, year, items: sortedItems });
         });
 
         planning.push({ team, weeks });

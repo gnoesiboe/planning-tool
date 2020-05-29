@@ -125,7 +125,26 @@ export default function useManagePlanning() {
             return;
         }
 
-        let updatedItem = {
+        // validate that the week the item is dropped in does not already contain an item for the same project
+        const currentProjectIdsForTeamForWeek = planningItems
+            .filter(
+                (item) =>
+                    item.week === newWeek &&
+                    item.year === newYear &&
+                    item.teamId === newTeamId &&
+                    item.id !== id
+            )
+            .map((item) => item.projectId);
+
+        if (currentProjectIdsForTeamForWeek.includes(item.projectId)) {
+            notifyError(
+                `Week ${newWeek} already contains an item for this project. Move aborted!`
+            );
+
+            return;
+        }
+
+        const updatedItem: PlanningItem = {
             ...item,
             year: newYear,
             week: newWeek,

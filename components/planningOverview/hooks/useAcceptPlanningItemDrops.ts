@@ -1,3 +1,4 @@
+import { usePlanningContext } from './../../../context/planning/PlanningContext';
 import { Team } from './../../../model/planning';
 import { OnItemDroppedHandler } from './../components/Week';
 import { useDrop } from 'react-dnd';
@@ -10,18 +11,21 @@ type DropCollectedProps = {
 };
 
 export default function useAcceptPlanningItemDrops(
-    acceptDropOfProjectIds: string[],
     week: number,
     year: number,
     team: Team,
     onItemDropped: OnItemDroppedHandler
 ) {
+    const { projects } = usePlanningContext();
+
+    const projectIds = projects ? projects.map((project) => project.id) : [];
+
     const [{ isOver, canDrop }, droppableRef] = useDrop<
         DropObject,
         {},
         DropCollectedProps
     >({
-        accept: acceptDropOfProjectIds,
+        accept: projectIds, // due to accept not being updated after a drop, we accept all projectIds and notify user when not possible later (@see https://github.com/react-dnd/react-dnd/issues/1877)
         drop: ({ id }) => {
             onItemDropped(id, week, year, team.id);
 
