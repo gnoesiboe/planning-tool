@@ -29,5 +29,5 @@ export default function useHandleFormState() {
         });
     };
 
-    return { from: fromValue, until: untilValue, choiceRange, onFieldChange };
+    return { from, fromValue, until, untilValue, choiceRange, onFieldChange };
 }

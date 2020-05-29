@@ -3,7 +3,14 @@ import { transform as transformToValue } from './utility/weekyearToFormChoiceVal
 import useHandleFormState from './utility/useHandleFormState';
 
 const PlanningOverviewFiltering: React.FC = () => {
-    const { choiceRange, from, until, onFieldChange } = useHandleFormState();
+    const {
+        choiceRange,
+        from,
+        fromValue,
+        until,
+        untilValue,
+        onFieldChange,
+    } = useHandleFormState();
 
     return (
         <form className="form-inline">
@@ -13,16 +20,24 @@ const PlanningOverviewFiltering: React.FC = () => {
                 <select
                     id="from"
                     className="form-control"
-                    value={from}
+                    value={fromValue}
                     onChange={(event) =>
                         onFieldChange('from', event.target.value)
                     }
                 >
                     {choiceRange.map((pair) => {
                         const value = transformToValue(pair);
+                        const disabled =
+                            pair.year > until.year ||
+                            (pair.week > until.week &&
+                                pair.year === until.year);
 
                         return (
-                            <option value={value} key={value}>
+                            <option
+                                value={value}
+                                key={value}
+                                disabled={disabled}
+                            >
                                 week {`${pair.week} @ ${pair.year}`}
                             </option>
                         );
@@ -36,16 +51,23 @@ const PlanningOverviewFiltering: React.FC = () => {
                 <select
                     id="until"
                     className="form-control"
-                    value={until}
+                    value={untilValue}
                     onChange={(event) =>
                         onFieldChange('until', event.target.value)
                     }
                 >
                     {choiceRange.map((pair) => {
                         const value = transformToValue(pair);
+                        const disabled =
+                            pair.year < from.year ||
+                            (pair.week < from.week && pair.year === from.year);
 
                         return (
-                            <option value={value} key={value}>
+                            <option
+                                value={value}
+                                key={value}
+                                disabled={disabled}
+                            >
                                 week {`${pair.week} @ ${pair.year}`}
                             </option>
                         );
