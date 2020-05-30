@@ -7,64 +7,8 @@ import {
     sendValidationErrorResponse,
     sendInternalServerErrorResponse,
 } from '../../response/handler/errorResponseHandler';
-import {
-    getCurrentWeek,
-    getCurrentYear,
-    getNoOfWeeksInYear,
-} from '../../../utility/dateTimeUtilities';
 import { WeekYearPair } from '../../../utility/types';
-
-const defaultNoOfWeeksToShow = 10;
-
-/**
- * Generated a new input schema every requet to make sure that
- * the current year and week are used for validation.
- */
-const createInputSchema = () => {
-    return Joi.object({
-        team_id: Joi.alternatives().try(
-            Joi.array().items(Joi.string()),
-            Joi.string()
-        ),
-
-        // from
-        week_from: Joi.number()
-            .default(() => getCurrentWeek())
-            .min(1)
-            .max(53),
-        year_from: Joi.number()
-            .default(() => getCurrentYear())
-            .min(getCurrentWeek() - 1),
-
-        // until
-        week_until: Joi.number()
-            .default(({ week_from, year_from }) => {
-                const weekFrom = week_from || getCurrentWeek();
-                const yearFrom = year_from || getCurrentYear();
-
-                return (
-                    (weekFrom + defaultNoOfWeeksToShow) %
-                    getNoOfWeeksInYear(yearFrom)
-                );
-            })
-            .min(1)
-            .max(53),
-        year_until: Joi.number()
-            .default(({ week_from, year_from, week_until }) => {
-                const fromWeek = week_from || getCurrentWeek();
-                const fromYear = year_from || getCurrentYear();
-                const untilWeek = week_until || getCurrentWeek();
-
-                if (untilWeek <= fromWeek) {
-                    return fromYear + 1;
-                }
-
-                return fromYear;
-            })
-            .min(getCurrentYear() - 1)
-            .max(getCurrentYear() + 2),
-    }).required();
-};
+import { createPlanningItemFilteringSchema as createValidationSchema } from '../../validation/factory/planningItemValidationSchemaFactory';
 
 export type FiltersValues = {
     teamIds: string[];
@@ -76,7 +20,7 @@ const determineFilters = (request: NextApiRequest): FiltersValues => {
     const {
         value: { team_id, week_from, year_from, week_until, year_until },
         error,
-    } = createInputSchema().validate(request.query);
+    } = createValidationSchema().validate(request.query);
 
     if (error) {
         throw error;
