@@ -17,7 +17,7 @@ const PlanningOverviewFiltering: React.FC = () => {
     } = useHandleFormState();
 
     return (
-        <form className="form-inline">
+        <form className="form-inline planning-overview-filtering">
             <FormGroup>
                 <label htmlFor="from">From: </label>
                 &nbsp;

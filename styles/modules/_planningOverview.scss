@@ -9,6 +9,10 @@
     top: 20px;
 }
 
+.planning-overview__team-rows {
+    margin-top: 100px;
+}
+
 .planning-overview__team-row {
     margin: 0 0 10px;
     padding: 0 10px 0 0;
@@ -50,10 +54,6 @@
     vertical-align: top;
     position: relative;
     overflow: hidden;
-}
-
-.planning-overview__week:first-child {
-    padding-left: 0;
 }
 
 .planning-overview__week__title {
