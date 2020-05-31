@@ -1,3 +1,5 @@
+import { WeekYearPair } from './../utility/types.d';
+
 export type Team = {
     id: string;
     name: string;
@@ -16,6 +18,16 @@ export type Project = {
     name: string;
     color: string;
     active: boolean;
+};
+
+export type ProjectBudgetItem = {
+    id: string;
+    projectId: string;
+    from: WeekYearPair;
+    until: WeekYearPair;
+    createdAt: string;
+    noOfWeeks: number;
+    comments: string | null;
 };
 
 export interface PlanningItem {
