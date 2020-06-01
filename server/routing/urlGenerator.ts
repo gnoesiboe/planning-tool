@@ -12,6 +12,10 @@ export const createPutPlanningItemUrl = (id: string) =>
 export const createGetProjectListUrl = () => `${baseUrl}/projects`;
 export const createPostProjectUrl = () => `${baseUrl}/projects`;
 
+// project budget item
+export const createGetProjectBudgetItemsUrl = () =>
+    `${baseUrl}/project-budget-items`;
+
 // team
 export const createGetTeamListUrl = () => `${baseUrl}/teams`;
 
