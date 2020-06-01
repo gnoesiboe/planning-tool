@@ -1,7 +1,7 @@
 import FormGroup from '../primities/form/FormGroup';
 import { transform as transformToValue } from './utility/weekyearToFormChoiceValueTransformer';
-import useHandleFormState, { SelectOption } from './utility/useHandleFormState';
-import ReactSelect from 'react-select';
+import useHandleFormState from './utility/useHandleFormState';
+import FormChoice from '../primities/form/FormChoice';
 
 const PlanningOverviewFiltering: React.FC = () => {
     const {
@@ -69,7 +69,7 @@ const PlanningOverviewFiltering: React.FC = () => {
                                 key={value}
                                 disabled={disabled}
                             >
-                                week {`${pair.week} @ ${pair.year}`}
+                                {`${pair.week} @ ${pair.year}`}
                             </option>
                         );
                     })}
@@ -77,9 +77,11 @@ const PlanningOverviewFiltering: React.FC = () => {
             </FormGroup>
             <FormGroup>
                 <label htmlFor="teams">Teams: </label>
-                <ReactSelect<SelectOption>
+                <FormChoice
                     id="teams"
                     options={teamOptions}
+                    className="planning-overview-filtering__team-field"
+                    placeholder="Show only specific teams"
                     isMulti
                     value={teamsValue}
                     onChange={(newItems) => {

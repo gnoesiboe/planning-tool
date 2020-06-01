@@ -9,11 +9,7 @@ import {
 } from '../../../utility/dateTimeUtilities';
 import { FiltersValues } from '../../../server/controller/planningItem/indexController';
 import { OptionsType } from 'react-select';
-
-export type SelectOption = {
-    value: string;
-    label: string;
-};
+import { SelectOption } from '../../primities/form/FormChoice';
 
 export default function useHandleFormState() {
     const {
