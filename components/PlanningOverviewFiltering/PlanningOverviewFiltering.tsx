@@ -20,7 +20,6 @@ const PlanningOverviewFiltering: React.FC = () => {
         <form className="form-inline planning-overview-filtering">
             <FormGroup>
                 <label htmlFor="from">From: </label>
-                &nbsp;
                 <select
                     id="from"
                     className="form-control"
@@ -48,10 +47,8 @@ const PlanningOverviewFiltering: React.FC = () => {
                     })}
                 </select>
             </FormGroup>
-            &nbsp;
             <FormGroup>
                 <label htmlFor="until">Until: </label>
-                &nbsp;
                 <select
                     id="until"
                     className="form-control"
@@ -78,10 +75,8 @@ const PlanningOverviewFiltering: React.FC = () => {
                     })}
                 </select>
             </FormGroup>
-            &nbsp;
             <FormGroup>
                 <label htmlFor="teams">Teams: </label>
-                &nbsp;
                 <ReactSelect<SelectOption>
                     id="teams"
                     options={teamOptions}

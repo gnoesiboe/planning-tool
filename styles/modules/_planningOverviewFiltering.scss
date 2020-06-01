@@ -9,7 +9,16 @@
         width: 300px;
     }
 
+    label {
+        margin-right: 10px;
+    }
+
     .form-group {
         margin-bottom: 10px !important;
+        margin-right: 20px;
+
+        &:last-child {
+            margin-right: 0;
+        }
     }
 }
