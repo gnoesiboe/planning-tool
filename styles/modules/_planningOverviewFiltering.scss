@@ -1,12 +1,12 @@
 .planning-overview-filtering {
     position: fixed;
     background: #eee;
-    padding: 20px 20px 10px;
+    padding: 10px 10px 0 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
     z-index: 1001;
 
-    #teams {
+    .planning-overview-filtering__team-field {
         width: 300px;
     }
 
