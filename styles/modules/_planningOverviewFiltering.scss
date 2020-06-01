@@ -1,8 +1,9 @@
 .planning-overview-filtering {
     position: fixed;
-    background: #ddd;
+    background: #eee;
     padding: 20px 20px 10px;
     border-radius: 5px;
+    border: 1px solid #ddd;
     z-index: 1001;
 
     #teams {
