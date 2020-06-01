@@ -11,6 +11,7 @@ import {
     startOfWeek,
     endOfWeek,
     eachWeekOfInterval,
+    format,
 } from 'date-fns';
 import { nl } from 'date-fns/locale';
 
@@ -88,6 +89,20 @@ export function getCurrentYear(): number {
 
 export function getCurrentWeek(): number {
     return getWeek(new Date(), {
+        locale: nl,
+    });
+}
+
+export function getStartOfWeek(pair: WeekYearPair): Date {
+    return createDateFromWeekYearPair(pair, 'start');
+}
+
+export function getEndOfWeek(pair: WeekYearPair): Date {
+    return createDateFromWeekYearPair(pair, 'end');
+}
+
+export function formatShortDate(date: Date): string {
+    return format(date, 'd MMM', {
         locale: nl,
     });
 }

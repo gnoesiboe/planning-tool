@@ -14,8 +14,8 @@
 }
 
 .planning-overview__team-row {
-    margin: 0 0 10px;
-    padding: 0 10px 0 0;
+    margin: 0 0 30px;
+    padding: 0 10px 20px 0;
     width: 100%;
     white-space: nowrap;
     position: relative;
@@ -27,7 +27,7 @@
 }
 
 .planning-overview__team-row__title {
-    margin: 50px 0 0 0;
+    margin: 75px 0 0 0;
     display: inline-block;
     width: 250px;
     white-space: normal;
@@ -56,10 +56,16 @@
     overflow: hidden;
 }
 
+.planning-overview__week__period {
+    font-size: 0.8em;
+    margin: 0 0 15px;
+    color: #999;
+}
+
 .planning-overview__week__title {
     height: 40px;
     padding: 0;
-    margin: 0 0 10px;
+    margin: 0;
 }
 
 .planning-overview__team-week-projects {

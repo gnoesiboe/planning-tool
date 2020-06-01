@@ -1,6 +1,11 @@
 import { ReactNode } from 'react';
 import useAcceptPlanningItemDrops from '../hooks/useAcceptPlanningItemDrops';
 import { Team } from '../../../model/planning';
+import {
+    getStartOfWeek,
+    getEndOfWeek,
+    formatShortDate,
+} from '../../../utility/dateTimeUtilities';
 
 export type OnItemDroppedHandler = (
     id: string,
@@ -31,6 +36,9 @@ const Week: React.FC<Props> = ({
         onItemDropped
     );
 
+    const startDate = getStartOfWeek({ week, year });
+    const endDate = getEndOfWeek({ week, year });
+
     return (
         <div
             className="planning-overview__week"
@@ -38,6 +46,9 @@ const Week: React.FC<Props> = ({
             style={hoverStyle}
         >
             <h3 className="planning-overview__week__title">{week}</h3>
+            <div className="planning-overview__week__period">
+                {formatShortDate(startDate)} - {formatShortDate(endDate)}
+            </div>
             {children}
         </div>
     );
