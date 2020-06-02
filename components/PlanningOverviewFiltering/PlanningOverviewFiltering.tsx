@@ -1,15 +1,15 @@
 import FormGroup from '../primities/form/FormGroup';
-import { transform as transformToValue } from './utility/weekyearToFormChoiceValueTransformer';
 import useHandleFormState from './utility/useHandleFormState';
 import FormChoice from '../primities/form/FormChoice';
+import PeriodPartChoice from './components/PeriodPartChoice';
 
 const PlanningOverviewFiltering: React.FC = () => {
     const {
-        choiceRange,
-        from,
+        periodOptions,
         fromValue,
-        until,
+        isFromDisabled,
         untilValue,
+        isUntilDisabled,
         onPeriodFieldChange,
         teamOptions,
         teamsValue,
@@ -20,60 +20,23 @@ const PlanningOverviewFiltering: React.FC = () => {
         <form className="form-inline planning-overview-filtering">
             <FormGroup>
                 <label htmlFor="from">From: </label>
-                <select
-                    id="from"
-                    className="form-control"
+                <PeriodPartChoice
+                    name="from"
                     value={fromValue}
-                    onChange={(event) =>
-                        onPeriodFieldChange('from', event.target.value)
-                    }
-                >
-                    {choiceRange.map((pair) => {
-                        const value = transformToValue(pair);
-                        const disabled =
-                            pair.year > until.year ||
-                            (pair.week > until.week &&
-                                pair.year === until.year);
-
-                        return (
-                            <option
-                                value={value}
-                                key={value}
-                                disabled={disabled}
-                            >
-                                week {`${pair.week} @ ${pair.year}`}
-                            </option>
-                        );
-                    })}
-                </select>
+                    isDisabled={isFromDisabled}
+                    options={periodOptions}
+                    onChange={onPeriodFieldChange}
+                />
             </FormGroup>
             <FormGroup>
                 <label htmlFor="until">Until: </label>
-                <select
-                    id="until"
-                    className="form-control"
+                <PeriodPartChoice
+                    name="until"
                     value={untilValue}
-                    onChange={(event) =>
-                        onPeriodFieldChange('until', event.target.value)
-                    }
-                >
-                    {choiceRange.map((pair) => {
-                        const value = transformToValue(pair);
-                        const disabled =
-                            pair.year < from.year ||
-                            (pair.week < from.week && pair.year === from.year);
-
-                        return (
-                            <option
-                                value={value}
-                                key={value}
-                                disabled={disabled}
-                            >
-                                {`${pair.week} @ ${pair.year}`}
-                            </option>
-                        );
-                    })}
-                </select>
+                    isDisabled={isUntilDisabled}
+                    options={periodOptions}
+                    onChange={onPeriodFieldChange}
+                />
             </FormGroup>
             <FormGroup>
                 <label htmlFor="teams">Teams: </label>

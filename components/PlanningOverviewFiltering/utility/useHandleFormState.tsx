@@ -1,15 +1,21 @@
 import { usePlanningContext } from '../../../context/planning/PlanningContext';
 import {
-    transform as transformToValue,
-    reverseTransform,
+    transform as transformPairToOptionValue,
+    reverseTransform as reverseTransformToPair,
 } from './weekyearToFormChoiceValueTransformer';
 import {
     getRangeOfWeekYearPairsFromDate,
     subtractMonths,
 } from '../../../utility/dateTimeUtilities';
-import { FiltersValues } from '../../../server/controller/planningItem/indexController';
 import { OptionsType } from 'react-select';
 import { SelectOption } from '../../primities/form/FormChoice';
+import { WeekYearPair } from '../../../utility/types';
+import { FiltersValues } from '../../../server/controller/planningItem/indexController';
+
+export type OnPeriodFieldChange = (
+    field: keyof FiltersValues,
+    newValue: string
+) => void;
 
 export default function useHandleFormState() {
     const {
@@ -18,20 +24,52 @@ export default function useHandleFormState() {
         teams,
     } = usePlanningContext();
 
-    const choiceRange = getRangeOfWeekYearPairsFromDate(
+    const periodRange = getRangeOfWeekYearPairsFromDate(
         subtractMonths(new Date(), 3),
         53
     );
 
-    const fromValue = transformToValue(from);
-    const untilValue = transformToValue(until);
+    const periodOptions: OptionsType<SelectOption> = periodRange.map(
+        (pair) => ({
+            label: `${pair.week} @ ${pair.year}`,
+            value: transformPairToOptionValue(pair),
+        })
+    );
 
-    const onPeriodFieldChange = (
-        field: keyof FiltersValues,
-        newValue: string
-    ) => {
+    const determineCurrentOption = (value: WeekYearPair): SelectOption | null =>
+        periodOptions
+            .filter((option) => {
+                const pair = reverseTransformToPair(option.value);
+
+                return value.week === pair.week && value.year === pair.year;
+            })
+            .pop() || null;
+
+    const fromValue = determineCurrentOption(from);
+
+    const isFromDisabled = (option: SelectOption): boolean => {
+        const pair = reverseTransformToPair(option.value);
+
+        return (
+            pair.year > until.year ||
+            (pair.week > until.week && pair.year === until.year)
+        );
+    };
+
+    const untilValue = determineCurrentOption(until);
+
+    const isUntilDisabled = (option: SelectOption): boolean => {
+        const pair = reverseTransformToPair(option.value);
+
+        return (
+            pair.year < from.year ||
+            (pair.week < from.week && pair.year === from.year)
+        );
+    };
+
+    const onPeriodFieldChange: OnPeriodFieldChange = (field, newValue) => {
         onFilterChange({
-            [field]: reverseTransform(newValue),
+            [field]: reverseTransformToPair(newValue),
         });
     };
 
@@ -53,11 +91,11 @@ export default function useHandleFormState() {
     };
 
     return {
-        from,
         fromValue,
-        until,
+        isFromDisabled,
         untilValue,
-        choiceRange,
+        isUntilDisabled,
+        periodOptions,
         onPeriodFieldChange,
         teamOptions,
         teamsValue,

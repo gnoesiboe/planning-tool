@@ -5,8 +5,6 @@ export type SelectOption = {
     label: string;
 };
 
-const FormChoice: React.FC<ReactSelectProps> = (props) => {
+export default function FormChoice(props: ReactSelectProps) {
     return <ReactSelect<SelectOption> {...props} />;
-};
-
-export default FormChoice;
+}

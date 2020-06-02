@@ -6,6 +6,10 @@
     border: 1px solid #ddd;
     z-index: 1001;
 
+    .planning-overview-filtering__period-field {
+        width: 200px;
+    }
+
     .planning-overview-filtering__team-field {
         width: 300px;
     }
