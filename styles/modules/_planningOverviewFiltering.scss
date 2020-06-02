@@ -6,8 +6,28 @@
     border: 1px solid #ddd;
     z-index: 1001;
 
-    .planning-overview-filtering__period-field {
+    .planning-overview-filtering__period-part-choice {
         width: 200px;
+    }
+
+    .planning-overview-filtering__period-part-choice__option {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+    }
+
+    .planning-overview-filtering__period-part-choice__option--selected {
+        background: #ddd;
+    }
+
+    .planning-overview-filtering__period-part-choice__option--disabled {
+        cursor: not-allowed;
+        color: #ddd;
+    }
+
+    .planning-overview-filtering__period-part-choice__year {
+        color: #bbb;
+        font-size: 0.8em;
     }
 
     .planning-overview-filtering__team-field {

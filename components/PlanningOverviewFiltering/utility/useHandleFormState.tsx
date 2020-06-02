@@ -29,12 +29,14 @@ export default function useHandleFormState() {
         53
     );
 
-    const periodOptions: OptionsType<SelectOption> = periodRange.map(
-        (pair) => ({
-            label: `${pair.week} @ ${pair.year}`,
-            value: transformPairToOptionValue(pair),
-        })
-    );
+    const periodOptions: OptionsType<SelectOption> = periodRange.map((pair) => {
+        const value = transformPairToOptionValue(pair);
+
+        return {
+            label: value, // will be transformed to actual title in PeriodPartChoice
+            value: value,
+        };
+    });
 
     const determineCurrentOption = (value: WeekYearPair): SelectOption | null =>
         periodOptions

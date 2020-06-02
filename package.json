@@ -15,6 +15,7 @@
         "@hapi/joi": "^17.1.1",
         "@primer/octicons-react": "^9.6.0",
         "bootstrap": "^4.5.0",
+        "classnames": "^2.2.6",
         "date-fns": "^2.13.0",
         "immer": "^6.0.5",
         "lodash": "^4.17.15",
@@ -36,6 +37,7 @@
     },
     "devDependencies": {
         "@types/bootstrap": "^4.3.3",
+        "@types/classnames": "^2.2.10",
         "@types/hapi__joi": "^17.1.0",
         "@types/lodash": "^4.14.152",
         "@types/markdown-it": "^10.0.1",
