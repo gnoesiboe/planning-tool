@@ -54,6 +54,11 @@
     vertical-align: top;
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
+}
+
+.planning-overview__week--current {
+    border: 2px solid #ddd;
 }
 
 .planning-overview__week__period {

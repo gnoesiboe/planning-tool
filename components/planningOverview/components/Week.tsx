@@ -5,7 +5,10 @@ import {
     getStartOfWeek,
     getEndOfWeek,
     formatShortDateWithoutYear,
+    getCurrentWeek,
+    getCurrentYear,
 } from '../../../utility/dateTimeUtilities';
+import createClassName from 'classnames';
 
 export type OnItemDroppedHandler = (
     id: string,
@@ -39,12 +42,13 @@ const Week: React.FC<Props> = ({
     const startDate = getStartOfWeek({ week, year });
     const endDate = getEndOfWeek({ week, year });
 
+    const className = createClassName('planning-overview__week', {
+        'planning-overview__week--current':
+            getCurrentWeek() === week && getCurrentYear() === year,
+    });
+
     return (
-        <div
-            className="planning-overview__week"
-            ref={droppableRef}
-            style={hoverStyle}
-        >
+        <div className={className} ref={droppableRef} style={hoverStyle}>
             <h3 className="planning-overview__week__title">{week}</h3>
             <div className="planning-overview__week__period">
                 {formatShortDateWithoutYear(startDate)} -{' '}
