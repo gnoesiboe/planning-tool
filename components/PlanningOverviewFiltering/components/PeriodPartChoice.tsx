@@ -5,6 +5,10 @@ import { FiltersValues } from '../../../server/controller/planningItem/indexCont
 import { OptionProps } from 'react-select/src/types';
 import { reverseTransform } from '../utility/weekyearToFormChoiceValueTransformer';
 import createClassName from 'classnames';
+import {
+    createDateFromWeekYearPair,
+    formatShortDate,
+} from '../../../utility/dateTimeUtilities';
 
 type Props = {
     value: SelectOption | null;
@@ -37,11 +41,13 @@ const CustomOption: React.FC<OptionProps> = (props) => {
 
     const pair = reverseTransform(data.label);
 
+    const start = createDateFromWeekYearPair(pair, 'start');
+
     return (
         <div ref={innerRef} {...innerProps} className={className}>
             Week {pair.week}{' '}
-            <span className="planning-overview-filtering__period-part-choice__year">
-                {pair.year}
+            <span className="planning-overview-filtering__period-part-choice__postfix">
+                {formatShortDate(start)}
             </span>
         </div>
     );
@@ -55,7 +61,7 @@ const CustomSingleValue: React.FC<SingleValueProps<SelectOption>> = (props) => {
     return (
         <div {...innerProps}>
             Week {pair.week}{' '}
-            <span className="planning-overview-filtering__period-part-choice__year">
+            <span className="planning-overview-filtering__period-part-choice__postfix">
                 {pair.year}
             </span>
         </div>

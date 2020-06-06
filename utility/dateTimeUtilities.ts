@@ -101,8 +101,14 @@ export function getEndOfWeek(pair: WeekYearPair): Date {
     return createDateFromWeekYearPair(pair, 'end');
 }
 
-export function formatShortDate(date: Date): string {
+export function formatShortDateWithoutYear(date: Date): string {
     return format(date, 'd MMM', {
+        locale: nl,
+    });
+}
+
+export function formatShortDate(date: Date): string {
+    return format(date, 'd MMM YYY', {
         locale: nl,
     });
 }

@@ -4,7 +4,7 @@ import { Team } from '../../../model/planning';
 import {
     getStartOfWeek,
     getEndOfWeek,
-    formatShortDate,
+    formatShortDateWithoutYear,
 } from '../../../utility/dateTimeUtilities';
 
 export type OnItemDroppedHandler = (
@@ -47,7 +47,8 @@ const Week: React.FC<Props> = ({
         >
             <h3 className="planning-overview__week__title">{week}</h3>
             <div className="planning-overview__week__period">
-                {formatShortDate(startDate)} - {formatShortDate(endDate)}
+                {formatShortDateWithoutYear(startDate)} -{' '}
+                {formatShortDateWithoutYear(endDate)}
             </div>
             {children}
         </div>
