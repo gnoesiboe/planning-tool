@@ -37,10 +37,11 @@
     z-index: 1000;
 
     h2 {
-        display: inline;
-        padding: 0 20px 10px 0;
+        display: inline-block;
+        padding: 0 10px 5px 10px;
+        margin-left: -10px;
         background: #fff;
-        border-radius: 5px;
+        border-radius: 4px;
     }
 }
 
