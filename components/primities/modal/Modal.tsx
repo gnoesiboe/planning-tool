@@ -8,10 +8,10 @@ const Modal: React.FC<Props> = ({ ...otherProps }) => {
     const customStyles: Styles = {
         content: {
             marginLeft: '50%',
-            zIndex: 1030,
         },
         overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            zIndex: 2000,
         },
     };
 
