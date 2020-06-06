@@ -18,6 +18,7 @@ const CustomOption: React.FC<OptionProps> = (props) => {
     const {
         isDisabled,
         isSelected,
+        isFocused,
         innerRef,
         data,
 
@@ -30,6 +31,7 @@ const CustomOption: React.FC<OptionProps> = (props) => {
         {
             'planning-overview-filtering__period-part-choice__option--selected': isSelected,
             'planning-overview-filtering__period-part-choice__option--disabled': isDisabled,
+            'planning-overview-filtering__period-part-choice__option--focussed': isFocused,
         }
     );
 

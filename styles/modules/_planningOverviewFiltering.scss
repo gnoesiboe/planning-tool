@@ -18,6 +18,11 @@
 
     .planning-overview-filtering__period-part-choice__option--selected {
         background: #ddd;
+        font-weight: bold;
+    }
+
+    .planning-overview-filtering__period-part-choice__option--focussed {
+        font-weight: bold;
     }
 
     .planning-overview-filtering__period-part-choice__option--disabled {
