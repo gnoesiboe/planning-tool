@@ -4,7 +4,7 @@ import {
     Project,
     PlanningItem,
     TeamWeekNote,
-    ProjectBudgetItem,
+    ProjectBudgetItemWithUsageCount,
 } from '../../model/planning';
 import useFetchPlanningRequirements from './hooks/useFetchPlanningRequirements';
 import useManagePlanning, { PlanningFilters } from './hooks/useManagePlanning';
@@ -37,7 +37,7 @@ type ContextValue = {
     planningItems: PlanningItem[] | null;
     projects: Project[] | null;
     teamWeekNotes: TeamWeekNote[] | null;
-    projectBudgetItems: ProjectBudgetItem[] | null;
+    projectBudgetItems: ProjectBudgetItemWithUsageCount[] | null;
     addPlanningItem: AddPlanningItemHandler;
     movePlanningItem: MovePlanningItemHandler;
     editPlanningItem: EditPlanningItemHandler;
@@ -72,6 +72,11 @@ export const PlanningContextProvider: React.FC<{
     const { teams } = useFetchPlanningRequirements();
 
     const {
+        projectBudgetItems,
+        fetchProjectBudgetItems,
+    } = useManageProjectBudgetItems();
+
+    const {
         filters,
         onFilterChange,
         planningItems,
@@ -79,7 +84,7 @@ export const PlanningContextProvider: React.FC<{
         movePlanningItem,
         editPlanningItem,
         removePlanningItem,
-    } = useManagePlanning();
+    } = useManagePlanning(fetchProjectBudgetItems);
 
     const {
         teamWeekNotes,
@@ -88,8 +93,6 @@ export const PlanningContextProvider: React.FC<{
     } = useManageTeamWeekNotes();
 
     const { projects, addProject } = useManageProjects();
-
-    const { projectBudgetItems } = useManageProjectBudgetItems();
 
     const value: ContextValue = {
         filters,

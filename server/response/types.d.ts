@@ -1,4 +1,7 @@
-import { ProjectBudgetItem } from './../../model/planning.d';
+import {
+    ProjectBudgetItem,
+    ProjectBudgetItemWithUsageCount,
+} from './../../model/planning.d';
 import { FiltersValues } from './../controller/planningItem/indexController';
 import { TeamWeekNote, PlanningItem } from './../../model/planning';
 import { Planning, Project, Team } from '../../model/planning';
@@ -22,7 +25,7 @@ export type TeamWeekNotesResponseBody = {
 };
 
 export type ProjectBudgetItemsResponseBody = {
-    projectBudgetItems: ProjectBudgetItem[];
+    projectBudgetItems: ProjectBudgetItemWithUsageCount[];
 };
 
 export type ErrorResponseBody = {

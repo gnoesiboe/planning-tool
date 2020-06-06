@@ -31,7 +31,7 @@ export type PlanningFilters = {
     teamIds: string[];
 };
 
-export default function useManagePlanning() {
+export default function useManagePlanning(fetchProjectBudgetItems: () => void) {
     const [filters, setFilters] = useState<PlanningFilters>(
         resolveInitialFilters()
     );
@@ -87,6 +87,8 @@ export default function useManagePlanning() {
             await persist(item);
 
             notifySuccess('Planning item added');
+
+            fetchProjectBudgetItems();
         } catch (error) {
             if (!planningItems) {
                 throw new Error(
@@ -167,6 +169,8 @@ export default function useManagePlanning() {
         // update on server
         try {
             await update(updatedItem);
+
+            fetchProjectBudgetItems();
         } catch (error) {
             notifyError(
                 'Something went wrong updating the planning item on the server. Refresh the page to continue!'
@@ -189,6 +193,8 @@ export default function useManagePlanning() {
         // update on server
         try {
             await update(item);
+
+            fetchProjectBudgetItems();
         } catch (error) {
             notifyError(
                 'Something went wrong updating the planning item on the server. Refresh the page to continue!'
@@ -211,6 +217,8 @@ export default function useManagePlanning() {
         // remove on server
         try {
             await remove(item);
+
+            fetchProjectBudgetItems();
         } catch (error) {
             notifyError(
                 'Something went wrong removing the planning item on the server. Refresh the page to continue!'
