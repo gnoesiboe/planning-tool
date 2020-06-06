@@ -1,9 +1,9 @@
 import { ProjectBudgetItemsResponseBody } from './../../response/types.d';
 import { Controller } from './../../routing/methodSwitch';
-import { fetchAll } from '../../../repository/database/projectBudgetItemRepository';
+import { fetchAllWithUsageCount } from '../../../repository/database/projectBudgetItemRepository';
 
 const indexController: Controller = async (_request, response) => {
-    const items = await fetchAll();
+    const items = await fetchAllWithUsageCount();
 
     const body: ProjectBudgetItemsResponseBody = {
         projectBudgetItems: items,

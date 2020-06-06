@@ -1,9 +1,9 @@
-import { ProjectBudgetItem } from '../planning';
-import { Result } from '../../repository/database/projectBudgetItemRepository';
+import { ResultWithUsageCount } from './../../repository/database/projectBudgetItemRepository';
+import { ProjectBudgetItemWithUsageCount } from './../planning.d';
 
-export function createProjectBudgetItemFromDatabaseResult(
-    result: Result
-): ProjectBudgetItem {
+export function createProjectBudgetItemWithUsageCountFromDatabaseResult(
+    result: ResultWithUsageCount
+): ProjectBudgetItemWithUsageCount {
     return {
         id: result.id,
         projectId: result.project_id,
@@ -18,5 +18,6 @@ export function createProjectBudgetItemFromDatabaseResult(
         noOfWeeks: result.no_of_weeks,
         comments: result.comments,
         createdAt: result.created_at,
+        usageCount: result.usage_count,
     };
 }

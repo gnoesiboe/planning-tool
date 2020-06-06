@@ -1,3 +1,4 @@
+import { ProjectBudgetItem } from './planning.d';
 import { WeekYearPair } from './../utility/types.d';
 
 export type Team = {
@@ -20,7 +21,7 @@ export type Project = {
     active: boolean;
 };
 
-export type ProjectBudgetItem = {
+export interface ProjectBudgetItem {
     id: string;
     projectId: string;
     from: WeekYearPair;
@@ -28,7 +29,11 @@ export type ProjectBudgetItem = {
     createdAt: string;
     noOfWeeks: number;
     comments: string | null;
-};
+}
+
+export interface ProjectBudgetItemWithUsageCount extends ProjectBudgetItem {
+    usageCount: number;
+}
 
 export interface PlanningItem {
     id: string;

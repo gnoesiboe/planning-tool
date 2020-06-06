@@ -1,8 +1,8 @@
-import { ProjectBudgetItem } from './../../model/planning.d';
+import { ProjectBudgetItemWithUsageCount } from './../../model/planning.d';
 import { executeSelect } from '../../storage/database';
-import { createProjectBudgetItemFromDatabaseResult } from '../../model/factory/projectBudgetItemFactory';
+import { createProjectBudgetItemWithUsageCountFromDatabaseResult } from '../../model/factory/projectBudgetItemFactory';
 
-export type Result = {
+export interface Result {
     id: string;
     project_id: string;
     week_from: number;
@@ -12,16 +12,37 @@ export type Result = {
     created_at: string;
     no_of_weeks: number;
     comments: string | null;
-};
+}
 
-export async function fetchAll(): Promise<ProjectBudgetItem[]> {
-    const results = await executeSelect<Result>(`
-        SELECT *
-        FROM project_budget_item
-        ORDER BY project_id ASC, YEARWEEK(year_from, week_from) ASC
+export interface ResultWithUsageCount extends Result {
+    usage_count: number;
+}
+
+export async function fetchAllWithUsageCount(): Promise<
+    ProjectBudgetItemWithUsageCount[]
+> {
+    const results = await executeSelect<ResultWithUsageCount>(`
+        SELECT
+            pbi.*,
+            (
+                SELECT
+                    COUNT(*)
+                FROM planning_item pi
+                    WHERE
+                        pi.project_id = pbi.project_id
+                    AND
+                        CONCAT(pi.year, pi.week) BETWEEN CONCAT(pbi.year_from, pbi.week_from) AND CONCAT(pbi.year_until, pbi.week_until)
+            ) AS 'usage_count'
+        FROM
+            project_budget_item pbi
+        INNER JOIN
+            project p ON p.id = pbi.project_id
+        ORDER BY
+            p.name ASC,
+            CONCAT(year_from, week_from) ASC;
     `);
 
     return results.map((result) =>
-        createProjectBudgetItemFromDatabaseResult(result)
+        createProjectBudgetItemWithUsageCountFromDatabaseResult(result)
     );
 }
