@@ -93,6 +93,10 @@ export function getCurrentWeek(): number {
     });
 }
 
+export function isCurrentPair(pair: WeekYearPair): boolean {
+    return getCurrentWeek() === pair.week && getCurrentYear() === pair.year;
+}
+
 export function getStartOfWeek(pair: WeekYearPair): Date {
     return createDateFromWeekYearPair(pair, 'start');
 }

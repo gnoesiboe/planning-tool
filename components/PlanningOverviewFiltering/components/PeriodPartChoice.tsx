@@ -8,7 +8,9 @@ import createClassName from 'classnames';
 import {
     createDateFromWeekYearPair,
     formatShortDate,
+    isCurrentPair,
 } from '../../../utility/dateTimeUtilities';
+import Octicon, { Clock } from '@primer/octicons-react';
 
 type Props = {
     value: SelectOption | null;
@@ -30,6 +32,9 @@ const CustomOption: React.FC<OptionProps> = (props) => {
         innerProps,
     } = props;
 
+    const pair = reverseTransform(data.label);
+    const isCurrentWeek = isCurrentPair(pair);
+
     const className = createClassName(
         'planning-overview-filtering__period-part-choice__option',
         {
@@ -39,8 +44,6 @@ const CustomOption: React.FC<OptionProps> = (props) => {
         }
     );
 
-    const pair = reverseTransform(data.label);
-
     const start = createDateFromWeekYearPair(pair, 'start');
 
     return (
@@ -49,6 +52,8 @@ const CustomOption: React.FC<OptionProps> = (props) => {
             <span className="planning-overview-filtering__period-part-choice__postfix">
                 {formatShortDate(start)}
             </span>
+            {` `}
+            {isCurrentWeek && <Octicon icon={Clock} />}
         </div>
     );
 };
