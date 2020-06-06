@@ -1,9 +1,13 @@
 .project-budget-overview {
     position: fixed;
-    padding: 10px;
     border: 1px solid #ddd;
     background: white;
-    right: 10px;
-    bottom: 10px;
+    right: 0;
+    bottom: 0;
     z-index: 1000;
+}
+
+.project-budget-overview--toggle-button {
+    float: right;
+    padding: 0;
 }
