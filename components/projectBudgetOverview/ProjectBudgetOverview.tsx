@@ -1,12 +1,12 @@
 import useProjectBudgetOverviewItems from './hooks/useProjectBudgetOverviewItems';
 import Item from './components/Item';
-import useShowHideModal from '../../hooks/useShowHideModal';
 import LinkButton from '../primities/button/LinkButton';
+import useShowHideProjectBudgetOverview from './hooks/useShowHideProjectBudgetOverview';
 
 type Props = {};
 
 const ProjectBudgetOverview: React.FC<Props> = () => {
-    const { visible, toggle } = useShowHideModal(true);
+    const { visible, toggle } = useShowHideProjectBudgetOverview();
 
     const { items } = useProjectBudgetOverviewItems();
 
