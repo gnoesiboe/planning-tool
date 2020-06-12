@@ -27,21 +27,17 @@
 }
 
 .planning-overview__team-row__title {
-    margin: 75px 0 0 0;
-    display: inline-block;
-    width: 250px;
+    width: 400px; // if removed somehow the title is not sticky?!
     white-space: normal;
     position: sticky;
     top: 0;
     left: 0;
     z-index: 1000;
+    margin: 0 0 20px 0;
+    padding-left: 10px;
 
     h2 {
-        display: inline-block;
-        padding: 0 10px 5px 10px;
-        margin-left: -10px;
-        background: #fff;
-        border-radius: 4px;
+        text-transform: uppercase;
     }
 }
 
@@ -60,8 +56,12 @@
 
 .planning-overview__week--current {
     border: 1px solid #bbb;
-    margin-right: 40px;
-    margin-left: 40px;
+    margin-right: 10px;
+    margin-left: 10px;
+
+    &:first-child {
+        margin-left: 0;
+    }
 }
 
 .planning-overview__week__period {
