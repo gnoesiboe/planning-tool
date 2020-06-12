@@ -10,6 +10,7 @@ const WeekActions: React.FC<Props> = ({ children }) => (
             variant="outline-secondary"
             title={<Octicon icon={Plus} />}
             id="week-actions-dropdown"
+            size="sm"
         >
             {children}
         </DropdownButton>

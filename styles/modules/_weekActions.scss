@@ -1,8 +1,8 @@
 .week-actions {
     visibility: hidden;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 10px;
+    top: 14px;
 
     .planning-overview__week:hover & {
         visibility: visible;
