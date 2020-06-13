@@ -4,6 +4,8 @@ Week based planning tool. Project can be assigned to weeks for teams. Project bu
 
 Build using NextJs with a Node API.
 
+![Screenshot](support/images/screenshot1.png?raw=true 'Screenshot')
+
 ## Development
 
 Build using NextJS. It runs an api and development server using nodejs.
