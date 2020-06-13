@@ -11,7 +11,7 @@ import Head from 'next/head';
 import DragAndDropProvider from './components/DragAndDropProvider';
 import useMovePlanningItemToOtherWeekOnDrop from './hooks/useMovePlanningItemToOtherWeekOnDrop';
 import usePlanning from './hooks/usePlanning';
-import PlanningOverviewFiltering from '../PlanningOverviewFiltering/PlanningOverviewFiltering';
+import PlanningOverviewFiltering from '../planningOverviewFiltering/PlanningOverviewFiltering';
 import ProjectBudgetOverview from '../projectBudgetOverview/ProjectBudgetOverview';
 
 const PlanningOverview: React.FC = () => {
