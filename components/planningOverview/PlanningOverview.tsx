@@ -1,6 +1,6 @@
 import TeamRow from './components/TeamRow';
 import Week from './components/Week';
-import TeamWeekProject from './components/TeamWeekProject';
+import PlanningOverviewItem from './components/PlanningOverviewItem';
 import RemovePlanningItem from '../removePlanningItem/RemovePlanningItem';
 import AddPlanningItem from '../addPlanningItem/AddPlanningItem';
 import TeamWeekNotesOverview from '../teamWeekNotesOverview/TeamWeekNotesOverview';
@@ -56,9 +56,9 @@ const PlanningOverview: React.FC = () => {
                                         />
                                     </WeekActions>
                                     {items.length > 0 && (
-                                        <div className="planning-overview__team-week-projects">
+                                        <div className="planning-overview__items">
                                             {items.map((item) => (
-                                                <TeamWeekProject
+                                                <PlanningOverviewItem
                                                     key={item.id}
                                                     project={item.project}
                                                     item={item}
@@ -70,7 +70,7 @@ const PlanningOverview: React.FC = () => {
                                                         item={item}
                                                         team={team}
                                                     />
-                                                </TeamWeekProject>
+                                                </PlanningOverviewItem>
                                             ))}
                                         </div>
                                     )}

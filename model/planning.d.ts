@@ -44,14 +44,15 @@ export interface PlanningItem {
     notes: string | null;
 }
 
-export interface ExstendedPlanningItem extends PlanningItem {
+export interface PlanningItemWithRelations extends PlanningItem {
     project: Project;
+    team: Team;
 }
 
 export type WeekPlanningItems = Array<{
     week: number;
     year: number;
-    items: ExstendedPlanningItem[];
+    items: PlanningItemWithRelations[];
 }>;
 
 export type TeamPlanning = {

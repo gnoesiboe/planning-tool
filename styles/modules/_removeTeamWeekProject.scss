@@ -7,7 +7,7 @@
         margin: -5px 0 0 3px;
         visibility: hidden;
 
-        .planning-overview__team-week-project:hover & {
+        .planning-overview__item:hover & {
             visibility: visible;
         }
     }
