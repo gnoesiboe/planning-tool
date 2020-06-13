@@ -1,6 +1,8 @@
 # Planning tool
 
-Week based planning tool. Project can be assigned to weeks for teams.
+Week based planning tool. Project can be assigned to weeks for teams. Project budgets (no of weeks) can be assigned.
+
+Build using NextJs with a Node API.
 
 ## Development
 
