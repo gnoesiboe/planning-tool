@@ -1,10 +1,16 @@
 import ReactModal, { Props as ReactModalProps, Styles } from 'react-modal';
+import LinkButton from '../button/LinkButton';
+import Octicon, { X } from '@primer/octicons-react';
 
 ReactModal.setAppElement('#__next');
 
 type Props = Omit<ReactModalProps, 'isOpen'>;
 
-const Modal: React.FC<Props> = ({ ...otherProps }) => {
+const Modal: React.FC<Props> = ({
+    children,
+    onRequestClose,
+    ...otherProps
+}) => {
     const customStyles: Styles = {
         content: {
             marginLeft: '50%',
@@ -15,7 +21,26 @@ const Modal: React.FC<Props> = ({ ...otherProps }) => {
         },
     };
 
-    return <ReactModal {...otherProps} isOpen={true} style={customStyles} />;
+    return (
+        <ReactModal
+            {...otherProps}
+            isOpen={true}
+            style={customStyles}
+            onRequestClose={onRequestClose}
+        >
+            <LinkButton
+                className="modal__close"
+                onClick={(event) => {
+                    if (onRequestClose) {
+                        onRequestClose(event);
+                    }
+                }}
+            >
+                <Octicon icon={X} />
+            </LinkButton>
+            {children}
+        </ReactModal>
+    );
 };
 
 export default Modal;

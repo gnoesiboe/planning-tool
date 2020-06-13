@@ -5,7 +5,7 @@ import {
     Team,
     WeekPlanningItems,
     Project,
-    ExstendedPlanningItem,
+    PlanningItemWithRelations,
 } from './../../../model/planning';
 import { createRangeOfWeekYearPairs } from '../../../utility/dateTimeUtilities';
 import { resolveProjectOrThrow } from './projectResolver';
@@ -33,7 +33,7 @@ export function selectItemsGrouppedByWeekAndTeam(
         const weeks: WeekPlanningItems = [];
 
         weeksWithYears.forEach(({ week, year }) => {
-            const items: ExstendedPlanningItem[] = [];
+            const items: PlanningItemWithRelations[] = [];
             const projectIdsInWeek: string[] = [];
 
             planningItems.forEach((item) => {
@@ -49,7 +49,7 @@ export function selectItemsGrouppedByWeekAndTeam(
 
                 const project = resolveProjectOrThrow(projects, item.projectId);
 
-                items.push({ ...item, project });
+                items.push({ ...item, project, team });
             });
 
             const sortedItems = sortBy(items, (item) => item.project.name);
