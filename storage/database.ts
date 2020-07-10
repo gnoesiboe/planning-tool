@@ -15,7 +15,7 @@ const getPool = (): Pool => {
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
         connectionLimit: 30,
-        debug: true,
+        debug: false,
     });
 
     return pool;
