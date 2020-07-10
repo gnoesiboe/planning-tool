@@ -3,7 +3,8 @@
 
 // Modules
 @import './modules/planningOverview';
-@import './modules/removeTeamWeekProject';
+@import './modules/removePlanningItem';
+@import './modules/viewPlanningItem';
 @import './modules/addPlanningItem';
 @import './modules/teamWeekNotesOverview';
 @import './modules/removeTeamWeekNote';
@@ -13,6 +14,8 @@
 @import './modules/projectOverview';
 @import './modules/planningOverviewFiltering';
 @import './modules/projectBudgetOverview';
+@import './modules/markdownContent';
+@import './modules/section';
 
 body {
     padding: 0;
@@ -21,19 +24,4 @@ body {
 
 .page-content {
     padding-top: 30px;
-}
-
-.markdown-content {
-    ul {
-        padding: 0 0 0 15px;
-        margin: 0 0 10px;
-    }
-
-    p {
-        margin-bottom: 0.3rem;
-    }
-}
-
-.modal__close {
-    float: right;
 }

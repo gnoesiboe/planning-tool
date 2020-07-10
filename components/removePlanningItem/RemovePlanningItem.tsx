@@ -11,7 +11,7 @@ const RemovePlanningItem: React.FC<Props> = ({ item }) => {
     const { onClick } = useRemoveOnClick(item);
 
     return (
-        <span className="remove-team-week-project">
+        <span className="remove-planning-item">
             <LinkButton onClick={onClick}>
                 <Octicon icon={X} />
             </LinkButton>

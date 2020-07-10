@@ -5,6 +5,7 @@ import useShowHideModal from '../../hooks/useShowHideModal';
 import Modal from '../primities/modal/Modal';
 import EditPlanningItemForm from './components/EditPlanningItemForm';
 import { Table } from 'react-bootstrap';
+import Section from '../primities/section/Section';
 
 type Props = {
     item: PlanningItem;
@@ -16,22 +17,25 @@ const EditPlanningItem: React.FC<Props> = ({ item, team }) => {
 
     if (visible) {
         return (
-            <Modal onRequestClose={() => hide()}>
-                <h1>Edit planning item</h1>
-                <Table bordered>
-                    <tbody>
-                        <tr>
-                            <th style={{ width: '30%' }}>Week</th>
-                            <td>{item.week}</td>
-                        </tr>
-                        <tr>
-                            <th>Team</th>
-                            <td>{team.name}</td>
-                        </tr>
-                    </tbody>
-                </Table>
+            <Modal onRequestClose={() => hide()} title="Edit planning item">
+                <Section>
+                    <Table bordered>
+                        <tbody>
+                            <tr>
+                                <th style={{ width: '30%' }}>Week</th>
+                                <td>{item.week}</td>
+                            </tr>
+                            <tr>
+                                <th>Team</th>
+                                <td>{team.name}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </Section>
 
-                <EditPlanningItemForm item={item} onDone={() => hide()} />
+                <Section>
+                    <EditPlanningItemForm item={item} onDone={() => hide()} />
+                </Section>
             </Modal>
         );
     }

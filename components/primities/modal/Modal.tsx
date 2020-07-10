@@ -1,14 +1,18 @@
 import ReactModal, { Props as ReactModalProps, Styles } from 'react-modal';
-import LinkButton from '../button/LinkButton';
-import Octicon, { X } from '@primer/octicons-react';
+import { ModalBody, ModalTitle, CloseButton } from 'react-bootstrap';
+import ModalHeader from 'react-bootstrap/ModalHeader';
 
 ReactModal.setAppElement('#__next');
 
-type Props = Omit<ReactModalProps, 'isOpen'>;
+type Props = Omit<ReactModalProps, 'isOpen' | 'onRequestClose'> & {
+    title?: string;
+    onRequestClose: () => void;
+};
 
 const Modal: React.FC<Props> = ({
     children,
     onRequestClose,
+    title,
     ...otherProps
 }) => {
     const customStyles: Styles = {
@@ -28,17 +32,17 @@ const Modal: React.FC<Props> = ({
             style={customStyles}
             onRequestClose={onRequestClose}
         >
-            <LinkButton
-                className="modal__close"
-                onClick={(event) => {
-                    if (onRequestClose) {
-                        onRequestClose(event);
-                    }
-                }}
-            >
-                <Octicon icon={X} />
-            </LinkButton>
-            {children}
+            <ModalHeader>
+                {title && <ModalTitle>{title}</ModalTitle>}
+                <CloseButton
+                    onClick={() => {
+                        if (onRequestClose) {
+                            onRequestClose();
+                        }
+                    }}
+                />
+            </ModalHeader>
+            <ModalBody>{children}</ModalBody>
         </ReactModal>
     );
 };

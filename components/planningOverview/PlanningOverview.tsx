@@ -13,6 +13,7 @@ import useMovePlanningItemToOtherWeekOnDrop from './hooks/useMovePlanningItemToO
 import usePlanning from './hooks/usePlanning';
 import PlanningOverviewFiltering from '../planningOverviewFiltering/PlanningOverviewFiltering';
 import ProjectBudgetOverview from '../projectBudgetOverview/ProjectBudgetOverview';
+import ViewPlanningItem from '../viewPlanningItem/ViewPlanningItem';
 
 const PlanningOverview: React.FC = () => {
     const { planning } = usePlanning();
@@ -63,6 +64,9 @@ const PlanningOverview: React.FC = () => {
                                                     project={item.project}
                                                     item={item}
                                                 >
+                                                    <ViewPlanningItem
+                                                        item={item}
+                                                    />
                                                     <RemovePlanningItem
                                                         item={item}
                                                     />

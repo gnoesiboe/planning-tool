@@ -1,0 +1,16 @@
+.view-planning-item {
+    display: block;
+}
+
+.view-planning-item--button {
+    position: absolute;
+    bottom: 5px;
+    right: 40px;
+    padding: 0 !important;
+    margin: -5px 0 0 3px;
+    visibility: hidden;
+
+    .planning-overview__item:hover & {
+        visibility: visible;
+    }
+}

@@ -25,8 +25,10 @@ const AddPlanningItem: React.FC<Props> = ({
 
     if (visible) {
         return (
-            <Modal onRequestClose={() => hide()}>
-                <h1>{`Planning item toevoegen - Week ${week}`}</h1>
+            <Modal
+                onRequestClose={() => hide()}
+                title={`Planning item toevoegen - Week ${week}`}
+            >
                 <AddPlanningItemForm
                     week={week}
                     year={year}
