@@ -1,11 +1,16 @@
-import { AddProjectHandler } from '../PlanningContext';
-import { fetchAll, persist } from '../../../repository/api/projectRepository';
+import { AddProjectHandler, EditProjectHandler } from '../PlanningContext';
+import {
+    fetchAll,
+    persist,
+    update,
+} from '../../../repository/api/projectRepository';
 import { Project } from '../../../model/planning';
 import { notifyError } from '../../../utility/notifier';
 import { useState, useEffect } from 'react';
 import {
     addProjectToProjects,
     removeProjectFromProjects,
+    updateProjectInProjects,
 } from '../handler/projectStateMutationHandler';
 import useExecuteOnInterval from '../../../hooks/useExecuteOnInterval';
 
@@ -64,5 +69,27 @@ export default function useManageProjects() {
         }
     };
 
-    return { projects: projects || null, addProject };
+    const editProject: EditProjectHandler = async (project) => {
+        // update local state
+        setProjects((currentProjects) => {
+            if (!Array.isArray(currentProjects)) {
+                throw new Error(
+                    'Expecting projects to be an array at this point'
+                );
+            }
+
+            return updateProjectInProjects(project, currentProjects);
+        });
+
+        // push update to server
+        try {
+            await update(project);
+        } catch (error) {
+            notifyError(
+                'Something went wrong while persisting the project. Please refresh the page!'
+            );
+        }
+    };
+
+    return { projects: projects || null, addProject, editProject };
 }

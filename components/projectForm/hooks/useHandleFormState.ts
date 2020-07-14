@@ -28,12 +28,15 @@ export default function useHandleFormState(
     const [values, setValues] = useState<FormValues>({
         name: project?.name || '',
         color: project?.color || '',
-        active: project?.active || true,
+        active: project ? project.active : true,
     });
 
     const [errors, setErrors] = useState<FormErrors>({ ...emptyErrors });
 
-    const handleFieldChange = (key: keyof FormValues, value: string) => {
+    const handleFieldChange = (
+        key: keyof FormValues,
+        value: string | boolean
+    ) => {
         setValues((currentValues) => ({
             ...currentValues,
             [key]: value,

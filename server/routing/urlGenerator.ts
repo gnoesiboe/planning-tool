@@ -11,6 +11,7 @@ export const createPutPlanningItemUrl = (id: string) =>
 // project
 export const createGetProjectListUrl = () => `${baseUrl}/projects`;
 export const createPostProjectUrl = () => `${baseUrl}/projects`;
+export const createPutProjectUrl = (id: string) => `${baseUrl}/projects/${id}`;
 
 // project budget item
 export const createGetProjectBudgetItemsUrl = () =>

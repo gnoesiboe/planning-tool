@@ -14,7 +14,9 @@ type Props = {
 const EditProject: React.FC<Props> = ({ project }) => {
     const { show, hide, visible } = useShowHideModal();
 
-    const { onSubmitValid } = useUpdateProjectOnValidSubmit();
+    const { onSubmitValid } = useUpdateProjectOnValidSubmit(project, () =>
+        hide()
+    );
 
     if (visible) {
         return (

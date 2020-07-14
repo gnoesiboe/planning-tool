@@ -26,6 +26,7 @@ export type RemovePlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type AddTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;
 export type RemoveTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;
 export type AddProjectHandler = (project: Project) => Promise<void>;
+export type EditProjectHandler = (project: Project) => Promise<void>;
 export type OnFilterChangeHandler = (
     newFilterValues: Partial<FiltersValues>
 ) => void;
@@ -45,6 +46,7 @@ type ContextValue = {
     addTeamWeekNote: AddTeamWeekNoteHandler;
     removeTeamWeekNote: RemoveTeamWeekNoteHandler;
     addProject: AddProjectHandler;
+    editProject: EditProjectHandler;
 };
 
 const initialValue: ContextValue = {
@@ -62,6 +64,7 @@ const initialValue: ContextValue = {
     addTeamWeekNote: async () => {},
     removeTeamWeekNote: async () => {},
     addProject: async () => {},
+    editProject: async () => {},
 };
 
 const PlanningContext = createContext<ContextValue>(initialValue);
@@ -92,7 +95,7 @@ export const PlanningContextProvider: React.FC<{
         removeTeamWeekNote,
     } = useManageTeamWeekNotes();
 
-    const { projects, addProject } = useManageProjects();
+    const { projects, addProject, editProject } = useManageProjects();
 
     const value: ContextValue = {
         filters,
@@ -109,6 +112,7 @@ export const PlanningContextProvider: React.FC<{
         addTeamWeekNote,
         removeTeamWeekNote,
         addProject,
+        editProject,
     };
 
     return (

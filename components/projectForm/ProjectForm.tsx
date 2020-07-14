@@ -65,7 +65,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmitValid, onCancel, project }) => {
                             errors.color ? 'is-invalid' : ''
                         }`}
                         onChange={(event) =>
-                            handleFieldChange('active', event.target.value)
+                            handleFieldChange('active', event.target.checked)
                         }
                     />
                     <label htmlFor="active" className="form-check-label">

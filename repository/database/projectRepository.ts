@@ -50,6 +50,6 @@ export async function update({
 }: Project): Promise<void> {
     await executeQuery(
         'UPDATE project SET name = ?, color = ?, active = ? WHERE id = ? LIMIT 1',
-        [name, color, id, active ? 1 : 0]
+        [name, color, active ? 1 : 0, id]
     );
 }
