@@ -1,4 +1,4 @@
-import { PlanningItem, Team } from '../../model/planning';
+import { PlanningItemWithRelations } from '../../model/planning';
 import LinkButton from '../primities/button/LinkButton';
 import Octicon, { Pencil } from '@primer/octicons-react';
 import useShowHideModal from '../../hooks/useShowHideModal';
@@ -8,11 +8,10 @@ import { Table } from 'react-bootstrap';
 import Section from '../primities/section/Section';
 
 type Props = {
-    item: PlanningItem;
-    team: Team;
+    item: PlanningItemWithRelations;
 };
 
-const EditPlanningItem: React.FC<Props> = ({ item, team }) => {
+const EditPlanningItem: React.FC<Props> = ({ item }) => {
     const { show, hide, visible } = useShowHideModal();
 
     if (visible) {
@@ -27,7 +26,7 @@ const EditPlanningItem: React.FC<Props> = ({ item, team }) => {
                             </tr>
                             <tr>
                                 <th>Team</th>
-                                <td>{team.name}</td>
+                                <td>{item.team.name}</td>
                             </tr>
                         </tbody>
                     </Table>

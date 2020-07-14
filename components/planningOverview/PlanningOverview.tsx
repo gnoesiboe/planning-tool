@@ -72,7 +72,6 @@ const PlanningOverview: React.FC = () => {
                                                     />
                                                     <EditPlanningItem
                                                         item={item}
-                                                        team={team}
                                                     />
                                                 </PlanningOverviewItem>
                                             ))}
