@@ -1,22 +1,15 @@
 import { PlanningItem } from '../../model/planning';
 import useRemoveOnClick from './hooks/useRemoveOnClick';
-import LinkButton from '../primities/button/LinkButton';
-import Octicon, { X } from '@primer/octicons-react';
 
 type Props = {
     item: PlanningItem;
+    renderButton: (onClick: () => void) => JSX.Element;
 };
 
-const RemovePlanningItem: React.FC<Props> = ({ item }) => {
+const RemovePlanningItem: React.FC<Props> = ({ item, renderButton }) => {
     const { onClick } = useRemoveOnClick(item);
 
-    return (
-        <span className="remove-planning-item">
-            <LinkButton onClick={onClick}>
-                <Octicon icon={X} />
-            </LinkButton>
-        </span>
-    );
+    return renderButton(onClick);
 };
 
 export default RemovePlanningItem;

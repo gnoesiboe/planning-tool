@@ -13,37 +13,32 @@ type Props = {
 const EditPlanningItem: React.FC<Props> = ({ item, renderButton }) => {
     const { show, hide, visible } = useShowHideModal();
 
-    return (
-        <span className="edit-planning-item">
-            {visible ? (
-                <Modal onRequestClose={() => hide()} title="Edit planning item">
-                    <Section>
-                        <Table bordered>
-                            <tbody>
-                                <tr>
-                                    <th style={{ width: '30%' }}>Week</th>
-                                    <td>{item.week}</td>
-                                </tr>
-                                <tr>
-                                    <th>Team</th>
-                                    <td>{item.team.name}</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </Section>
+    if (visible) {
+        return (
+            <Modal onRequestClose={() => hide()} title="Edit planning item">
+                <Section>
+                    <Table bordered>
+                        <tbody>
+                            <tr>
+                                <th style={{ width: '30%' }}>Week</th>
+                                <td>{item.week}</td>
+                            </tr>
+                            <tr>
+                                <th>Team</th>
+                                <td>{item.team.name}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </Section>
 
-                    <Section>
-                        <EditPlanningItemForm
-                            item={item}
-                            onDone={() => hide()}
-                        />
-                    </Section>
-                </Modal>
-            ) : (
-                renderButton(() => show())
-            )}
-        </span>
-    );
+                <Section>
+                    <EditPlanningItemForm item={item} onDone={() => hide()} />
+                </Section>
+            </Modal>
+        );
+    }
+
+    return renderButton(() => show());
 };
 
 export default EditPlanningItem;

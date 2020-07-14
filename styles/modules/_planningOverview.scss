@@ -1,3 +1,5 @@
+@import '../settings//animations';
+
 .planning-overview {
     width: 100%;
     height: 100%;
@@ -105,27 +107,23 @@
     }
 }
 
-.planning-overview__item__action {
+.planning-overview__item-actions {
     position: absolute;
-    bottom: 5px;
-    right: 20px;
-    padding: 0 !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px;
     visibility: hidden;
+    text-align: right;
 
     .planning-overview__item:hover & {
         visibility: visible;
     }
-
-    .view-planning-item & {
-        visibility: visible;
-    }
 }
 
-@keyframes fadein {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.planning-overview__item-action {
+    margin: 0;
+    padding: 0 0 0 5px !important;
+    margin: 0 !important;
+    color: black !important;
 }

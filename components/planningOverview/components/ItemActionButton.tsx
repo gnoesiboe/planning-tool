@@ -7,7 +7,7 @@ type Props = {
 };
 
 const ItemActionButton: React.FC<Props> = ({ children, onClick }) => (
-    <LinkButton onClick={onClick} className="planning-overview__item__action">
+    <LinkButton onClick={onClick} className="planning-overview__item-action">
         {children}
     </LinkButton>
 );
