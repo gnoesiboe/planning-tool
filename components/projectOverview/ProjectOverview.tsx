@@ -3,6 +3,7 @@ import { usePlanningContext } from '../../context/planning/PlanningContext';
 import { Table } from 'react-bootstrap';
 import AddProject from '../addProject/AddProject';
 import { CSSProperties } from 'react';
+import EditProject from '../editProject/EditProject';
 
 const ProjectOverview: React.FC = () => {
     const { projects } = usePlanningContext();
@@ -20,6 +21,7 @@ const ProjectOverview: React.FC = () => {
                         <tr>
                             <th>Name</th>
                             <th style={{ width: '120px' }}>Color</th>
+                            <th style={{ width: '60px' }} />
                         </tr>
                     </thead>
                     <tbody>
@@ -39,6 +41,9 @@ const ProjectOverview: React.FC = () => {
                                     <td>{project.name}</td>
                                     <td style={colorCellStyle}>
                                         {project.color}
+                                    </td>
+                                    <td>
+                                        <EditProject project={project} />
                                     </td>
                                 </tr>
                             );

@@ -1,5 +1,5 @@
 import { Result } from './../../repository/database/projectRepository';
-import { FormValues } from './../../components/addProject/hooks/useHandleFormState';
+import { FormValues } from '../../components/projectForm/hooks/useHandleFormState';
 import { Project } from './../planning';
 import { RequestBody } from './../../server/controller/project/createController';
 import { createUuid } from '../../utility/idGenerator';

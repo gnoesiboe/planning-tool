@@ -1,6 +1,7 @@
-import { usePlanningContext } from './../../../context/planning/PlanningContext';
 import { useState, FormEventHandler } from 'react';
-import { createProjectFromFormInput } from '../../../model/factory/projectFactory';
+import { Project } from '../../../model/planning';
+
+export type OnSubmitValidHandler = (values: FormValues) => void;
 
 export type FormValues = {
     name: string;
@@ -20,16 +21,17 @@ const emptyErrors: FormErrors = {
     active: null,
 };
 
-export default function useHandleFormState(onDone: () => void) {
+export default function useHandleFormState(
+    onSubmitValid: OnSubmitValidHandler,
+    project?: Project
+) {
     const [values, setValues] = useState<FormValues>({
-        name: '',
-        color: '',
-        active: true,
+        name: project?.name || '',
+        color: project?.color || '',
+        active: project?.active || true,
     });
 
     const [errors, setErrors] = useState<FormErrors>({ ...emptyErrors });
-
-    const { addProject } = usePlanningContext();
 
     const handleFieldChange = (key: keyof FormValues, value: string) => {
         setValues((currentValues) => ({
@@ -65,11 +67,7 @@ export default function useHandleFormState(onDone: () => void) {
             return;
         }
 
-        const project = createProjectFromFormInput(values);
-
-        addProject(project);
-
-        onDone();
+        onSubmitValid(values);
     };
 
     return { values, errors, handleFieldChange, onSubmit };

@@ -2,16 +2,21 @@ import PrimaryButton from '../primities/button/PrimaryButton';
 import Octicon, { PlusSmall } from '@primer/octicons-react';
 import useShowHideModal from '../../hooks/useShowHideModal';
 import Modal from '../primities/modal/Modal';
-import ProjectForm from './components/ProjectForm';
+import ProjectForm from '../projectForm/ProjectForm';
+import usePersistProjectOnValidSubmit from './hooks/usePersistProjectOnValidSubmit';
 
 const AddProject: React.FC = () => {
     const { show, hide, visible } = useShowHideModal();
 
+    const { onSubmitValid } = usePersistProjectOnValidSubmit(() => hide());
+
     if (visible) {
         return (
-            <Modal onRequestClose={() => hide()}>
-                <h1>Add project</h1>
-                <ProjectForm onDone={() => hide()} />
+            <Modal onRequestClose={() => hide()} title="Add project">
+                <ProjectForm
+                    onSubmitValid={onSubmitValid}
+                    onCancel={() => hide()}
+                />
             </Modal>
         );
     }

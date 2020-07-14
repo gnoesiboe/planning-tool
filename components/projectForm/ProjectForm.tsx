@@ -1,16 +1,22 @@
-import FormGroup from '../../primities/form/FormGroup';
-import useHandleFormState from '../hooks/useHandleFormState';
-import LinkButton from '../../primities/button/LinkButton';
-import PrimaryButton from '../../primities/button/PrimaryButton';
-import FormFieldError from '../../primities/form/FormFieldError';
+import FormGroup from '../primities/form/FormGroup';
+import useHandleFormState, {
+    OnSubmitValidHandler,
+} from './hooks/useHandleFormState';
+import LinkButton from '../primities/button/LinkButton';
+import PrimaryButton from '../primities/button/PrimaryButton';
+import FormFieldError from '../primities/form/FormFieldError';
+import { Project } from '../../model/planning';
 
 type Props = {
-    onDone: () => void;
+    onSubmitValid: OnSubmitValidHandler;
+    onCancel: () => void;
+    project?: Project;
 };
 
-const ProjectForm: React.FC<Props> = ({ onDone }) => {
+const ProjectForm: React.FC<Props> = ({ onSubmitValid, onCancel, project }) => {
     const { values, errors, handleFieldChange, onSubmit } = useHandleFormState(
-        onDone
+        onSubmitValid,
+        project
     );
 
     return (
@@ -72,7 +78,7 @@ const ProjectForm: React.FC<Props> = ({ onDone }) => {
                 )}
             </FormGroup>
             <PrimaryButton type="submit">Add project</PrimaryButton>
-            <LinkButton onClick={() => onDone()}>Cancel</LinkButton>
+            <LinkButton onClick={() => onCancel()}>Cancel</LinkButton>
         </form>
     );
 };
