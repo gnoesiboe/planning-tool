@@ -105,6 +105,22 @@
     }
 }
 
+.planning-overview__item__action {
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+    padding: 0 !important;
+    visibility: hidden;
+
+    .planning-overview__item:hover & {
+        visibility: visible;
+    }
+
+    .view-planning-item & {
+        visibility: visible;
+    }
+}
+
 @keyframes fadein {
     from {
         opacity: 0;

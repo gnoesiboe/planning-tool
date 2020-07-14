@@ -3,6 +3,7 @@ import useHandleFormState from '../hooks/useHandleFormState';
 import FormGroup from '../../primities/form/FormGroup';
 import PrimaryButton from '../../primities/button/PrimaryButton';
 import LinkButton from '../../primities/button/LinkButton';
+import TextareaAutosize from 'react-autosize-textarea';
 
 type Props = {
     item: PlanningItem;
@@ -19,12 +20,12 @@ const EditPlanningItemForm: React.FC<Props> = ({ item, onDone }) => {
         <form noValidate onSubmit={handleSubmit}>
             <FormGroup>
                 <label htmlFor="notes">Notities</label>
-                <textarea
+                <TextareaAutosize
                     autoFocus
                     value={values.notes}
                     className="form-control"
                     onChange={(event) =>
-                        handleFieldChange('notes', event.target.value)
+                        handleFieldChange('notes', event.currentTarget.value)
                     }
                 />
             </FormGroup>

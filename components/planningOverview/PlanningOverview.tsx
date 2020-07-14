@@ -1,19 +1,16 @@
 import TeamRow from './components/TeamRow';
 import Week from './components/Week';
-import PlanningOverviewItem from './components/PlanningOverviewItem';
-import RemovePlanningItem from '../removePlanningItem/RemovePlanningItem';
 import AddPlanningItem from '../addPlanningItem/AddPlanningItem';
 import TeamWeekNotesOverview from '../teamWeekNotesOverview/TeamWeekNotesOverview';
 import AddTeamWeekNote from '../addTeamWeekNote/AddTeamWeekNote';
 import WeekActions from './components/WeekActions';
-import EditPlanningItem from '../editPlanningItem/EditPlanningItem';
 import Head from 'next/head';
 import DragAndDropProvider from './components/DragAndDropProvider';
 import useMovePlanningItemToOtherWeekOnDrop from './hooks/useMovePlanningItemToOtherWeekOnDrop';
 import usePlanning from './hooks/usePlanning';
 import PlanningOverviewFiltering from '../planningOverviewFiltering/PlanningOverviewFiltering';
 import ProjectBudgetOverview from '../projectBudgetOverview/ProjectBudgetOverview';
-import ViewPlanningItem from '../viewPlanningItem/ViewPlanningItem';
+import PlanningOverviewItems from './components/PlanningOverviewItems';
 
 const PlanningOverview: React.FC = () => {
     const { planning } = usePlanning();
@@ -57,25 +54,7 @@ const PlanningOverview: React.FC = () => {
                                         />
                                     </WeekActions>
                                     {items.length > 0 && (
-                                        <div className="planning-overview__items">
-                                            {items.map((item) => (
-                                                <PlanningOverviewItem
-                                                    key={item.id}
-                                                    project={item.project}
-                                                    item={item}
-                                                >
-                                                    <ViewPlanningItem
-                                                        item={item}
-                                                    />
-                                                    <RemovePlanningItem
-                                                        item={item}
-                                                    />
-                                                    <EditPlanningItem
-                                                        item={item}
-                                                    />
-                                                </PlanningOverviewItem>
-                                            ))}
-                                        </div>
+                                        <PlanningOverviewItems items={items} />
                                     )}
                                     <TeamWeekNotesOverview
                                         week={week}

@@ -11,9 +11,13 @@
     ul {
         padding: 0 0 0 15px;
         margin: 0 0 10px;
+
+        ul {
+            margin: 0;
+        }
     }
 
     p {
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.8rem;
     }
 }

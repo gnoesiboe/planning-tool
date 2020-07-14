@@ -1,4 +1,4 @@
-import { PlanningItem, Project } from './../../../model/planning';
+import { PlanningItemWithRelations } from './../../../model/planning.d';
 import { useDrag, DragObjectWithType } from 'react-dnd';
 import { CSSProperties } from 'react';
 
@@ -11,13 +11,13 @@ type DropCollectedProps = {
     opacity: number;
 };
 
-export default function useMakeDraggable(item: PlanningItem, project: Project) {
+export default function useMakeDraggable(item: PlanningItemWithRelations) {
     const [{ opacity }, draggableRef] = useDrag<
         DropObject,
         {},
         DropCollectedProps
     >({
-        item: { name: 'planning_item', id: item.id, type: project.id },
+        item: { name: 'planning_item', id: item.id, type: item.project.id },
         collect: (monitor) => ({
             opacity: monitor.isDragging() ? 0.4 : 1,
         }),
