@@ -20,6 +20,7 @@ const ProjectOverview: React.FC = () => {
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>No of items</th>
                             <th style={{ width: '120px' }}>Color</th>
                             <th style={{ width: '60px' }} />
                         </tr>
@@ -39,6 +40,12 @@ const ProjectOverview: React.FC = () => {
                             return (
                                 <tr key={project.id} className={rowClassname}>
                                     <td>{project.name}</td>
+                                    <td>
+                                        {project.noOfItems}{' '}
+                                        {project.noOfItems === 1
+                                            ? 'item'
+                                            : 'items'}
+                                    </td>
                                     <td style={colorCellStyle}>
                                         {project.color}
                                     </td>

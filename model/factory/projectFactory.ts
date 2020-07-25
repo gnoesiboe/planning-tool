@@ -13,10 +13,12 @@ export function createProjectFromRequestInput(input: RequestBody): Project {
     return { ...input };
 }
 
-export function createProjectFromFormInput(values: FormValues): Project {
+export function createProjectFromFormInput(
+    values: FormValues
+): ProjectWithItemCount {
     const id = createUuid();
 
-    return { ...values, id };
+    return { ...values, id, noOfItems: 0 };
 }
 
 export function createProjectFromDatabaseResult(result: Result): Project {

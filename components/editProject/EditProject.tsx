@@ -2,13 +2,13 @@ import React from 'react';
 import LinkButton from '../primities/button/LinkButton';
 import useShowHideModal from '../../hooks/useShowHideModal';
 import Octicon, { Pencil } from '@primer/octicons-react';
-import { Project } from '../../model/planning';
+import { ProjectWithItemCount } from '../../model/planning';
 import Modal from '../primities/modal/Modal';
 import ProjectForm from '../projectForm/ProjectForm';
 import useUpdateProjectOnValidSubmit from './hooks/useUpdateProjectOnValidSubmit';
 
 type Props = {
-    project: Project;
+    project: ProjectWithItemCount;
 };
 
 const EditProject: React.FC<Props> = ({ project }) => {

@@ -1,15 +1,15 @@
-import { Project } from './../../../model/planning.d';
+import { ProjectWithItemCount } from './../../../model/planning.d';
 import { OnSubmitValidHandler } from './../../projectForm/hooks/useHandleFormState';
 import { usePlanningContext } from '../../../context/planning/PlanningContext';
 
 export default function useUpdateProjectOnValidSubmit(
-    project: Project,
+    project: ProjectWithItemCount,
     onDone: () => void
 ) {
     const { editProject } = usePlanningContext();
 
     const onSubmitValid: OnSubmitValidHandler = (values) => {
-        const updatedProject: Project = {
+        const updatedProject: ProjectWithItemCount = {
             ...project,
             ...values,
         };

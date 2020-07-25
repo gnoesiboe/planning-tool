@@ -1,3 +1,4 @@
+import { ProjectWithItemCount } from './../../model/planning.d';
 import {
     createGetProjectListUrl,
     createPostProjectUrl,
@@ -11,7 +12,7 @@ import {
     executePutRequest,
 } from '../../api/client';
 
-export async function fetchAll(): Promise<Project[]> {
+export async function fetchAll(): Promise<ProjectWithItemCount[]> {
     const { projects } = await executeGetRequest<ProjectsResponseBody>(
         createGetProjectListUrl()
     );

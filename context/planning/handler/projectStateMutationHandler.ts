@@ -1,8 +1,11 @@
+import { ProjectWithItemCount } from './../../../model/planning';
 import { produce } from 'immer';
-import { Project } from './../../../model/planning';
 
 // make sure that inactive projects go last and otherwise are sorted by name
-const sortProjects = (first: Project, second: Project) => {
+const sortProjects = (
+    first: ProjectWithItemCount,
+    second: ProjectWithItemCount
+) => {
     if (first.active === false) {
         return 1;
     }
@@ -15,37 +18,46 @@ const sortProjects = (first: Project, second: Project) => {
 };
 
 export function addProjectToProjects(
-    project: Project,
-    currentProjects: Project[]
+    project: ProjectWithItemCount,
+    currentProjects: ProjectWithItemCount[]
 ) {
-    return produce<Project[]>(currentProjects, (updatedProjects) => {
-        updatedProjects.push(project);
-        updatedProjects.sort(sortProjects);
-    });
+    return produce<ProjectWithItemCount[]>(
+        currentProjects,
+        (updatedProjects) => {
+            updatedProjects.push(project);
+            updatedProjects.sort(sortProjects);
+        }
+    );
 }
 
 export function updateProjectInProjects(
-    updatedProject: Project,
-    currentProjects: Project[]
+    updatedProject: ProjectWithItemCount,
+    currentProjects: ProjectWithItemCount[]
 ) {
-    return produce<Project[]>(currentProjects, (updatedProjects) => {
-        return updatedProjects
-            .map((cursorProject) =>
-                cursorProject.id === updatedProject.id
-                    ? updatedProject
-                    : cursorProject
-            )
-            .sort(sortProjects);
-    });
+    return produce<ProjectWithItemCount[]>(
+        currentProjects,
+        (updatedProjects) => {
+            return updatedProjects
+                .map((cursorProject) =>
+                    cursorProject.id === updatedProject.id
+                        ? updatedProject
+                        : cursorProject
+                )
+                .sort(sortProjects);
+        }
+    );
 }
 
 export function removeProjectFromProjects(
-    project: Project,
-    currentProjects: Project[]
+    project: ProjectWithItemCount,
+    currentProjects: ProjectWithItemCount[]
 ) {
-    return produce<Project[]>(currentProjects, (updatedProjects) => {
-        return updatedProjects.filter(
-            (cursorProject) => cursorProject.id !== project.id
-        );
-    });
+    return produce<ProjectWithItemCount[]>(
+        currentProjects,
+        (updatedProjects) => {
+            return updatedProjects.filter(
+                (cursorProject) => cursorProject.id !== project.id
+            );
+        }
+    );
 }

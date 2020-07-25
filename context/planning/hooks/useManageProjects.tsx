@@ -4,7 +4,7 @@ import {
     persist,
     update,
 } from '../../../repository/api/projectRepository';
-import { Project } from '../../../model/planning';
+import { ProjectWithItemCount } from '../../../model/planning';
 import { notifyError } from '../../../utility/notifier';
 import { useState, useEffect } from 'react';
 import {
@@ -17,7 +17,9 @@ import useExecuteOnInterval from '../../../hooks/useExecuteOnInterval';
 const refetchInterval = 1000 * 60 * 15; // 15 minutes
 
 export default function useManageProjects() {
-    const [projects, setProjects] = useState<Project[] | null>(null);
+    const [projects, setProjects] = useState<ProjectWithItemCount[] | null>(
+        null
+    );
 
     const doFetchProjects = () => {
         fetchAll()

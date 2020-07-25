@@ -1,10 +1,10 @@
 import { ReactNode, createContext, useContext } from 'react';
 import {
     Team,
-    Project,
     PlanningItem,
     TeamWeekNote,
     ProjectBudgetItemWithUsageCount,
+    ProjectWithItemCount,
 } from '../../model/planning';
 import useFetchPlanningRequirements from './hooks/useFetchPlanningRequirements';
 import useManagePlanning, { PlanningFilters } from './hooks/useManagePlanning';
@@ -25,8 +25,12 @@ export type MovePlanningItemHandler = (
 export type RemovePlanningItemHandler = (item: PlanningItem) => Promise<void>;
 export type AddTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;
 export type RemoveTeamWeekNoteHandler = (note: TeamWeekNote) => Promise<void>;
-export type AddProjectHandler = (project: Project) => Promise<void>;
-export type EditProjectHandler = (project: Project) => Promise<void>;
+export type AddProjectHandler = (
+    project: ProjectWithItemCount
+) => Promise<void>;
+export type EditProjectHandler = (
+    project: ProjectWithItemCount
+) => Promise<void>;
 export type OnFilterChangeHandler = (
     newFilterValues: Partial<FiltersValues>
 ) => void;
@@ -36,7 +40,7 @@ type ContextValue = {
     onFilterChange: OnFilterChangeHandler;
     teams: Team[] | null;
     planningItems: PlanningItem[] | null;
-    projects: Project[] | null;
+    projects: ProjectWithItemCount[] | null;
     teamWeekNotes: TeamWeekNote[] | null;
     projectBudgetItems: ProjectBudgetItemWithUsageCount[] | null;
     addPlanningItem: AddPlanningItemHandler;

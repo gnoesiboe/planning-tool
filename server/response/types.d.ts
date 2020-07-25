@@ -8,7 +8,7 @@ import { Planning, Project, Team } from '../../model/planning';
 import { ValidationError, ValidationErrorItem } from '@hapi/joi';
 
 export type ProjectsResponseBody = {
-    projects: Project[];
+    projects: ProjectWithItemCount[];
 };
 
 export type TeamsResponseBody = {
