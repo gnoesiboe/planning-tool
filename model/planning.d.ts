@@ -14,12 +14,16 @@ export type TeamWeekNote = {
     note: string;
 };
 
-export type Project = {
+export interface Project {
     id: string;
     name: string;
     color: string;
     active: boolean;
-};
+}
+
+export interface ProjectWithItemCount extends Project {
+    noOfItems: number;
+}
 
 export interface ProjectBudgetItem {
     id: string;

@@ -1,22 +1,38 @@
+import { ProjectWithItemCount } from './../../model/planning.d';
 import { Project } from '../../model/planning';
 import { executeSelect, executeQuery } from '../../storage/database';
-import { createProjectFromDatabaseResult } from '../../model/factory/projectFactory';
+import {
+    createProjectFromDatabaseResult,
+    createProjectWithItemCountFromResult,
+} from '../../model/factory/projectFactory';
 
-export type Result = {
+export interface Result {
     id: string;
     name: string;
     color: string;
     active: 1 | 0;
-};
+}
 
-export async function findAllOrderedByNameAndActiveStatus(): Promise<
-    Project[]
+export interface ResultWithItemCount extends Result {
+    no_of_items: number;
+}
+
+export async function findAllOrderedByNameAndActiveStatusWithItemCount(): Promise<
+    ProjectWithItemCount[]
 > {
-    const results = await executeSelect<Result>(
-        'SELECT * FROM project ORDER BY active DESC, name ASC'
+    const results = await executeSelect<ResultWithItemCount>(
+        `
+            SELECT p.*, COUNT(*) as no_of_items
+            FROM project p
+            LEFT JOIN planning_item pi ON pi.project_id = p.id
+            GROUP BY p.id
+            ORDER BY active DESC, name ASC
+        `
     );
 
-    return results.map((result) => createProjectFromDatabaseResult(result));
+    return results.map((result) =>
+        createProjectWithItemCountFromResult(result)
+    );
 }
 
 export async function findOneWithId(id: string): Promise<Project | null> {

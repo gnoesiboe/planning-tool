@@ -1,9 +1,9 @@
 import { ProjectsResponseBody } from './../../response/types.d';
 import { Controller } from './../../routing/methodSwitch';
-import { findAllOrderedByNameAndActiveStatus } from '../../../repository/database/projectRepository';
+import { findAllOrderedByNameAndActiveStatusWithItemCount } from '../../../repository/database/projectRepository';
 
 const indexController: Controller = async (_request, response) => {
-    const projects = await findAllOrderedByNameAndActiveStatus();
+    const projects = await findAllOrderedByNameAndActiveStatusWithItemCount();
 
     const body: ProjectsResponseBody = {
         projects,
