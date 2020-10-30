@@ -4,15 +4,14 @@ import 'bootstrap/scss/bootstrap.scss';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { PlanningContextProvider } from '../context/planning/PlanningContext';
 import { ToastContainer } from 'react-toastify';
-import { Navbar } from 'react-bootstrap';
 import MainNavigation from '../components/mainNavigation/MainNavigation';
+import MainHeader from '../components/mainHeader/MainHeader';
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
     <>
-        <Navbar bg="dark" variant="dark" sticky="top">
-            <Navbar.Brand>Freshheads</Navbar.Brand>
+        <MainHeader>
             <MainNavigation />
-        </Navbar>
+        </MainHeader>
         <div className="container-fluid page-content">
             <PlanningContextProvider>
                 <Component {...pageProps} />
