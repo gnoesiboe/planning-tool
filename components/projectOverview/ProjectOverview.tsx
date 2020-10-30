@@ -1,13 +1,14 @@
 import Head from 'next/head';
-import { usePlanningContext } from '../../context/planning/PlanningContext';
 import { Table } from 'react-bootstrap';
 import AddProject from '../addProject/AddProject';
 import { CSSProperties } from 'react';
 import EditProject from '../editProject/EditProject';
+import useSelectProjectsWithBudget from './hooks/useSelectProjectsWIthBudget';
 import styles from './ProjectOverview.module.scss';
+import BudgetItemDescription from './components/BudgetItemDescription';
 
 const ProjectOverview: React.FC = () => {
-    const { projects } = usePlanningContext();
+    const { projectsWithBudgetItems: projects } = useSelectProjectsWithBudget();
 
     return (
         <div className="project-overview">
@@ -21,7 +22,7 @@ const ProjectOverview: React.FC = () => {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>No of items</th>
+                            <th>Budget</th>
                             <th style={{ width: '120px' }}>Color</th>
                             <th style={{ width: '60px' }} />
                         </tr>
@@ -42,10 +43,13 @@ const ProjectOverview: React.FC = () => {
                                 <tr key={project.id} className={rowClassname}>
                                     <td>{project.name}</td>
                                     <td>
-                                        {project.noOfItems}{' '}
-                                        {project.noOfItems === 1
-                                            ? 'item'
-                                            : 'items'}
+                                        {project.active &&
+                                            project.budgetItems.map((item) => (
+                                                <BudgetItemDescription
+                                                    key={item.id}
+                                                    item={item}
+                                                />
+                                            ))}
                                     </td>
                                     <td style={colorCellStyle}>
                                         {project.color}
