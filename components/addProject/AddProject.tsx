@@ -1,5 +1,5 @@
 import PrimaryButton from '../primities/button/PrimaryButton';
-import Octicon, { PlusSmall } from '@primer/octicons-react';
+import { PlusIcon } from '@primer/octicons-react';
 import useShowHideModal from '../../hooks/useShowHideModal';
 import Modal from '../primities/modal/Modal';
 import ProjectForm from '../projectForm/ProjectForm';
@@ -23,7 +23,7 @@ const AddProject: React.FC = () => {
 
     return (
         <PrimaryButton className="create-project" onClick={() => show()}>
-            <Octicon icon={PlusSmall} /> Add project
+            <PlusIcon /> Add project
         </PrimaryButton>
     );
 };

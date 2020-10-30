@@ -1,5 +1,5 @@
 import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 };
 
 const DragAndDropProvider: React.FC<Props> = ({ children }) => (
-    <DndProvider backend={Backend}>{children}</DndProvider>
+    <DndProvider backend={HTML5Backend}>{children}</DndProvider>
 );
 
 export default DragAndDropProvider;

@@ -5,7 +5,7 @@ import ViewPlanningItem from '../../viewPlanningItem/ViewPlanningItem';
 import RemovePlanningItem from '../../removePlanningItem/RemovePlanningItem';
 import EditPlanningItem from '../../editPlanningItem/EditPlanningItem';
 import ItemActionButton from './ItemActionButton';
-import Octicon, { Pencil, Eye, X } from '@primer/octicons-react';
+import { PencilIcon, EyeIcon, XIcon } from '@primer/octicons-react';
 import PlanningOverviewItemActions from './PlanningOverviewItemActions';
 
 type Props = {
@@ -21,7 +21,7 @@ const PlanningOverviewItems: React.FC<Props> = ({ items }) => (
                         item={item}
                         renderButton={(onClick) => (
                             <ItemActionButton onClick={onClick}>
-                                <Octicon icon={Eye} />
+                                <EyeIcon />
                             </ItemActionButton>
                         )}
                     />
@@ -29,7 +29,7 @@ const PlanningOverviewItems: React.FC<Props> = ({ items }) => (
                         item={item}
                         renderButton={(onClick) => (
                             <ItemActionButton onClick={onClick}>
-                                <Octicon icon={X} />
+                                <XIcon />
                             </ItemActionButton>
                         )}
                     />
@@ -37,7 +37,7 @@ const PlanningOverviewItems: React.FC<Props> = ({ items }) => (
                         item={item}
                         renderButton={(onClick) => (
                             <ItemActionButton onClick={onClick}>
-                                <Octicon icon={Pencil} />
+                                <PencilIcon />
                             </ItemActionButton>
                         )}
                     />

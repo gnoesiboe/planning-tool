@@ -1,7 +1,7 @@
 import React from 'react';
 import LinkButton from '../primities/button/LinkButton';
 import useShowHideModal from '../../hooks/useShowHideModal';
-import Octicon, { Pencil } from '@primer/octicons-react';
+import { PencilIcon } from '@primer/octicons-react';
 import { ProjectWithItemCount } from '../../model/planning';
 import Modal from '../primities/modal/Modal';
 import ProjectForm from '../projectForm/ProjectForm';
@@ -35,7 +35,7 @@ const EditProject: React.FC<Props> = ({ project }) => {
 
     return (
         <LinkButton onClick={() => show()}>
-            <Octicon icon={Pencil} />
+            <PencilIcon />
         </LinkButton>
     );
 };

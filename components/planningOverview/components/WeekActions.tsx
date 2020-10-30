@@ -1,5 +1,5 @@
 import { DropdownButton } from 'react-bootstrap';
-import Octicon, { Plus } from '@primer/octicons-react';
+import { PlusIcon } from '@primer/octicons-react';
 import { ReactNode } from 'react';
 
 type Props = { children: ReactNode };
@@ -8,7 +8,7 @@ const WeekActions: React.FC<Props> = ({ children }) => (
     <div className="week-actions">
         <DropdownButton
             variant="outline-secondary"
-            title={<Octicon icon={Plus} />}
+            title={<PlusIcon />}
             id="week-actions-dropdown"
             size="sm"
         >

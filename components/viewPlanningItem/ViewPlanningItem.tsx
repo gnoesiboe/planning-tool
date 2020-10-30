@@ -7,7 +7,7 @@ import MarkdownContent from '../primities/MarkdownContent';
 import Section from '../primities/section/Section';
 import EditPlanningItem from '../editPlanningItem/EditPlanningItem';
 import PrimaryButton from '../primities/button/PrimaryButton';
-import Octicon, { Pencil } from '@primer/octicons-react';
+import { PencilIcon } from '@primer/octicons-react';
 
 type Props = {
     item: PlanningItemWithRelations;
@@ -45,7 +45,7 @@ const ViewPlanningItem: React.FC<Props> = ({ item, renderButton }) => {
                     item={item}
                     renderButton={(onClick) => (
                         <PrimaryButton onClick={onClick}>
-                            <Octicon icon={Pencil} />
+                            <PencilIcon />
                             &nbsp; Edit
                         </PrimaryButton>
                     )}

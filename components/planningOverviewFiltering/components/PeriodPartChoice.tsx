@@ -10,7 +10,7 @@ import {
     formatShortDate,
     isCurrentPair,
 } from '../../../utility/dateTimeUtilities';
-import Octicon, { Clock } from '@primer/octicons-react';
+import { ClockIcon } from '@primer/octicons-react';
 
 type Props = {
     value: SelectOption | null;
@@ -53,7 +53,7 @@ const CustomOption: React.FC<OptionProps> = (props) => {
                 {formatShortDate(start)}
             </span>
             {` `}
-            {isCurrentWeek && <Octicon icon={Clock} />}
+            {isCurrentWeek && <ClockIcon />}
         </div>
     );
 };

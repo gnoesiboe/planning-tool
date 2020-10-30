@@ -1,7 +1,7 @@
 import { PlanningItemWithRelations } from '../../../model/planning';
 import { CSSProperties, ReactNode } from 'react';
 import useMakeDraggable from '../hooks/useMakeDraggable';
-import Octicon, { ThreeBars } from '@primer/octicons-react';
+import { ThreeBarsIcon } from '@primer/octicons-react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 type Props = {
@@ -37,7 +37,7 @@ const PlanningOverviewItem: React.FC<Props> = ({ item, children }) => {
                     delay={0}
                     overlay={<Tooltip id={`tooltip-${id}`}>{notes}</Tooltip>}
                 >
-                    <Octicon icon={ThreeBars} />
+                    <ThreeBarsIcon />
                 </OverlayTrigger>
             )}
             {children}

@@ -1,6 +1,6 @@
 import { ProjectBudgetOverviewItem } from '../hooks/useProjectBudgetOverviewItems';
 import createClassName from 'classnames';
-import Octicon, { Info } from '@primer/octicons-react';
+import { InfoIcon } from '@primer/octicons-react';
 
 type Props = {
     data: ProjectBudgetOverviewItem;
@@ -25,7 +25,7 @@ const Item: React.FC<Props> = ({
                 <td>
                     {comments && (
                         <span title={comments}>
-                            <Octicon icon={Info} />
+                            <InfoIcon />
                         </span>
                     )}
                 </td>
