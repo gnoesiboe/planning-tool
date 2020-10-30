@@ -32,38 +32,43 @@ const PlanningOverview: React.FC = () => {
             <div className={styles.teamRows}>
                 <DragAndDropProvider>
                     {planning.map(({ team, weeks }) => (
-                        <TeamRow team={team} key={team.id}>
-                            {weeks.map(({ week, year, items }) => (
-                                <Week
-                                    key={week}
-                                    week={week}
-                                    year={year}
-                                    team={team}
-                                    onItemDropped={onItemDropped}
-                                >
-                                    <WeekActions>
-                                        <AddPlanningItem
-                                            week={week}
-                                            year={year}
-                                            team={team}
-                                            currentPlanningItems={items}
-                                        />
-                                        <AddTeamWeekNote
-                                            team={team}
-                                            week={week}
-                                            year={year}
-                                        />
-                                    </WeekActions>
-                                    {items.length > 0 && (
-                                        <PlanningOverviewItems items={items} />
-                                    )}
-                                    <TeamWeekNotesOverview
+                        <>
+                            <TeamRow team={team} key={team.id}>
+                                {weeks.map(({ week, year, items }) => (
+                                    <Week
+                                        key={week}
                                         week={week}
+                                        year={year}
                                         team={team}
-                                    />
-                                </Week>
-                            ))}
-                        </TeamRow>
+                                        onItemDropped={onItemDropped}
+                                    >
+                                        <WeekActions>
+                                            <AddPlanningItem
+                                                week={week}
+                                                year={year}
+                                                team={team}
+                                                currentPlanningItems={items}
+                                            />
+                                            <AddTeamWeekNote
+                                                team={team}
+                                                week={week}
+                                                year={year}
+                                            />
+                                        </WeekActions>
+                                        {items.length > 0 && (
+                                            <PlanningOverviewItems
+                                                items={items}
+                                            />
+                                        )}
+                                        <TeamWeekNotesOverview
+                                            week={week}
+                                            team={team}
+                                        />
+                                    </Week>
+                                ))}
+                            </TeamRow>
+                            <hr className={styles.teamRowSeperator} />
+                        </>
                     ))}
                 </DragAndDropProvider>
             </div>

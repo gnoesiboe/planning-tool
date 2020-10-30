@@ -12,11 +12,10 @@
 
 .teamRow {
     margin: 0 0 30px;
-    padding: 0 10px 20px 0;
+    padding: 0 10px 0 0;
     width: 100%;
     white-space: nowrap;
     position: relative;
-    border-bottom: 1px solid #ddd;
 }
 
 .teamRowTitle {
@@ -36,6 +35,17 @@
 
 .teamRowEqualizer {
     display: inline; // react-equalizer uses a div element, which is by default a block element
+}
+
+.teamRowSeperator {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    height: 1px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    margin: 20px 0 30px;
+    position: relative; // make sure that, when resizing, it stays 100% wide
 }
 
 .week {

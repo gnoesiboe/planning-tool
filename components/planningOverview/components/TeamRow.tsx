@@ -8,17 +8,15 @@ type Props = {
     children: ReactNode;
 };
 
-const TeamRow: React.FC<Props> = ({ children, team }) => {
-    return (
-        <div className={styles.teamRow}>
-            <div className={styles.teamRowTitle}>
-                <h2>{team.name}</h2>
-            </div>
-            <HeightEqualizer className={styles.teamRowEqualizer}>
-                {children}
-            </HeightEqualizer>
+const TeamRow: React.FC<Props> = ({ children, team }) => (
+    <div className={styles.teamRow}>
+        <div className={styles.teamRowTitle}>
+            <h2>{team.name}</h2>
         </div>
-    );
-};
+        <HeightEqualizer className={styles.teamRowEqualizer}>
+            {children}
+        </HeightEqualizer>
+    </div>
+);
 
 export default TeamRow;
