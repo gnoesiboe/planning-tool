@@ -18,13 +18,13 @@ const ProjectOverview: React.FC = () => {
             <AddProject />
             <h1>Projects</h1>
             {projects && (
-                <Table striped bordered>
+                <Table striped bordered responsive className={styles.table}>
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Budget</th>
-                            <th style={{ width: '120px' }}>Color</th>
-                            <th style={{ width: '60px' }} />
+                            <th className={styles.tableColorColumn}>Color</th>
+                            <th className={styles.tableActionsColumn} />
                         </tr>
                     </thead>
                     <tbody>

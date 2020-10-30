@@ -1,4 +1,18 @@
+@import './../../styles//settings//breakpoints';
+
 .row--inactive {
     color: #999;
     text-decoration: line-through;
+}
+
+.table {
+    min-width: $breakpoints-md; // ensure table moves to responsive mode on small devices
+}
+
+.tableColorColumn {
+    width: 120px;
+}
+
+.tableActionsColumn {
+    width: 60px;
 }
