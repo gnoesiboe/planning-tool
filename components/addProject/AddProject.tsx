@@ -4,6 +4,7 @@ import useShowHideModal from '../../hooks/useShowHideModal';
 import Modal from '../primities/modal/Modal';
 import ProjectForm from '../projectForm/ProjectForm';
 import usePersistProjectOnValidSubmit from './hooks/usePersistProjectOnValidSubmit';
+import styles from './AddProject.module.scss';
 
 const AddProject: React.FC = () => {
     const { show, hide, visible } = useShowHideModal();
@@ -22,7 +23,7 @@ const AddProject: React.FC = () => {
     }
 
     return (
-        <PrimaryButton className="create-project" onClick={() => show()}>
+        <PrimaryButton className={styles.button} onClick={() => show()}>
             <PlusIcon /> Add project
         </PrimaryButton>
     );

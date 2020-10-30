@@ -3,7 +3,7 @@ import { PlanningItemWithRelations } from '../../model/planning';
 import useShowHideModal from '../../hooks/useShowHideModal';
 import Modal from '../primities/modal/Modal';
 import { Table } from 'react-bootstrap';
-import MarkdownContent from '../primities/MarkdownContent';
+import MarkdownContent from '../primities/markdownContent/MarkdownContent';
 import Section from '../primities/section/Section';
 import EditPlanningItem from '../editPlanningItem/EditPlanningItem';
 import PrimaryButton from '../primities/button/PrimaryButton';

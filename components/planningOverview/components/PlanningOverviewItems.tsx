@@ -7,13 +7,14 @@ import EditPlanningItem from '../../editPlanningItem/EditPlanningItem';
 import ItemActionButton from './ItemActionButton';
 import { PencilIcon, EyeIcon, XIcon } from '@primer/octicons-react';
 import PlanningOverviewItemActions from './PlanningOverviewItemActions';
+import styles from '../PlanningOverview.module.scss';
 
 type Props = {
     items: PlanningItemWithRelations[];
 };
 
 const PlanningOverviewItems: React.FC<Props> = ({ items }) => (
-    <div className="planning-overview__items">
+    <div className={styles.items}>
         {items.map((item) => (
             <PlanningOverviewItem key={item.id} item={item}>
                 <PlanningOverviewItemActions>

@@ -11,6 +11,7 @@ import {
     isCurrentPair,
 } from '../../../utility/dateTimeUtilities';
 import { ClockIcon } from '@primer/octicons-react';
+import styles from '../PlanningOverviewFiltering.module.scss';
 
 type Props = {
     value: SelectOption | null;
@@ -35,21 +36,18 @@ const CustomOption: React.FC<OptionProps> = (props) => {
     const pair = reverseTransform(data.label);
     const isCurrentWeek = isCurrentPair(pair);
 
-    const className = createClassName(
-        'planning-overview-filtering__period-part-choice__option',
-        {
-            'planning-overview-filtering__period-part-choice__option--selected': isSelected,
-            'planning-overview-filtering__period-part-choice__option--disabled': isDisabled,
-            'planning-overview-filtering__period-part-choice__option--focussed': isFocused,
-        }
-    );
+    const className = createClassName(styles.periodPartChoiceOption, {
+        [styles['periodPartChoiceOption--selected']]: isSelected,
+        [styles['periodPartChoiceOption--disabled']]: isDisabled,
+        [styles['periodPartChoiceOption--focussed']]: isFocused,
+    });
 
     const start = createDateFromWeekYearPair(pair, 'start');
 
     return (
         <div ref={innerRef} {...innerProps} className={className}>
             Week {pair.week}{' '}
-            <span className="planning-overview-filtering__period-part-choice__postfix">
+            <span className={styles.periodPartChoicePostfix}>
                 {formatShortDate(start)}
             </span>
             {` `}
@@ -66,9 +64,7 @@ const CustomSingleValue: React.FC<SingleValueProps<SelectOption>> = (props) => {
     return (
         <div {...innerProps}>
             Week {pair.week}{' '}
-            <span className="planning-overview-filtering__period-part-choice__postfix">
-                {pair.year}
-            </span>
+            <span className={styles.periodPartChoicePostfix}>{pair.year}</span>
         </div>
     );
 };
@@ -79,30 +75,28 @@ const PeriodPartChoice: React.FC<Props> = ({
     isDisabled,
     options,
     onChange,
-}) => {
-    return (
-        <FormChoice
-            id={name}
-            value={value}
-            className="planning-overview-filtering__period-part-choice"
-            components={{
-                SingleValue: CustomSingleValue,
+}) => (
+    <FormChoice
+        id={name}
+        value={value}
+        className={styles.periodPartChoice}
+        components={{
+            SingleValue: CustomSingleValue,
 
-                // @ts-ignore cannot get types to match
-                Option: CustomOption,
-            }}
-            onChange={(newItem) => {
-                if (Array.isArray(newItem)) {
-                    throw new Error('Expecting new item to be an object');
-                }
+            // @ts-ignore cannot get types to match
+            Option: CustomOption,
+        }}
+        onChange={(newItem) => {
+            if (Array.isArray(newItem)) {
+                throw new Error('Expecting new item to be an object');
+            }
 
-                // @ts-ignore -> new item can either be a multi or a single option somehow
-                onChange(name, newItem ? newItem.value : null);
-            }}
-            isOptionDisabled={isDisabled}
-            options={options}
-        />
-    );
-};
+            // @ts-ignore -> new item can either be a multi or a single option somehow
+            onChange(name, newItem ? newItem.value : null);
+        }}
+        isOptionDisabled={isDisabled}
+        options={options}
+    />
+);
 
 export default PeriodPartChoice;

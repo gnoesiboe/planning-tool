@@ -11,6 +11,7 @@ import usePlanning from './hooks/usePlanning';
 import PlanningOverviewFiltering from '../planningOverviewFiltering/PlanningOverviewFiltering';
 import ProjectBudgetOverview from '../projectBudgetOverview/ProjectBudgetOverview';
 import PlanningOverviewItems from './components/PlanningOverviewItems';
+import styles from './PlanningOverview.module.scss';
 
 const PlanningOverview: React.FC = () => {
     const { planning } = usePlanning();
@@ -22,13 +23,13 @@ const PlanningOverview: React.FC = () => {
     }
 
     return (
-        <div className="planning-overview">
+        <div className={styles.wrapper}>
             <Head>
                 <title>Planning overview | Freshheads</title>
             </Head>
             <PlanningOverviewFiltering />
             <ProjectBudgetOverview />
-            <div className="planning-overview__team-rows">
+            <div className={styles.teamRows}>
                 <DragAndDropProvider>
                     {planning.map(({ team, weeks }) => (
                         <TeamRow team={team} key={team.id}>

@@ -1,0 +1,56 @@
+.wrapper {
+    position: fixed;
+    background: #eee;
+    padding: 10px 10px 10px 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    z-index: 1001;
+
+    label {
+        margin-right: 10px;
+    }
+}
+
+.formGroup {
+    margin-bottom: 10px !important;
+    margin-right: 20px !important;
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+.periodPartChoice {
+    width: 200px;
+}
+
+.periodPartChoiceOption {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.periodPartChoiceOption--selected {
+    background: #ddd;
+    font-weight: bold;
+}
+
+.periodPartChoiceOption--focussed {
+    font-weight: bold;
+}
+
+.periodPartChoiceOption--disabled {
+    cursor: not-allowed;
+    color: #ddd;
+}
+
+.periodPartChoicePostfix {
+    margin-left: 5px;
+    color: #bbb;
+    font-size: 0.8em;
+}
+
+.teamField {
+    width: 300px;
+}

@@ -1,15 +1,15 @@
 import { DropdownButton } from 'react-bootstrap';
 import { PlusIcon } from '@primer/octicons-react';
 import { ReactNode } from 'react';
+import styles from '../PlanningOverview.module.scss';
 
 type Props = { children: ReactNode };
 
 const WeekActions: React.FC<Props> = ({ children }) => (
-    <div className="week-actions">
+    <div className={styles.weekActions}>
         <DropdownButton
             variant="outline-secondary"
             title={<PlusIcon />}
-            id="week-actions-dropdown"
             size="sm"
         >
             {children}

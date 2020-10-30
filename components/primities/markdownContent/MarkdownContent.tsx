@@ -1,4 +1,5 @@
-import { parseMarkdown } from '../../utility/markdownUtilities';
+import { parseMarkdown } from '../../../utility/markdownUtilities';
+import styles from './MarkdownContent.module.scss';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
     children: string;
@@ -14,7 +15,7 @@ const MarkdownContent: React.FC<Props> = ({
     return (
         <div
             {...otherProps}
-            className={`markdown-content ${className}`}
+            className={`${styles.wrapper} ${className}`}
             dangerouslySetInnerHTML={{ __html: parsedContent }}
         />
     );

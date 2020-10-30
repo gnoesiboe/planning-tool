@@ -1,4 +1,4 @@
-.project-budget-overview {
+.wrapper {
     position: fixed;
     border: 1px solid #ddd;
     background: white;
@@ -7,7 +7,8 @@
     z-index: 1000;
 }
 
-.project-budget-overview--toggle-button {
+.toggleButton {
     float: right;
     padding: 0;
+    text-decoration: none !important;
 }

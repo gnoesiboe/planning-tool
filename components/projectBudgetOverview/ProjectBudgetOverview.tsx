@@ -1,7 +1,8 @@
 import useProjectBudgetOverviewItems from './hooks/useProjectBudgetOverviewItems';
 import Item from './components/Item';
-import LinkButton from '../primities/button/LinkButton';
 import useShowHideProjectBudgetOverview from './hooks/useShowHideProjectBudgetOverview';
+import styles from './ProjectBudgetOverview.module.scss';
+import ToggleButton from './components/ToggleButton';
 
 type Props = {};
 
@@ -15,13 +16,8 @@ const ProjectBudgetOverview: React.FC<Props> = () => {
     }
 
     return (
-        <div className="project-budget-overview">
-            <LinkButton
-                onClick={() => toggle()}
-                className="project-budget-overview--toggle-button"
-            >
-                {visible ? 'hide' : 'show budget'}
-            </LinkButton>
+        <div className={styles.wrapper}>
+            <ToggleButton onClick={() => toggle()} visible={visible} />
             {visible && (
                 <table className="table table-borderless">
                     <thead>

@@ -1,13 +1,8 @@
-.remove-team-week-note {
+.button {
     float: right;
-    visibility: hidden !important;
     padding: 0 !important;
     margin: 0 !important;
     color: #999 !important;
     font-size: 0.7rem !important;
     margin-top: -5px !important;
-
-    .team-week-notes-overview--item:hover & {
-        visibility: visible !important;
-    }
 }

@@ -4,6 +4,7 @@ import { Table } from 'react-bootstrap';
 import AddProject from '../addProject/AddProject';
 import { CSSProperties } from 'react';
 import EditProject from '../editProject/EditProject';
+import styles from './ProjectOverview.module.scss';
 
 const ProjectOverview: React.FC = () => {
     const { projects } = usePlanningContext();
@@ -29,7 +30,7 @@ const ProjectOverview: React.FC = () => {
                         {projects.map((project) => {
                             const rowClassname = project.active
                                 ? ''
-                                : 'project-overview__row--inactive';
+                                : styles['row--inactive'];
 
                             const colorCellStyle: CSSProperties = project.active
                                 ? {

@@ -1,6 +1,7 @@
 import { usePlanningContext } from '../../context/planning/PlanningContext';
 import { Team } from '../../model/planning';
 import TeamWeekNotesOverviewItem from './components/TeamWeekNotesOverviewItem';
+import styles from './TeamWeekNotesOverview.module.scss';
 
 type Props = {
     week: number;
@@ -20,7 +21,7 @@ const TeamWeekNotesOverview: React.FC<Props> = ({ team, week }) => {
     );
 
     return (
-        <ul className="team-week-notes-overview">
+        <ul className={styles.wrapper}>
             {notes.map((note) => (
                 <TeamWeekNotesOverviewItem note={note} key={note.id} />
             ))}

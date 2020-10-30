@@ -1,19 +1,6 @@
 // Libs
 @import '~normalize.css';
 
-// Modules
-@import './modules/planningOverview';
-@import './modules/addPlanningItem';
-@import './modules/teamWeekNotesOverview';
-@import './modules/removeTeamWeekNote';
-@import './modules/weekActions';
-@import './modules/createProject';
-@import './modules/projectOverview';
-@import './modules/planningOverviewFiltering';
-@import './modules/projectBudgetOverview';
-@import './modules/markdownContent';
-@import './modules/section';
-
 body {
     padding: 0;
     margin: 0;

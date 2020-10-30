@@ -3,6 +3,7 @@ import { CSSProperties, ReactNode } from 'react';
 import useMakeDraggable from '../hooks/useMakeDraggable';
 import { ThreeBarsIcon } from '@primer/octicons-react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import styles from '../PlanningOverview.module.scss';
 
 type Props = {
     item: PlanningItemWithRelations;
@@ -27,10 +28,10 @@ const PlanningOverviewItem: React.FC<Props> = ({ item, children }) => {
         <div
             ref={draggableRef}
             style={combinedStyle}
-            className="planning-overview__item"
+            className={styles.item}
             title={notes || ''}
         >
-            <h3 className="planning-overview__item__title">{project.name}</h3>
+            <h3 className={styles.itemTitle}>{project.name}</h3>
             {notes && (
                 <OverlayTrigger
                     placement="bottom"
